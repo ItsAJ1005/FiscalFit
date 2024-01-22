@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+}
+
+@keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.tag-list {
+    margin: 0;
+    padding: 1rem; /* Added padding */
+    list-style: none;
+    display: inline-block; /* Display inline block to make the lists appear on the same line */
+}
+
+.tag-list li {
+    display: inline-block;
+    /* color: white; */
+    font-weight: 700;
+    padding: 1rem;
+    background: goldenrod;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem -0.25rem grey;
+    margin-right: 1rem; /* Added margin for spacing */
+}
+
+.scroller {
+    display: flex; /* Use flex to make child elements appear in a row */
+    width: 100%;
+    overflow: hidden;
+    /* outline: 2px solid lime; */
+}
+
+.scroller-inner {
+    margin: 0;
+    white-space: nowrap;
+    padding-block: 1rem;
+    gap: 1rem;
+    animation: scroll 15s infinite linear; /* Corrected animation property */
+}
