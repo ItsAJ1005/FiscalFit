@@ -41,4 +41,5 @@ const userSchema = new mongoose.Schema({
 
 const Asset = mongoose.model("Asset", assetSchema);
 
-module.exports = Asset;
+exports.Asset = Asset;
+exports.assetSchema = assetSchema;
