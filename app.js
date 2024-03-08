@@ -3,6 +3,9 @@ const path = require("path");
 const app = express();
 const fs = require("fs");
 const ejs = require("ejs");
+const cookieParser = require('cookie-parser');
+app.use(cookieParser())
+
 /**changes*/
 const mongoose = require("mongoose");
 const assetRoutes = require("./routes/assetRoutes");
