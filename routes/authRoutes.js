@@ -6,6 +6,7 @@ const User = require("../models/User");
 
 router.post("/signup", authController.signup);
 router.post("/signin", authController.signin);
+router.get("/logout", authController.logout);
 router.get("/users", authController.getAllUsers);
 router.post("/change-password", authController.changePassword);
 
