@@ -1,7 +1,10 @@
 const { Asset, assetSchema } = require("../models/Asset");
 const User = require("../models/User");
-const jwt = require("jsonwebtoken"); 
-const axios = require('axios');
+const jwt = require("jsonwebtoken");
+const axios = require("axios");
+
+const fs = require("fs");
+const path = require("path");
 
 exports.addAsset = async (req, res) => {
   try {
@@ -38,68 +41,6 @@ exports.addAsset = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-exports.calculateGoldGrowthForUser = async (req, res) => {
-  const userId = req.cookies.jwt;
-  try {
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    const assetsObject = user.assets[0]; 
-
-    if (!assetsObject) {
-      return res.status(404).json({ message: 'Assets object not found for the user' });
-    }
-
-    const goldAsset = assetsObject.gold;
-
-    if (!goldAsset) {
-      return res.status(404).json({ message: 'Gold asset not found for the user' });
-    }
-
-    const { dateOfPurchase } = goldAsset;
-
-    const purchaseDate = new Date(dateOfPurchase);
-    const today = new Date();
-
-    const monthlyGrowth = [];
-
-    for (let currentMonth = new Date(purchaseDate); currentMonth <= today; currentMonth.setMonth(currentMonth.getMonth() + 1)) {
-      // Get the start and end dates for the current month
-      const startDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
-      const endDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
-
-      const apiKey = 'f93f2ab942408ca096636efe237ae902'; 
-      const startDateStr = startDate.toISOString().split('T')[0];
-      const endDateStr = endDate.toISOString().split('T')[0];
-      const apiUrl = `https://api.metalpriceapi.com/v1/timeframe?api_key=${apiKey}&start_date=${startDateStr}&end_date=${endDateStr}&base=USD&currencies=XAU`;
-
-      const response = await axios.get(apiUrl);
-      const historicalPrices = response.data?.prices?.XAU?.USD || [];
-
-      const initialPrice = goldAsset.pricePer10g * goldAsset.gramsBought;
-      const currentPrice = historicalPrices[0]?.close || 0;
-
-      const growth = (currentPrice - initialPrice) * goldAsset.gramsBought;
-
-      monthlyGrowth.push({
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
-        growth
-      });
-    }
-
-    res.json(monthlyGrowth);
-  } catch (error) {
-    console.error('Error calculating gold growth:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
-};
-
-
-
 
 exports.calculateRealEstateDifferenceForUser = async (req, res) => {
   try {
@@ -114,7 +55,7 @@ exports.calculateRealEstateDifferenceForUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const assetsObject = user.assets[0]; 
+    const assetsObject = user.assets[0];
 
     if (!assetsObject) {
       return res
@@ -122,7 +63,6 @@ exports.calculateRealEstateDifferenceForUser = async (req, res) => {
         .json({ message: "Assets object not found for the user" });
     }
 
-   
     const realEstateAsset = assetsObject.realEstate;
 
     if (!realEstateAsset) {
@@ -131,12 +71,10 @@ exports.calculateRealEstateDifferenceForUser = async (req, res) => {
         .json({ message: "Real estate asset not found for the user" });
     }
 
-    
     const purchasePrice = realEstateAsset.purchasePrice;
     const todayPrice = realEstateAsset.todayPrice;
     const difference = todayPrice - purchasePrice;
 
-    
     let status;
     if (difference > 0) {
       status = "Profit";
@@ -199,3 +137,51 @@ exports.calculateFDDifferenceForUser = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+
+exports.calculateGoldProfitForUser = async (req, res) => {
+  try {
+    const monthlyGoldCostsPath = 'MonthlyGoldCosts.json';
+    const monthlyGoldCostsData = JSON.parse(fs.readFileSync(monthlyGoldCostsPath, 'utf8'));
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+    const userId = decodedToken.id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const assetsObject = user.assets[0];
+    if (!assetsObject) {
+      return res.status(404).json({ message: "Assets object not found for the user" });
+    }
+
+    const goldAsset = assetsObject.gold;
+    if (!goldAsset) {
+      return res.status(404).json({ message: "Gold asset not found for the user" });
+    }
+
+    const goldPurchaseDate = goldAsset.dateOfPurchase;
+    const goldGramsBought = goldAsset.gramsBought;
+
+    const monthlyGoldCost = monthlyGoldCostsData.find(item => {
+      const itemDate = new Date(item.Date.trim());
+      return itemDate.getFullYear() === goldPurchaseDate.getFullYear() &&
+        itemDate.getMonth() === goldPurchaseDate.getMonth();
+    });
+
+    if (!monthlyGoldCost) {
+      return res.status(404).json({ message: "Monthly gold cost not found for the purchase date" });
+    }
+
+    const scaledGoldCost = parseFloat(monthlyGoldCost.INR.replace(',', '')) * goldGramsBought / 10; 
+
+    return res.json({ scaledGoldCost });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
