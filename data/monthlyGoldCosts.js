@@ -1,4 +1,4 @@
-﻿const data = [
+﻿const monthlyGoldCostsData = [
     {
         "Date": "31-12-1999",
         "INR": "12,631.0"
@@ -1165,4 +1165,4 @@
     }
 ]
 
-module.exports = data;
+module.exports = monthlyGoldCostsData;
