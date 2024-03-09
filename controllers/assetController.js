@@ -2,7 +2,7 @@ const { Asset, assetSchema } = require("../models/Asset");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
-
+const data = require("../MonthlyGoldCosts");
 const fs = require("fs");
 const path = require("path");
 
@@ -142,8 +142,7 @@ exports.calculateFDDifferenceForUser = async (req, res) => {
 
 exports.calculateGoldProfitForUser = async (req, res) => {
   try {
-    const monthlyGoldCostsPath = 'MonthlyGoldCosts.json';
-    const monthlyGoldCostsData = JSON.parse(fs.readFileSync(monthlyGoldCostsPath, 'utf8'));
+    const monthlyGoldCostsData = data;
     const token = req.cookies.jwt;
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
