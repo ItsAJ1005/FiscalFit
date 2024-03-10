@@ -3,18 +3,740 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link type="text/css" rel="stylesheet" href="style.css">
+    <title>Fiscal Fit</title>
+
+    <!-- <meta name="description" content="" /> -->
+    <!-- <meta name="keywords" content="" /> -->
+    <!-- <meta name="author" content="" /> -->
+    <!-- <meta name="robots" content="index, follow" />
+    <meta name="language" content="english">
+    <meta name="revised" content="Sunday, January 28th, 2010, 1:15 pm" /> 
+    <meta name="copyright" content="AJ 2024">
+    <meta name="HandheldFriendly" content="false"/> 
+    <meta property="og:image" content="./imagesLarge/website.png"/> -->
+    
+    <link rel="stylesheet" href="./css/style.css">
+        
+    <script src="https://unpkg.com/scrollreveal"></script>
+    
 </head>
 <body>
-    <div class="scroller">
-        <ul class="tag-list scroller-inner">
-            <!--insert elem-->>
-        </ul>
-        <ul class="tag-list scroller-inner">
-            <!--inert elem-->>
-        </ul>
+
+    <!--hero-bg-video-->
+    <video
+    autoplay
+    loop 
+    muted
+    id="backgroundVideo"
+    src="/assets/videos/animation.mp4"
+    ></video>
+
+    <!-- cursor div -->
+    <div id="cursor" class="active "></div>
+    <div id="cursor-blur"></div>
+
+    <!-- homepage -->
+    <div class="hero">
+
+        <div class="infinite-scrollbar">
+            <!-- Todo -->
+            <!-- ToDo Greeting border iphone -->
+            <span id="Greeting">: ) Good Morning</span> 
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            {
+            "symbols": [
+            {
+                "proName": "FOREXCOM:SPXUSD",
+                "title": "S&P 500 Index"
+            },
+            {
+                "proName": "FOREXCOM:NSXUSD",
+                "title": "US 100 Cash CFD"
+            },
+            {
+                "proName": "FX_IDC:EURUSD",
+                "title": "EUR to USD"
+            },
+            {
+                "proName": "BITSTAMP:BTCUSD",
+                "title": "Bitcoin"
+            },
+            {
+                "proName": "BITSTAMP:ETHUSD",
+                "title": "Ethereum"
+            }
+            ],
+            "showSymbolLogo": false,
+            "isTransparent": true,
+            "displayMode": "regular",
+            "colorTheme": "dark",
+            "locale": "en"
+        }
+            </script>
+            </div>
+            
+        </div>
+
+        <!-- header -->
+        <header>
+        <div class="product-switcher">
+            <div class="header-inner-container">
+
+                <div class="logo-combo">
+
+                    <div class="logo-outerBox">
+                        <div class="logo-innerBox">
+        
+                            <a  id="logo-anchor" href="#hero"><img id="logo-main-img" src="./assets/logos/example-main-logo.png" /></a>
+        
+                        </div>
+                    </div>
+
+                    <div class="stockSearchWidget" aria-expanded="false" aria-haspopup="listbox">
+
+                        <div class="combobox">
+                            <div class="combobox-inner">
+
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/unukghxb.json"
+                                    trigger="hover"
+                                    stroke="bold"
+                                    colors="primary:#ffffff,secondary:#a866ee"
+                                    style="width:20px;height:20px">
+                                </lord-icon>
+
+                                <input type="search" autocomplete="off" aria-autocomplete="list" aria-controls="react-autowhatever-1" placeholder="Search stocks, mutual funds, smallcases, ETFs etc." maxlength="80" id="search-stock-input" aria-label="search text" value="">
+
+                            <span>/</span>
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="listbox">
+                            
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <nav>
+                    <button class="header-btn">
+                        <span>
+                            <lord-icon
+                                src="https://cdn.lordicon.com/yrbmguoo.json"
+                                trigger="hover"
+                                colors="primary:#ffffff"
+                                style="width:16px;height:16px">
+                            </lord-icon>
+                        </span>
+
+                        <a method="GET" action="/portfolio" href="">Portfolio</a>
+                    </button>
+
+                    <button class="header-btn">
+                        <span>
+                            <img src="./assets/icons/gold-ingot.png"></img>
+                        </span>
+
+                        <a href="./gold.html">Gold</a>
+                    </button>
+
+                    <button class="header-btn">
+                        <span>
+                            <img src="./assets/icons/business-report.png"></img>
+                        </span>
+
+                        <a href="./screener.html">Screener</a>
+                    </button>
+
+                    <button class="header-btn">
+                        <span>
+                            <img src="./assets/icons/pie-chart.png"></img>
+                        </span>
+
+                        <span>More</span>
+                    </button>
+
+                    <button class="header-btn" id="login-btn">
+                        <span>
+                            <img src="./assets/icons/user.png"></img>
+                        </span>
+
+                        <span>Login</span>
+
+                        <span>
+                            <img src="./assets/icons/drop-down.png  "></img>
+                        </span>
+                    </button>
+
+                </nav>
+            </div>
+        </div>
+        </header>
+
+        <section class="hero-container">
+            <h1 class="hero-title scrollreveal hover-text">Manage Your <br>Finance A<br>Bit Intelligibly</h1>
+
+            <div class="hero-divider scrollreveal">
+              <a href="#page2">Explore how ↓</a>
+              <a href="#Learnmore">Learn More →</a>
+            </div>
+
+          </section>
+          
+
     </div>
-    <script type="module" src="bundle.js"></script>
+
+    <section class="page1">
+        <div class="page1-top">
+            <div class="page1-top-outer">
+
+                <div class="outer-box-top">
+                    <span>NIFTY 50  2,200</span>
+                    <span>SENSEX   72,000</span>
+                </div>
+
+                <div class="outer-box-bottom">
+                    <div class="rotating-text">
+                        <p>The market is in :</p>
+                        <p>
+                          <span class="word w-1">Fear?</span>
+                          <span class="word w-2"> Extreme Fear?.</span>
+                          <span class="word w-3"> Greed?</span>
+                          <span class="word w-4"> Extreme Greed?</span>
+                        </p>
+                      </div>
+                    <!-- <div class="status">
+                        The market is in Fear zone
+                    </div> -->
+
+                    <div class="days">
+                        <img src="/assets/icons/pie-chart.png" style="height:60px;"/>
+                        <img src="/assets/icons/pie-chart.png" style="height:60px;"/>
+                        <img src="/assets/icons/pie-chart.png" style="height:60px;"/>
+                        <img src="/assets/icons/pie-chart.png" style="height:60px;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page1-middle">
+            <div class="page1-middle-outer">
+                
+                <div class="top">
+                    <div class="glossy-card">
+                        <!-- BTC BEGIN -->
+                        <div class="tradingview-widget-container">
+                            <div class="tradingview-widget-container__widget"></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                            {
+                            "symbol": "BITSTAMP:BTCUSD",
+                            "width": "100%",
+                            "height": "100%",
+                            "locale": "en",
+                            "dateRange": "3M",
+                            "colorTheme": "dark",
+                            "isTransparent": true,
+                            "autosize": true,
+                            "largeChartUrl": ""
+                        }
+                            </script>
+                        </div>
+                        <!-- BTC END -->
+                    </div>
+    
+                    <div class="glossy-card">
+                        <!-- USD/INR BEGIN -->
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        {
+                        "symbol": "FX_IDC:USDINR",
+                        "width": "100%",
+                        "height": "100%",
+                        "locale": "en",
+                        "dateRange": "3M",
+                        "colorTheme": "dark",
+                        "isTransparent": true,
+                        "autosize": true,
+                        "largeChartUrl": ""
+                    }
+                        </script>
+                    </div>
+                    <!-- USD/INR END -->
+                    </div>
+    
+                    <div class="glossy-card">
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        {
+                        "symbol": "NASDAQ:MSFT",
+                        "width": "100%",
+                        "height": "100%",
+                        "locale": "en",
+                        "dateRange": "3M",
+                        "colorTheme": "dark",
+                        "isTransparent": true,
+                        "autosize": true,
+                        "largeChartUrl": ""
+                    }
+                        </script>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="bottom">
+
+                    <div class="glossy-card">
+                        <div class="tradingview-widget-container">
+                            <div class="tradingview-widget-container__widget"></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                            {
+                            "symbol": "NASDAQ:AMZN",
+                            "width": "100%",
+                            "height": "100%",
+                            "locale": "en",
+                            "dateRange": "3M",
+                            "colorTheme": "dark",
+                            "isTransparent": true,
+                            "autosize": true,
+                            "largeChartUrl": ""
+                        }
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="glossy-card">
+                        <div class="tradingview-widget-container">
+                            <div class="tradingview-widget-container__widget"></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                            {
+                            "symbol": "NASDAQ:GOOGL",
+                            "width": "100%",
+                            "height": "100%",
+                            "locale": "en",
+                            "dateRange": "3M",
+                            "colorTheme": "dark",
+                            "isTransparent": true,
+                            "autosize": true,
+                            "largeChartUrl": ""
+                        }
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="glossy-card">
+                        <div class="tradingview-widget-container">
+                            <div class="tradingview-widget-container__widget"></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                            {
+                            "symbol": "NYSE:TSM",
+                            "width": "100%",
+                            "height": "100%",
+                            "locale": "en",
+                            "dateRange": "3M",
+                            "colorTheme": "dark",
+                            "isTransparent": true,
+                            "autosize": true,
+                            "largeChartUrl": ""
+                        }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+            </div> 
+        </div>
+    </section>
+
+    <section id="page2" class="page2">
+        <div class="page2-outer">
+            <div class="page2-left">
+                <div class="page2-left-inner">
+                    <section class="get-started">
+                        <h3>Get started</h3>
+    
+                        <div class="get-started-inner">
+                            <div class="get-started-inner1">
+    
+                                <div class="get-started-inner1-1">
+                                    Learn to track and manage your finances effectively.
+                                </div>
+    
+                                <div class="get-started-inner1-2">
+                                    <span> <img src="/assets/icons/diversify.svg"/> Compare diversification score with the community</span>
+                                    <span> <img src="/assets/icons/predict.svg"/> Predict expected returns of your portfolio</span>
+                                    <span> <img src="/assets/icons/redflags.svg"/> Find out red flags in your portfolio</span>
+                                </div>
+                            </div>
+                            <div class="get-started-inner2">
+                                Import in 1-tap! takes less than a minute!
+                            </div>
+                            <div class="get-started-inner3">
+                                <button id="start">Start</button>
+                            </div>
+                        </div>
+
+                        <div class="tradingview-widget-container">
+                            <div class="tradingview-widget-container__widget"></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                            {
+                            "colorTheme": "light",
+                            "dateRange": "3M",
+                            "showChart": true,
+                            "locale": "en",
+                            "width": "400vw",
+                            "height": "50vh",
+                            "isTransparent": false,
+                            "showSymbolLogo": false,
+                            "showFloatingTooltip": true,
+                            "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
+                            "plotLineColorFalling": "rgba(41, 98, 255, 1)",
+                            "gridLineColor": "rgba(240, 243, 250, 0)",
+                            "scaleFontColor": "rgba(106, 109, 120, 1)",
+                            "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+                            "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
+                            "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+                            "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+                            "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+                            "tabs": [
+                            {
+                                "title": "Indices",
+                                "symbols": [
+                                {
+                                    "s": "FOREXCOM:SPXUSD",
+                                    "d": "S&P 500 Index"
+                                },
+                                {
+                                    "s": "FOREXCOM:NSXUSD",
+                                    "d": "US 100 Cash CFD"
+                                },
+                                {
+                                    "s": "FOREXCOM:DJI",
+                                    "d": "Dow Jones Industrial Average Index"
+                                },
+                                {
+                                    "s": "INDEX:NKY",
+                                    "d": "Nikkei 225"
+                                },
+                                {
+                                    "s": "INDEX:DEU40",
+                                    "d": "DAX Index"
+                                },
+                                {
+                                    "s": "FOREXCOM:UKXGBP",
+                                    "d": "FTSE 100 Index"
+                                }
+                                ],
+                                "originalTitle": "Indices"
+                            },
+                            {
+                                "title": "Futures",
+                                "symbols": [
+                                {
+                                    "s": "CME_MINI:ES1!",
+                                    "d": "S&P 500"
+                                },
+                                {
+                                    "s": "CME:6E1!",
+                                    "d": "Euro"
+                                },
+                                {
+                                    "s": "COMEX:GC1!",
+                                    "d": "Gold"
+                                },
+                                {
+                                    "s": "NYMEX:CL1!",
+                                    "d": "WTI Crude Oil"
+                                },
+                                {
+                                    "s": "NYMEX:NG1!",
+                                    "d": "Gas"
+                                },
+                                {
+                                    "s": "CBOT:ZC1!",
+                                    "d": "Corn"
+                                }
+                                ],
+                                "originalTitle": "Futures"
+                            },
+                            {
+                                "title": "Bonds",
+                                "symbols": [
+                                {
+                                    "s": "CBOT:ZB1!",
+                                    "d": "T-Bond"
+                                },
+                                {
+                                    "s": "CBOT:UB1!",
+                                    "d": "Ultra T-Bond"
+                                },
+                                {
+                                    "s": "EUREX:FGBL1!",
+                                    "d": "Euro Bund"
+                                },
+                                {
+                                    "s": "EUREX:FBTP1!",
+                                    "d": "Euro BTP"
+                                },
+                                {
+                                    "s": "EUREX:FGBM1!",
+                                    "d": "Euro BOBL"
+                                }
+                                ],
+                                "originalTitle": "Bonds"
+                            },
+                            {
+                                "title": "Forex",
+                                "symbols": [
+                                {
+                                    "s": "FX:EURUSD",
+                                    "d": "EUR to USD"
+                                },
+                                {
+                                    "s": "FX:GBPUSD",
+                                    "d": "GBP to USD"
+                                },
+                                {
+                                    "s": "FX:USDJPY",
+                                    "d": "USD to JPY"
+                                },
+                                {
+                                    "s": "FX:USDCHF",
+                                    "d": "USD to CHF"
+                                },
+                                {
+                                    "s": "FX:AUDUSD",
+                                    "d": "AUD to USD"
+                                },
+                                {
+                                    "s": "FX:USDCAD",
+                                    "d": "USD to CAD"
+                                }
+                                ],
+                                "originalTitle": "Forex"
+                            }
+                            ]
+                        }
+                            </script>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="page2-right">
+                <h6>Today's news and events</h6>
+                <div class="pill-container">
+                    <button><a href="#advance-chart"><img src="/assets/icons/dice.svg" alt="dice"/> All</a></button>
+                    <button><a><img src="/assets/icons/compass.svg" alt="compass"/> Macro</a></button>
+                    <button><a><img src="/assets/icons/horn.svg" alt="hor>n"/> Earnings</a></button>
+                    <button><a href="https://www.bseindia.com/corporates/corporates_act.html" target="_blank"><img src="/assets/icons/corpAction.svg" alt="corpAction"/> Corp Action</a></button> 
+                    <button><a href="https://www.moneycontrol.com/stocks/marketinfo/dividends_declared/index.php" target="_blank"><img src="/assets/icons/dividends.svg" alt="dividends"/> Dividens</a></button>
+                    <button><a href="https://www.moneycontrol.com/personal-finance/" target="_blank"><img src="/assets/icons/news.svg" alt="news"/> News</a></button>
+                </div>
+                <div class="economic-event">
+                    <div class="economic-event-top">
+                        <h4>Bank Loan Growth</h4>
+                        <div class="expected">
+                            <span>Expected On</span>
+                            <p>Feb 23, 2024</p>
+                        </div>
+                    </div>
+                    <div class="economic-event-bottom">
+                        <div class="economic-event-bottom1">
+                            <p>Expected Value:</p> <span>To be announced</span>
+                        </div>
+                        <span class="divider-span"></span>
+                        <div class="economic-event-bottom2">
+                            <p>Current:</p> <span>20.3%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget news"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                    {
+                    "feedMode": "all_symbols",
+                    "isTransparent": true,
+                    "displayMode": "adaptive",
+                    "width": "100%",
+                    "height": "50%",
+                    "colorTheme": "light",
+                    "locale": "en"
+                }
+                    </script>
+                </div>
+            </div>
+            
+        </div>
+
+    </section>
+
+    <section id="page3" class="page3">
+
+        <video disablePictureInPicture class="coin1" autoplay="" loop="" muted="" playsinline="" preload="none">
+            <source src="/assets/videos/coin_3.webm" type="video/webm">
+            <source src="/assets/videos/coin_2.webm" type="video/mp4">
+        </video>
+        <video disablePictureInPicture class="coin2" autoplay="" loop="" muted="" playsinline="" preload="none">
+            <source src="/assets/videos/coin_1.webm" type="video/webm">
+            <source src="/assets/videos/coin_1.webm" type="video/webm">
+        </video>
+        <video disablePictureInPicture class="coin3" autoplay="" loop="" muted="" playsinline="" preload="none">
+            <source src="/assets/videos/coin_3.webm" type="video/webm">
+            <source src="/assets/videos/coin_2.webm" type="video/webm">
+        </video>
+        
+        <div class="page3-top">
+            <h1 class="scrollreveal">
+                <div id="understand">
+                    Learn
+                </div>
+                <div id="your">
+                    managing
+                </div>
+                <div id="money">
+                    the money
+                </div>
+            </h1>
+            <pre class="reveal-text">Get all of your investments at one place.
+            <br>Use our powerful features to customize your requests.</pre>
+        </div>
+        <div class="page3-bottom scrollreveal">
+            <div class="page3-b-1">
+                <h4>Plan and Predict</h4>
+                <p>Diversify, research, set limits, stay informed, invest for the long term.</p>
+            </div>
+            <div class="page3-b-2">
+                <h4>Research</h4>
+                <p>Analyze trends, research fundamentals, monitor news, manage risks.</p>
+            </div>
+            <div class="page3-b-3">
+                <h4>Manage</h4>
+                <p>Invest cautiously, monitor trends, adapt to market changes.</p>
+            </div>
+            <div class="page3-b-4">
+                <h4>Community</h4>
+                <p>Engage in forums, share insights, learn from the community and chat with a CA.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="green-div" class="green-div">
+        <img
+          src="https://eiwgew27fhz.exactdn.com/wp-content/themes/puttosaurus/img/dots-side.svg"
+          alt=""
+        />
+        <h4 class="scrollreveal">SIGN UP FOR FISCAL FIT AND NEW INFORMATION STRAIGHT TO YOUR INBOX</h4>
+        <img
+          src="https://eiwgew27fhz.exactdn.com/wp-content/themes/puttosaurus/img/dots-side.svg"
+          alt=""
+        />
+    </section>
+
+    <section id="advance-chart" class="analysis">
+    <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+        {
+        "width": "1380",
+        "height": "610",
+        "symbol": "FX_IDC:INRUSD",
+        "interval": "D",
+        "timezone": "Asia/Kolkata",
+        "theme": "dark",
+        "style": "9",
+        "locale": "en",
+        "enable_publishing": false,
+        "withdateranges": true,
+        "allow_symbol_change": true,
+        "details": true,
+        "hotlist": true,
+        "calendar": false,
+        "support_host": "https://www.tradingview.com"
+    }
+        </script>
+    </div>
+    </section>
+
+    <section id="page4" class="page4">
+    <p>
+        Discover a virtual oasis at our market and portfolio website. Friendly support, a user-friendly interface, and a diverse array of creative offerings await. Unwind in the online cafe of inspiration – a perfect escape for exploration. Worth a visit for a refreshing digital experience!
+    </p>
+    <img
+        id="colon1"
+        src="https://eiwgew27fhz.exactdn.com/wp-content/themes/puttosaurus/img/quote-left.svg"
+        alt=""
+    />
+    <img
+        id="colon2"
+        src="https://eiwgew27fhz.exactdn.com/wp-content/themes/puttosaurus/img/quote-right.svg"
+        alt=""
+    />
+    </section>
+
+    <section id="page5" class="page5 ">
+        <div class="section__grad-bG"></div>
+        <h1>WHAT ARE YOU WAITING FOR?</h1>
+        <div class="elem">
+            <h2>Learn</h2>
+            <img
+            src="/assets/icons/redflags.svg"
+            alt=""
+            />
+        </div>
+        <div class="elem">
+            <h2>Discuss</h2>
+            <img src="/assets/icons/news.svg" alt=""/>
+        </div>
+        <div class="elem">
+            <h2>Invest</h2>
+            <img src="/assets/icons/predict.svg" alt=""/>
+        </div>
+    </section>
+
+    <footer>
+        <img src="https://eiwgew27fhz.exactdn.com/wp-content/themes/puttosaurus/img/dots-footer.svg" alt=""/>
+
+        <div id="f1">
+            <img src="/assets/logos/example-main-logo.png" style="border-radius: 7px; opacity:99%;" alt="main-logo"/>
+        </div>
+
+        <div id="f2">
+            <h3>PORTFOLIO ANALYSING</h3>
+            <h3>STOCKS LESSONS</h3>
+            <h3>INTEREST RATES</h3>
+        </div>
+
+        <!-- <div id="f3">
+            <h3>coffee shop</h3>
+            <h3>LEAGUES</h3>
+            <h3>Contact us</h3>
+        </div> -->
+
+        <div id="f4">
+            <address>
+            IIIT SRI CITY <br />
+            GNAN MARG <br />
+            ANDHRA PRADESH <br />
+            CHITTOOR - 517646 <br />
+            TEL: 0208 309 0181 <br />
+            GET DIRECTIONS <br />
+            </address>
+        </div>
+    </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js" integrity="sha512-qF6akR/fsZAB4Co1QDDnUXWnaQseLGXoniuSuSlPQK6+aWhlMZcHzkasCSlnWoe+TJuudlka1/IQ01Dnhgq95g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/ScrollTrigger.min.js" integrity="sha512-IHDCHrefnBT3vOCsvdkMvJF/MCPz/nBauQLzJkupa4Gn4tYg5a6VGyzIrjo6QAUy3We5HFOZUlkUpP0dkgE60A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script type="module" src="./js/frontend.js"></script>
 </body>
 </html>

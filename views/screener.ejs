@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screener | Fiscal Fit</title>
+    <link rel="stylesheet" href="/css/screener.css">
+</head>
+<body>
+
+    <div class="infinite-scrollbar">
+        <!-- Todo -->
+        <!-- ToDo Greeting border iphone -->
+        <span id="Greeting">: ) Good Morning</span> 
+        <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            {
+            "symbols": [
+            {
+                "proName": "FOREXCOM:SPXUSD",
+                "title": "S&P 500 Index"
+            },
+            {
+                "proName": "FOREXCOM:NSXUSD",
+                "title": "US 100 Cash CFD"
+            },
+            {
+                "proName": "FX_IDC:EURUSD",
+                "title": "EUR to USD"
+            },
+            {
+                "proName": "BITSTAMP:BTCUSD",
+                "title": "Bitcoin"
+            },
+            {
+                "proName": "BITSTAMP:ETHUSD",
+                "title": "Ethereum"
+            }
+            ],
+            "showSymbolLogo": false,
+            "isTransparent": false,
+            "displayMode": "regular",
+            "colorTheme": "dark",
+            "locale": "en"
+        }
+        </script>
+        </div>
+        
+    </div>
+
+
+    <header>
+        <div class="product-switcher">
+            <div class="header-inner-container">
+    
+                <div class="logo-combo">
+    
+                    <div class="logo-outerBox">
+                        <div class="logo-innerBox">
+        
+                            <a  id="logo-anchor" href="/index.html"><img id="logo-main-img" src="/assets/logos/example-main-logo.png" /></a>
+        
+                        </div>
+                    </div>
+    
+                    <div class="stockSearchWidget" aria-expanded="false" aria-haspopup="listbox">
+    
+                        <div class="combobox">
+                            <div class="combobox-inner">
+    
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/unukghxb.json"
+                                    trigger="hover"
+                                    stroke="bold"
+                                    colors="primary:#ffffff,secondary:#a866ee"
+                                    style="width:20px;height:20px">
+                                </lord-icon>
+    
+                                <input type="search" autocomplete="off" aria-autocomplete="list" aria-controls="react-autowhatever-1" placeholder="Search stocks, mutual funds, smallcases, ETFs etc." maxlength="80" id="search-stock-input" aria-label="search text" value="">
+    
+                            <span>/</span>
+    
+                            </div>
+    
+    
+                        </div>
+    
+                        <div class="listbox">
+                            
+                        </div>
+    
+    
+                    </div>
+    
+                </div>
+    
+                <nav>
+                    <button class="header-btn">
+                        <span>
+                            <lord-icon
+                                src="https://cdn.lordicon.com/yrbmguoo.json"
+                                trigger="hover"
+                                colors="primary:#ffffff"
+                                style="width:16px;height:16px">
+                            </lord-icon>
+                        </span>
+    
+                        <a href="/pages/portfolio.html">Portfolio</a>
+                    </button>
+    
+                    <button class="header-btn">
+                        <span>
+                            <img src="/assets/icons/gold-ingot.png"></img>
+                        </span>
+    
+                        <a href="/pages/gold.html"> Gold</a>
+                    </button>
+    
+                    <button class="header-btn">
+                        <span>
+                            <img src="/assets/icons/business-report.png"></img>
+                        </span>
+    
+                        <a href="/pages/screener.html">Screener</a>
+                    </button>
+    
+                    <button class="header-btn">
+                        <span>
+                            <img src="/assets/icons/pie-chart.png"></img>
+                        </span>
+    
+                        <span>More</span>
+                    </button>
+    
+                    <button class="header-btn" id="login-btn">
+                        <span>
+                            <img src="/assets/icons/user.png"></img>
+                        </span>
+    
+                        <span>Login</span>
+    
+                        <span>
+                            <img src="/assets/icons/drop-down.png  "></img>
+                        </span>
+                    </button>
+    
+                </nav>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="page1">
+        <div class="top">
+            <div class="img">
+
+            </div>
+            <div class="head">
+
+            </div>
+            <div class="info">
+
+            </div>
+            <div class="start">
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+<div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+    {
+    "width": 550%,
+    "height": 300%,
+    "defaultColumn": "overview",
+    "defaultScreen": "most_volatile",
+    "market": "india",
+    "showToolbar": true,
+    "colorTheme": "dark",
+    "locale": "en",
+    "isTransparent": true
+  }
+    </script>
+  </div>
+</body>
+</html>

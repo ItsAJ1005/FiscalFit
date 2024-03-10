@@ -39,7 +39,15 @@ app.use("/api/auth", authRoutes);
 app.get("/", (req, res) => {
   res.render('index.ejs');
 });
-
+app.get('/portfolio',(req,res)=>{
+  res.render('protfolio.ejs');
+})
+app.get('/screener',(req,res)=>{
+  res.render('screener.ejs');
+})
+app.get('/gold',(req,res)=>{
+  res.render('gold.ejs');
+})
 app.listen(port, () => {
   console.log(`The server is up and running on ${port}`);
 });
