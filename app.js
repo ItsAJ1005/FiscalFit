@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
   res.render('index.ejs');
 });
 app.get('/portfolio',(req,res)=>{
-  res.render('protfolio.ejs');
+  res.render('portfolio.ejs');
 })
 app.get('/screener',(req,res)=>{
   res.render('screener.ejs');
