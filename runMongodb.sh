@@ -10,22 +10,22 @@ if [ "$(docker ps -q -f name=$MONGO_CONTAINER_NAME)" ]; then
     exit 0
 fi
 
-# This container will not be removed until we explicitply removes it while the pc is powered on
+# This container will not be removed until we explicitly remove it while the PC is powered on
 # Check if a MongoDB container with the same name exists but stopped
 if [ "$(docker ps -aq -f status=exited -f name=$MONGO_CONTAINER_NAME)" ]; then
-    echo "Removing stopped MongoDB container..."
-    docker rm $MONGO_CONTAINER_NAME
-fi
-
-# Run MongoDB container
-echo "Starting MongoDB container..."
-docker run -d --name $MONGO_CONTAINER_NAME -p $MONGO_PORT:27017 mongo
-
-# Check if MongoDB container is running
-if [ "$(docker ps -q -f name=$MONGO_CONTAINER_NAME)" ]; then
-    # dcoker exec -it $MONGO_CONTAINER_NAME
-    # mongosh
-    echo "MongoDB container is now running."
+    echo "Restarting stopped MongoDB container..."
+    docker start $MONGO_CONTAINER_NAME
 else
-    echo "Failed to start MongoDB container."
+    # Run MongoDB container
+    echo "Starting MongoDB container..."
+    docker run -d --name $MONGO_CONTAINER_NAME -p $MONGO_PORT:27017 mongo
+
+    # Check if MongoDB container is running
+    if [ "$(docker ps -q -f name=$MONGO_CONTAINER_NAME)" ]; then
+        # dcoker exec -it $MONGO_CONTAINER_NAME
+        # mongosh
+        echo "MongoDB container is now running."
+    else
+        echo "Failed to start MongoDB container."
+    fi
 fi
