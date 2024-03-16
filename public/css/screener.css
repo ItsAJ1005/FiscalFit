@@ -337,7 +337,7 @@
     transform: translateY(-11%);
 }
 
-.page1 > top {
+.page1 > .top {
     height: 20vh;
     width: 80vw
 }
