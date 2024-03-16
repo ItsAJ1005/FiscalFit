@@ -164,17 +164,18 @@ exports.calculateGoldProfitForUser = async (req, res) => {
     const goldPurchaseDate = goldAsset.dateOfPurchase;
     const goldGramsBought = goldAsset.gramsBought;
 
-    const monthlyGoldCost = monthlyGoldCostsData.find(item => {
+    const monthlyGoldCost = monthlyGoldCostsData.filter(item => {
       const itemDate = new Date(item.Date.trim());
-      return itemDate.getFullYear() === goldPurchaseDate.getFullYear() &&
-        itemDate.getMonth() === goldPurchaseDate.getMonth();
+      return itemDate.getFullYear() >= goldPurchaseDate.getFullYear() &&
+        itemDate.getMonth() >= goldPurchaseDate.getMonth();
     });
 
     if (!monthlyGoldCost) {
       return res.status(404).json({ message: "Monthly gold cost not found for the purchase date" });
     }
-
-    const scaledGoldCost = parseFloat(monthlyGoldCost.INR.replace(',', '')) * goldGramsBought / 10; 
+    const scaledGoldCost = monthlyGoldCost.map(obj => {
+      return parseFloat(obj.INR.replace(',', '')) * goldGramsBought / 10;
+    }); 
 
     return res.json({ scaledGoldCost });
   } catch (error) {
