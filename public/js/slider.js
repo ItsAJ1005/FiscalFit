@@ -1,4 +1,6 @@
-//step 1: get DOM
+// get DOM
+
+//slider.ejs file
 let nextDom = document.getElementById('next');
 let prevDom = document.getElementById('prev');
 
