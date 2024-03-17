@@ -254,6 +254,10 @@ nav > .header-btn > span {
   padding: 0 0 0 8px;
 }
 
+#login-btn > span > img {
+  height: 16px;
+}
+
 nav > .header-btn:hover {
   background: hsla(207.27, 4.56%, 52.75%, 0.3);
   transition: 0.45s;
@@ -270,16 +274,78 @@ nav > .header-btn > a {
 #login-btn {
   background: white;
   color: #151e28;
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   width: 105px;
   height: 35px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 8px 0px 0px ;
+  padding: 12px;
+  border-radius: 10px;
+  font-family: 'graphik-medium';
 }
 
 #login-btn:hover {
   background: rgb(217, 224, 214);
-  scale: 105%;
+  scale:105%;
   transition: ease;
 }
+
+/* Dropdown container for more-btn */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top:6.5vh;
+  right:9.16vw;
+  background-color: #232d38;
+  min-width: 25vw;
+  height: 40vh;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 8px;
+}
+
+/* Dropdown links */
+.group {
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sec1 {
+  margin-top: 2vh;
+  font-family: 'graphik-medium';
+  font-size: 20px;
+  height: 3vh;
+  border-bottom: 1px solid rgb(88, 234, 83);
+}
+.sec2 {
+  margin-inline: 1vw;
+  display: flex;
+  gap: 1.4vw;
+
+}
+
+.dropdown-content a img {
+  width: 2vw;
+}
+
+.dropdown-content > .sec2 {
+  font-size: 12px;
+  font-family: 'michroma';
+}
+
+/* Show the dropdown content when hovering over the dropdown button */
+#more-btn:hover .dropdown-content {
+  display: block;
+  transition: 0.3s;
+}
+
 
 /* 
     infinite scroller 
