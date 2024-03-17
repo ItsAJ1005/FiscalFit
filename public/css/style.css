@@ -1,5 +1,5 @@
 /*-----------------------------------*\
-  #style.css
+  #style.css OF index.ejs
 \*-----------------------------------*/
 
 /**
@@ -137,19 +137,9 @@ body {
 
 
 
-
-/*-----------------------------------*\
-  #COMPONENT
-\*-----------------------------------*/
-
-
-
-
-
 /*-----------------------------------*\
   #HEADER
 \*-----------------------------------*/
-
 
 header > .product-switcher {
   width: 100%;
@@ -449,7 +439,6 @@ h1 {
 }
 
 /* middle */
-
 .page1 > .page1-middle {
   /* background: #ccf4ca; */
   background-image: url('/assets/image/page1-bg.jpg');
@@ -489,6 +478,7 @@ h1 {
 
 }
 
+/* ALL GLOSSY CHARTS OF TOP SECTIONS  */
 .glossy-card {
   height: 25vh;
   width: 25vw;
@@ -648,11 +638,11 @@ h1 {
   background: #151e28;
 }
 
+/* CUSTOMIZED */
 .tradingview-widget-container {
   margin-top: 20px;
   width:100%;
 }
-
 
 .page2-right {
   height: 112vh;
@@ -671,6 +661,8 @@ h1 {
   font-family: 'graphikmedium';
 }
 
+
+/* PILL CONTAINER OF PAGE 2 */
 .pill-container {
   margin: 24px 0px 4px;
   height: 20vh;
@@ -1021,14 +1013,6 @@ h1 {
 
 
 /*-----------------------------------*\
-  #STORY
-\*-----------------------------------*/
-
-
-
-
-
-/*-----------------------------------*\
   #FOOTER
 \*-----------------------------------*/
 
@@ -1101,6 +1085,7 @@ footer > img {
   #Additional Styles
 \*-----------------------------------*/
 
+/* for gradient divs  */
 .section__grad-bg {
   height: 350px;
   background-image: radial-gradient(circle at 50% 720%, rgba(22, 22, 22, 0) 71%, rgba(22, 22, 22, .16) 89%, rgba(49, 247, 91, .22) 94%, rgba(112, 255, 212, .47));
@@ -1111,22 +1096,25 @@ footer > img {
   right: 0%;
 }
 
+/* selection color */
 *::selection {
   background-color: #fff;
   color: #95c11e;
 }
 
+/*customizing scrollbar  */
 body::-webkit-scrollbar {
   width: 8px;
   background: hsl(76, 86%, 61%);
 }
+
 body::-webkit-scrollbar-thumb {
   background-color: #67ef58;
-
   border-radius: 50px;
 }
 
 
+/* customizing hero-section cursor */
 #cursor {
   height: 20px;
   width: 20px;
@@ -1135,7 +1123,6 @@ body::-webkit-scrollbar-thumb {
   position: fixed;
   z-index: -1;
   transition: all linear 0.1s;
-  /* transition: all 0.3s ease-in-out; */
 }
 #cursor-blur {
   height: 500px;
@@ -1147,16 +1134,15 @@ body::-webkit-scrollbar-thumb {
   z-index: -1;
   transition: all linear 0.4s;
 }
-
 .hover-text:hover + #cursor {
-  height: 30px; /* Adjust the size you want on hover */
-  width: 30px; /* Adjust the size you want on hover */
+  height: 30px; 
+  width: 30px;
 }
 
 
 
 /*-----------------------------------*\
-  #Rotating Text
+  #Rotating Text of hero
 \*-----------------------------------*/
 
 .rotating-text {
@@ -1213,8 +1199,7 @@ body::-webkit-scrollbar-thumb {
 /*-----------------------------------*\
   #reveal-text
 \*-----------------------------------*/
-
-
+/* Scroll-Reveal */
 .reveal-text,
 .reveal-text::after {
   animation-delay: var(--animation-delay, 2s);
