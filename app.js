@@ -48,6 +48,12 @@ app.get('/screener',(req,res)=>{
 app.get('/gold',(req,res)=>{
   res.render('gold.ejs');
 })
+app.get('/login',(req,res)=>{
+  res.render('login.ejs');
+})
+app.get('/register',(req,res)=>{
+  res.render('register.ejs');
+})
 app.listen(port, () => {
   console.log(`The server is up and running on ${port}`);
 });
