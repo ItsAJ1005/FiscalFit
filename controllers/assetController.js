@@ -174,7 +174,7 @@ exports.calculateGoldProfitForUser = async (req, res) => {
       return res.status(404).json({ message: "Monthly gold cost not found for the purchase date" });
     }
     const scaledGoldCost = monthlyGoldCost.map(obj => {
-      return parseFloat(obj.INR.replace(',', '')) * goldGramsBought / 10;
+      return parseFloat(obj.INR.replace(',', '')) * goldGramsBought / 2.834952; 
     }); 
 
     return res.json({ scaledGoldCost });
