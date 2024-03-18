@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Gold</title>
     <link rel="stylesheet" href="/css/gold.css">
- 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
 </head>
 <body>
 
@@ -227,6 +228,16 @@
         </div>
     </div>
 
+    <div class="gold-chart">
+        <div style="position: relative;">
+            <canvas id="goldCostsChart"  width="800" height="400"></canvas>
+            <div id="zoomControls" style="position: absolute; top: 10px; right: 10px;">
+                <!-- <button id="zoomIn">+</button>
+                <button id="zoomOut">-</button> -->
+            </div>
+        </div>
+    </div>
+
     <div class="performance">
         <div class="left">
             
@@ -282,5 +293,6 @@
     </footer>
 
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script src="js/gold_chart.js"></script>
 </body>
 </html>
