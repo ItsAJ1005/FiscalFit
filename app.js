@@ -4,6 +4,7 @@ const app = express();
 const fs = require("fs");
 const ejs = require("ejs");
 const cookieParser = require('cookie-parser');
+var globalVariables = require('./public/js/global_variables');
 app.use(cookieParser())
 
 /**changes*/
@@ -53,6 +54,12 @@ app.get('/login',(req,res)=>{
 })
 app.get('/register',(req,res)=>{
   res.render('register.ejs');
+})
+
+
+// discuss
+app.get('/discuss',(req,res) => {
+  res.render('discuss/index.ejs',{jwt:req.cookies.jwt});
 })
 app.listen(port, () => {
   console.log(`The server is up and running on ${port}`);
