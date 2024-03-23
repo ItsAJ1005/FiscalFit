@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+var { LoggedIn, setLoggedIn } = require("../public/js/global_variables");
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -34,6 +35,7 @@ exports.signup = async (req, res) => {
     // res
     //   .status(201)
     //   .json({ message: "User created successfully", user: newUser._id });
+    // setLoggedIn(true);
     res.redirect("/");
   } catch (error) {
     console.error(error);
@@ -55,16 +57,23 @@ exports.signin = async (req, res) => {
 
     const token = createToken(user._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).json({ message: "Login successful", user: user._id });
-    return res.redirect("/");
+    // res.status(200).json({ message: "Login successful", user: user._id });
+    return res.redirect("/discuss");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-exports.logout = (req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
+exports.logout = async (req, res) => {
+  // Clear the JWT cookie
+  try {
+    await res.clearCookie("jwt");
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.error("Error clearing cookie:", error);
+    res.status(500).json({ message: "Error logging out" });
+  }
 };
 
 exports.changePassword = async (req, res) => {
