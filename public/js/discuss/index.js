@@ -1,7 +1,7 @@
 const loginButton = document.getElementById('log-in');
 const logoutButton = document.getElementById('log-out');
-var loginPage = document.getElementById('loginPage');
-loginPage.style.display = "none";
+var loginModal = document.getElementById('loginModal');
+loginModal.style.display = "none";
 
 if(logoutButton){
     logoutButton.addEventListener('click',(e)=>{
@@ -12,7 +12,6 @@ if(logoutButton){
             },
         })
         .then(response => {
-            console.log(response);
             if (response.ok) {
                 window.location.href = '/discuss'; 
             } else {
@@ -27,8 +26,8 @@ if(logoutButton){
 
 if(loginButton){
     loginButton.addEventListener('click',()=>{
-        if(loginPage.style.display == "none")
-            loginPage.style.display = "block";
+        if(loginModal.style.display == "none")
+            loginModal.style.display = "block";
     })
 }
 
@@ -36,11 +35,11 @@ window.addEventListener('click', function(e){
     if(loginButton === null || loginButton.contains(e.target)){
         return;
     }
-    var loginPage = document.getElementById('loginPage');
-    if (loginPage.contains(e.target)){
+    var loginModal = document.getElementById('loginModal');
+    if (loginModal.contains(e.target)){
     } else {
-        if(loginPage.style.display == "block") {
-            loginPage.style.display = "none";
+        if(loginModal.style.display == "block") {
+            loginModal.style.display = "none";
         }   
     }
 });

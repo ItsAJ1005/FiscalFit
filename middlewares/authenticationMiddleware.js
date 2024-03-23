@@ -6,16 +6,16 @@ const requirAuth= (req , res , next)=>{
     if(token){
         jwt.verify(token , 'Port-folio-hulala' , (err , decodedToken)=>{
             if(err){
-                console.log(err.mesg)
+                console.error(err.mesg)
             }
             else{
-                console.log(decodedToken);
+                console.error(decodedToken);
                 next();
             }
         })
     }
     else{
-        console.log(middlewareErr);
+        console.error(middlewareErr);
     }
 }
 

@@ -5,6 +5,10 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   assets: [assetSchema],
+  posts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post'
+  }]
 });
 userSchema.methods.updatePassword = async function (newPassword) {
   this.password = await bcrypt.hash(newPassword, 10);

@@ -22,7 +22,7 @@
                 <%}%>
             </div>
         </div>
-            <div id="loginPage" class="credentials">
+            <div id="loginModal" class="credentials">
                 <div class="background">
                     <div class="shape shape1"></div>
                     <div class="shape shape2"></div>
@@ -57,140 +57,10 @@
             </div>
         </div>
         <div class="carousel"></div>
-        <div class="post">
-            <div class="post-header">
-                <div class="post-logo">@/financeguru</div>
-                <div class="post-time">2024-03-04 | 6:00 pm</div>
-                <div class="post-join">
-                    <button>Join</button>
-                </div>
-                <!-- <div class="post-options"></div> -->
-            </div>
-            <div class="post-main">
-                <div class="post-title">
-                    Moronic Monday - February 26, 2024 - Your Weekly Questions Thread
-                </div>
-                <div class="post-content">
-                    This is your safe place for questions on financial careers, homework problems and finance in general. No question in the finance domain is unwelcome.
-                    Replies are expected to be constructive and civil.
-                    Any questions about your personal finances belong in r/PersonalFinance, and career-seekers are encouraged to also visit r/FinancialCareers.
-                </div>
-            </div>
-            <div class="post-footer">
-                <div class="post-vote">
-                    <button>Up</button>&#8739;135&#8739;<button>Down</button>
-                </div>
-                <button>Comnt</button>
-                <button>Share</button>
-            </div>
-        </div>
-        <div class="post">
-            <div class="post-header">
-                <div class="post-logo">@/financeguru</div>
-                <div class="post-time">2024-03-04 | 6:00 pm</div>
-                <div class="post-join">
-                    <button>Join</button>
-                </div>
-                <!-- <div class="post-options"></div> -->
-            </div>
-            <div class="post-main">
-                <div class="post-title">
-                    Moronic Monday - February 26, 2024 - Your Weekly Questions Thread
-                </div>
-                <div class="post-content">
-                    This is your safe place for questions on financial careers, homework problems and finance in general. No question in the finance domain is unwelcome.
-                    Replies are expected to be constructive and civil.
-                    Any questions about your personal finances belong in r/PersonalFinance, and career-seekers are encouraged to also visit r/FinancialCareers.
-                </div>
-            </div>
-            <div class="post-footer">
-                <div class="post-vote">
-                    <button>Up</button>&#8739;135&#8739;<button>Down</button>
-                </div>
-                <button>Comnt</button>
-                <button>Share</button>
-            </div>
-        </div>
-        <div class="post">
-            <div class="post-header">
-                <div class="post-logo">@/financeguru</div>
-                <div class="post-time">2024-03-04 | 6:00 pm</div>
-                <div class="post-join">
-                    <button>Join</button>
-                </div>
-                <!-- <div class="post-options"></div> -->
-            </div>
-            <div class="post-main">
-                <div class="post-title">
-                    Moronic Monday - February 26, 2024 - Your Weekly Questions Thread
-                </div>
-                <div class="post-content">
-                    This is your safe place for questions on financial careers, homework problems and finance in general. No question in the finance domain is unwelcome.
-                    Replies are expected to be constructive and civil.
-                    Any questions about your personal finances belong in r/PersonalFinance, and career-seekers are encouraged to also visit r/FinancialCareers.
-                </div>
-            </div>
-            <div class="post-footer">
-                <div class="post-vote">
-                    <button>Up</button>&#8739;135&#8739;<button>Down</button>
-                </div>
-                <button>Comnt</button>
-                <button>Share</button>
-            </div>
-        </div>
-        <div class="post">
-            <div class="post-header">
-                <div class="post-logo">@/financeguru</div>
-                <div class="post-time">2024-03-04 | 6:00 pm</div>
-                <div class="post-join">
-                    <button>Join</button>
-                </div>
-                <!-- <div class="post-options"></div> -->
-            </div>
-            <div class="post-main">
-                <div class="post-title">
-                    Moronic Monday - February 26, 2024 - Your Weekly Questions Thread
-                </div>
-                <div class="post-content">
-                    This is your safe place for questions on financial careers, homework problems and finance in general. No question in the finance domain is unwelcome.
-                    Replies are expected to be constructive and civil.
-                    Any questions about your personal finances belong in r/PersonalFinance, and career-seekers are encouraged to also visit r/FinancialCareers.
-                </div>
-            </div>
-            <div class="post-footer">
-                <div class="post-vote">
-                    <button>Up</button>&#8739;135&#8739;<button>Down</button>
-                </div>
-                <button>Comnt</button>
-                <button>Share</button>
-            </div>
-        </div>
-        <div class="post">
-            <div class="post-header">
-                <div class="post-logo">@/financeguru</div>
-                <div class="post-time">2024-03-04 | 6:00 pm</div>
-                <div class="post-join">
-                    <button>Join</button>
-                </div>
-                <!-- <div class="post-options"></div> -->
-            </div>
-            <div class="post-main">
-                <div class="post-title">
-                    Moronic Monday - February 26, 2024 - Your Weekly Questions Thread
-                </div>
-                <div class="post-content">
-                    This is your safe place for questions on financial careers, homework problems and finance in general. No question in the finance domain is unwelcome.
-                    Replies are expected to be constructive and civil.
-                    Any questions about your personal finances belong in r/PersonalFinance, and career-seekers are encouraged to also visit r/FinancialCareers.
-                </div>
-            </div>
-            <div class="post-footer">
-                <div class="post-vote">
-                    <button>Up</button>&#8739;135&#8739;<button>Down</button>
-                </div>
-                <button>Comnt</button>
-                <button>Share</button>
-            </div>
+        <div class="posts-container">
+            <% data.forEach(function(post){ %>
+                <%- include('../components/post', {post: post}) %>
+            <% }); %>
         </div>
     </header>
 

@@ -1,0 +1,25 @@
+<div class="post">
+    <div class="post-header">
+        <div class="post-logo"><%=post.party%></div>
+        <div class="post-time"><%=post.createdAt.getDate()%>/<%=post.createdAt.getMonth()%>/<%=post.createdAt.getFullYear()%> | <%=post.createdAt.getHours()%>:<%=String(post.createdAt.getMinutes()).padStart(2, "0")%></div>
+        <div class="post-join">
+            <button>Join</button>
+        </div>
+        <!-- <div class="post-options"></div> -->
+    </div>
+    <div class="post-main">
+        <div class="post-title">
+            <%=post.title%>
+        </div>
+        <div class="post-content">
+            <%=post.content%>
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="post-vote">
+            <button>Up</button>&#8739;<%=post.up - post.down%>&#8739;<button>Down</button>
+        </div>
+        <button>Comnt</button>
+        <button>Share</button>
+    </div>
+</div>
