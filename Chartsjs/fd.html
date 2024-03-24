@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fixed Deposit Line Graph</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.min.js"></script>
+
+  <style>
+    #chartContainer {
+      width: 100%; /* Set width to 100% to fit the page */
+      height: auto; /* Allow height to adjust based on width */
+      max-width: 800px; /* Limit maximum width */
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="chartContainer">
+    <canvas id="fixedDepositChart"></canvas>
+  </div>
+
+  <script>
+    const sampleData = [
+        { dateOfPurchase: '2023-01-01', principalAmount: 3000, interestRate: 9, tenure: 30},
+    ];
+
+    const labels = [];
+    const dataValues = [];
+    sampleData.forEach(data => {
+        const months = data.tenure * 12;
+        let currentAmount = data.principalAmount;
+        for (let i = 0; i <= months; i++) {
+            const interest = (currentAmount * data.interestRate) / (100 * 12);
+            currentAmount += interest;
+            labels.push(i); 
+            dataValues.push(currentAmount);
+        }
+    });
+
+    const ctx = document.getElementById('fixedDepositChart').getContext('2d');
+    const fixedDepositChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Fixed Deposit Growth',
+                data: dataValues,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    title: {
+                        display: true,
+                        text: 'Amount'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Tenure (in months)'
+                    }
+                }
+            }
+        },
+        plugins: {
+            zoom:{
+                pan: {
+                    enabled: true,
+                    mode: 'xy',
+                },
+                limits: {
+                    x: {min: 0, max: 1000000},
+                    y: {min: 0}
+                },
+                zoom: {
+                    drag: {
+                      enabled:true,
+                    },
+                    wheel: {
+                      enabled: true,
+                    },
+                    pinch: {
+                      enabled: true,
+                    },
+                    mode: 'xy',
+                    sensitivity: 0.1
+                  }
+            }
+        }
+    });
+  </script>
+</body>
+</html>
