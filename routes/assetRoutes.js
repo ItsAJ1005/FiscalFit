@@ -8,5 +8,5 @@ router.post("/add", assetController.addAsset);
 router.get("/real-estate-difference",assetController.calculateRealEstateDifferenceForUser);
 router.get("/fd-difference", assetController.calculateFDDifferenceForUser);
 router.get("/gold/profit", calculateGoldProfitForUser);
-
+router.get("/investment-risk", assetController.calculateSharpeRatio);
 module.exports = router;
