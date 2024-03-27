@@ -184,3 +184,58 @@ exports.calculateGoldProfitForUser = async (req, res) => {
   }
 };
 
+exports.calculateSharpeRatio = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+    const userId = decodedToken.id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const assetsObject = user.assets[0];
+    if (!assetsObject) {
+      return res.status(404).json({ message: "Assets object not found for the user" });
+    }
+
+    let totalReturns = 0;
+    let totalInvestment = 0;
+    ['equity', 'gold', 'fixedDeposit', 'realEstate'].forEach(assetClass => {
+      const asset = assetsObject[assetClass];
+      if (asset) {
+        totalReturns += asset.totalInvestment || asset.principalAmount || asset.purchasePrice || 0;
+        totalInvestment += asset.totalInvestment || asset.principalAmount || asset.purchasePrice || 0;
+      }
+    });
+    const expectedReturn = totalReturns / totalInvestment;
+
+    const returnsArray = ['equity', 'gold', 'fixedDeposit', 'realEstate'].map(assetClass => {
+      const asset = assetsObject[assetClass];
+      if (asset) {
+        return (asset.totalInvestment || asset.principalAmount || asset.purchasePrice || 0) / totalInvestment;
+      }
+      return 0;
+    });
+    const standardDeviation = calculateStandardDeviation(returnsArray);
+
+    const riskFreeRate = 0.02; 
+
+ 
+    const sharpeRatio = (expectedReturn - riskFreeRate) / standardDeviation;
+
+    res.json({ sharpeRatio });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+function calculateStandardDeviation(values) {
+  const n = values.length;
+  const mean = values.reduce((acc, val) => acc + val, 0) / n;
+  const variance = values.reduce((acc, val) => acc + (val - mean) ** 2, 0) / n;
+  return Math.sqrt(variance);
+}
+
