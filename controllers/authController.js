@@ -32,11 +32,7 @@ exports.signup = async (req, res) => {
 
     const token = createToken(newUser._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    // res
-    //   .status(201)
-    //   .json({ message: "User created successfully", user: newUser._id });
-    // setLoggedIn(true);
-    res.redirect("/");
+    res.status(201).json({ message: "User created successfully", user: newUser._id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -57,8 +53,7 @@ exports.signin = async (req, res) => {
 
     const token = createToken(user._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-     res.status(200).json({ message: "Login successful", user: user._id });
-    //return res.redirect("/discuss");
+    res.status(200).json({ message: "Login successful", user: user._id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
