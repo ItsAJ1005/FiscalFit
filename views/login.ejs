@@ -9,8 +9,7 @@
     <link rel="accesible icon" href="./assets/icons/the-trees-svgrepo-com.svg" type="image/svg+xml">
     <script src="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous"></script>
 </head>
-<body>
-     
+<body>     
     <div class="container">
         <h2>Login</h2>
 
@@ -36,6 +35,36 @@
  
         </form>
     </div>
-
+    <script>
+        const loginButton = document.querySelector('#btn');
+        const formData = document.querySelector('#loginForm');
+        loginButton.addEventListener('click',async (e)=>{
+            e.preventDefault();
+            // not posting the form directly 
+            const myForm = new FormData(formData);
+            const formBody = {
+                "email": myForm.get("email"),
+                "password": myForm.get("password")
+            }
+            try{
+                const response = await fetch("../api/auth/signin",{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formBody)
+                });
+                if(response.ok){
+                    window.location.href = '/';
+                }else{
+                    const error = await response.json();
+                    console.error(error.message);
+                    alert(error.message);
+                }
+            }catch(err){
+                console.error(err);
+            }   
+        });
+    </script>
 </body>
 </html>
