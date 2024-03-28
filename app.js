@@ -54,6 +54,9 @@ app.get('/login',(req,res)=>{
 app.get('/register',(req,res)=>{
   res.render('register.ejs');
 })
+app.get('*',(req,res)=>{
+    res.render('error404.ejs');
+})
 app.listen(port, () => {
   console.log(`The server is up and running on ${port}`);
 });
