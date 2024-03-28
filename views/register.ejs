@@ -39,5 +39,36 @@
 
         </form>
     </div>
+    <script>
+        const singupButton = document.querySelector('#btn');
+        const formData = document.querySelector('#loginForm');
+        singupButton.addEventListener('click',async (e)=>{
+            e.preventDefault();
+            // not posting the form directly 
+            const myForm = new FormData(formData);
+            const formBody = {
+                "email": myForm.get("email"),
+                "password": myForm.get("password")
+            }
+            try{
+                const response = await fetch("../api/auth/signup",{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formBody)
+                });
+                if(response.ok){
+                    window.location.href = '/';
+                }else{
+                    const error = await response.json();
+                    console.error(error.message);
+                    alert(error.message);
+                }
+            }catch(err){
+                console.error(err);
+            }   
+        });
+    </script>
 </body>
 </html>

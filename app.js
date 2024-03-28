@@ -4,12 +4,16 @@ const app = express();
 const fs = require("fs");
 const ejs = require("ejs");
 const cookieParser = require('cookie-parser');
+const Post = require('./models/Post');
+var globalVariables = require('./public/js/global_variables');
 app.use(cookieParser())
 
 /**changes*/
 const mongoose = require("mongoose");
 const assetRoutes = require("./routes/assetRoutes");
 const authRoutes = require("./routes/authRoutes");
+const postRoutes  = require("./routes/postRoutes");
+const stablishConnection = require("./db/connection");
 
 const port = 5000;
 const viewspath = path.join(__dirname, "views");
@@ -19,21 +23,11 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-mongoose
-  .connect("mongodb://0.0.0.0:27017/PersonalPortfolioSystem", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("MongoDB connected successfully");
-  })
-  .catch((err) => {
-    console.error("MongoDB connection failed:", err);
-    process.exit(1);
-  });
+stablishConnection();
 
 app.use("/api/assets", assetRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/posts",postRoutes);
 /**changes*/
 
 app.get("/", (req, res) => {
@@ -54,6 +48,14 @@ app.get('/login',(req,res)=>{
 app.get('/register',(req,res)=>{
   res.render('register.ejs');
 })
+
+
+// discuss
+app.get('/discuss',async (req,res) => {
+  await Post.find({})
+            .then((data) => res.render('discuss/index.ejs',{jwt:req.cookies.jwt,data:data}))
+            .catch((err) => console.error(err))
+});
 app.get('*',(req,res)=>{
     res.render('error404.ejs');
 })
