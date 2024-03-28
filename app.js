@@ -56,6 +56,9 @@ app.get('/discuss',async (req,res) => {
             .then((data) => res.render('discuss/index.ejs',{jwt:req.cookies.jwt,data:data}))
             .catch((err) => console.error(err))
 });
+app.get('*',(req,res)=>{
+    res.render('error404.ejs');
+})
 app.listen(port, () => {
   console.log(`The server is up and running on ${port}`);
 });
