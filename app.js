@@ -66,6 +66,9 @@ app.get('/discuss/posts/:id',async (req,res)=>{
             .then(post => res.render("discuss/viewpost.ejs",{post}))
             .catch(err => console.error(err));
 });
+app.get('*',(req,res)=>{
+    res.render('error404.ejs');
+})
 app.listen(port, () => {
   console.log(`The server is up and running on ${port}`);
 });
