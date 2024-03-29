@@ -43,3 +43,10 @@ window.addEventListener('click', function(e){
         }   
     }
 });
+
+const creatPostButton = document.querySelector('.create-post-btn-container');
+
+
+creatPostButton.addEventListener('click',()=>{
+    window.location.href = "posts/create"
+})

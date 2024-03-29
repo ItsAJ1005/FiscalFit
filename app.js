@@ -48,13 +48,23 @@ app.get('/login',(req,res)=>{
 app.get('/register',(req,res)=>{
   res.render('register.ejs');
 })
-
+Post.findByIdAndDelete();
 
 // discuss
 app.get('/discuss',async (req,res) => {
   await Post.find({})
             .then((data) => res.render('discuss/index.ejs',{jwt:req.cookies.jwt,data:data}))
             .catch((err) => console.error(err))
+});
+app.get('/discuss/posts/create',(req,res)=>{
+  res.render('discuss/newPost.ejs');
+})
+// This route should be kept at the very bottom to prevetn /anything 
+app.get('/discuss/posts/:id',async (req,res)=>{
+  await Post.findById(req.params.id)
+            .populate("user")
+            .then(post => res.render("discuss/viewpost.ejs",{post}))
+            .catch(err => console.error(err));
 });
 app.listen(port, () => {
   console.log(`The server is up and running on ${port}`);

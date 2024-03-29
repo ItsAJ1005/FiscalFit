@@ -1,0 +1,26 @@
+<button id="createpost-btn">
+        Create Post
+        <img src="/assets/icons/plus.png" alt="" style="width: 30px; height: 30px; padding: 5px;">
+</button>
+
+<style>
+#createpost-btn {
+    padding: 5px;
+    margin: 20px;
+    display: flex;
+    width: 150px;
+    background-color: aliceblue;
+    color: green;
+    border-radius: 16px; /* Adjust the border-radius value */
+    border: 1px solid green;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+</style>
+<script>
+    const createPostButton = document.querySelector("#createpost-btn");
+    createPostButton.addEventListener('click',()=>{
+        window.location.href = "posts/create";
+    })
+</script>
