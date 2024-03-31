@@ -56,7 +56,6 @@ app.get('/login',(req,res)=>{
 app.get('/register',(req,res)=>{
   res.render('register.ejs');
 })
-Post.findByIdAndDelete();
 
 // discuss
 app.get('/discuss',async (req,res) => {
@@ -79,6 +78,9 @@ app.get('/discuss/posts/:id',async (req,res)=>{
             .then(post => res.render("discuss/viewPost.ejs",{post}))
             .catch(err => console.error(err));
 });
+app.all('*',(req,res)=>{
+    res.render('error404.ejs');
+})
 app.listen(port, () => {
   console.log(`The server is up and running on ${port}`);
 });
