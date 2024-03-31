@@ -13,7 +13,6 @@ exports.createPost = async (req, res) => {
             console.error("Invalid user ID:", userId);
             return res.status(400).json({ message: "Invalid user ID" });
         }
-
         const author = await User.findById(userId);
         if (!author) {
             console.error("User not found for ID:", userId);
