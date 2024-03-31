@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-const requirAuth= (req , res , next)=>{
+const requirAuth = (req , res , next)=>{
     token = req.cookies.jwt ;
 
     if(token){
@@ -10,13 +10,12 @@ const requirAuth= (req , res , next)=>{
             }
             else{
                 console.error(decodedToken);
-                next();
+                next(decodedToken);
             }
         })
-    }
-    else{
+    }else{
         console.error(middlewareErr);
     }
 }
 
-module.export = {requirAuth}
+module.export = { requirAuth }
