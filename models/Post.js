@@ -11,7 +11,7 @@ const postSchema = new mongoose.Schema({
     // is  added by mongoose and maintained
     user: { // population is used
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "naiveUser",
         required: true
     },
     comments: [{

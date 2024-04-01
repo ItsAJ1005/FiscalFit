@@ -12,7 +12,7 @@ const createToken = (id) => {
 
 exports.signup = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body; // change this to {username , email , password , role } // later we will add logic that admin role will be disabled from client-role-selection
 
     if (!email || !password) {
       return res
@@ -27,7 +27,7 @@ exports.signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User({ email, password: hashedPassword });
+    const newUser = new User({ email, password: hashedPassword }); // Change this to naiveUser/expertUser according to role // dont add supreme as that is disabled only added thorugh manual operationg on database
     await newUser.save();
 
     const token = createToken(newUser._id);
@@ -41,8 +41,8 @@ exports.signup = async (req, res) => {
 
 exports.signin = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const { email, password } = req.body; // let this be unchanged 
+    const user = await User.findOne({ email }); // I think no need to change this as base class User is having {username,email,password,role} already
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
@@ -74,7 +74,7 @@ exports.logout = async (req, res) => {
 exports.changePassword = async (req, res) => {
   try {
     const { email, oldPassword, newPassword } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }); // Ig this is also work fine
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -108,7 +108,7 @@ exports.changePassword = async (req, res) => {
 };
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find(); // Dont change this
     res.json({ users });
   } catch (error) {
     console.error(error);
