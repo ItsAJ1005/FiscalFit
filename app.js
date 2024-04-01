@@ -66,7 +66,7 @@ app.get('/discuss',async (req,res) => {
 app.get('/discuss/posts/create',(req,res)=>{
   res.render('discuss/newPost.ejs');
 })
-// This route should be kept at the very bottom to prevetn /anything  // res.render("discuss/viewpost.ejs",{post,data})
+// This route should be kept at the very bottom to prevent /anything  // res.render("discuss/viewpost.ejs",{post,data})
 app.get('/discuss/posts/:id',async (req,res)=>{
   await Post.findById(req.params.id)
             .populate("user")
