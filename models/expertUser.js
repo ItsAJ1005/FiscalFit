@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
-const User = require('./User');
+const naiveUser = require('./naiveUser');
 
 const expertUserSchema = mongoose.Schema({
     clients : [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'naiveUser'
     }]
 })
 
 const expertUser = User.discriminator('expertUser',expertUserSchema);
 
-module.exports = expertUserSchema;
+module.exports = expertUser;
