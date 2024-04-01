@@ -11,7 +11,10 @@ app.use(cookieParser());
 // importing modals
 const Post = require('./models/Post');
 const Comment = require('./models/Comment');
-const User = require("./models/User");
+const naiveUser = require("./models/naiveUser");
+const expertUser = require("./models/expertUser");
+const supremeUser = require("./models/supremeUser");
+
 // importing Routes
 const mongoose = require("mongoose");
 const assetRoutes = require("./routes/assetRoutes");
@@ -36,8 +39,10 @@ app.use("/api/assets", assetRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/posts",postRoutes);
 app.use("/api/comments",commentRoutes);
-/**changes*/
 
+// Pages Rendering
+
+// main
 app.get("/", (req, res) => {
   res.render('index.ejs');
 });
@@ -78,9 +83,13 @@ app.get('/discuss/posts/:id',async (req,res)=>{
             .then(post => res.render("discuss/viewPost.ejs",{post}))
             .catch(err => console.error(err));
 });
+
+// Rendering 404 on unregistered routes
 app.all('*',(req,res)=>{
     res.render('error404.ejs');
 })
+
+// listing app on defined PORT
 app.listen(port, () => {
   console.log(`The server is up and running on ${port}`);
 });

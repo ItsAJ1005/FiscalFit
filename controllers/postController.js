@@ -1,6 +1,6 @@
 const Post = require('../models/Post.js');
 const jwt = require("jsonwebtoken");
-const User = require('../models/User');
+const naiveUser = require('../models/naiveUser');
 const mongoose = require("mongoose");
 exports.createPost = async (req, res) => {
     try {
@@ -13,7 +13,7 @@ exports.createPost = async (req, res) => {
             console.error("Invalid user ID:", userId);
             return res.status(400).json({ message: "Invalid user ID" });
         }
-        const author = await User.findById(userId);
+        const author = await naiveUser.findById(userId);
         if (!author) {
             console.error("User not found for ID:", userId);
             return res.status(404).json({ message: "User not found" });
