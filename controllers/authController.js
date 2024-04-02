@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const NaiveUser = require("../models/naiveUser"); // Import NaiveUser model
 const jwt = require('jsonwebtoken');
+const ExpertUser = require("../models/expertUser");
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -23,13 +24,24 @@ exports.signup = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newNaiveUser = new NaiveUser({ username, email, password: hashedPassword, role });
-    await newNaiveUser.save();
-
-    const token = createToken(newNaiveUser._id);
+    let newUser = "";
+    if(req.body.role === 'naive'){
+      const newNaiveUser = new NaiveUser({ username, email, password: hashedPassword, role });
+      newUser = newNaiveUser;
+      await newNaiveUser.save();
+    }else if(req.body.role === 'expert'){
+      const newExpertUser = new ExpertUser({ username, email, password: hashedPassword, role });
+      newUser = newExpertUser;
+      await newExpertUser.save();
+    }else{
+      res.status(400).json({ message: "Role can either be naive or expert" });
+    }
+    if(newUser == ""){
+      res.status(400).json({ message: "User creation failed" });  
+    }
+    const token = createToken(newUser._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json({ message: "User created successfully", user: newNaiveUser._id });
+    res.status(201).json({ message: "User created successfully", user: newUser._id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
