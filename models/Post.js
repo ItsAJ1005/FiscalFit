@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
-    party: {type: String,required: true},
+    community: {type: String,required: true},
     title: {type: String,required: true},
     content: {type: String,required: true},
     up: {type: Number, default: 0},

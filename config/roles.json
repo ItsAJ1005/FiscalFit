@@ -1,0 +1,52 @@
+{
+    "roles": [
+      {
+        "name": "supreme",
+        "permissions": [
+          "delete_user",
+          "ban_user",
+          "read_user",
+          "update_user",
+          "delete_post",
+          "ban_post",
+          "read_post",
+          "update_post",
+          "delete_comment",
+          "ban_commment",
+          "read_comment",
+          "update_comment",
+          "delete_community",
+          "ban_community",
+          "read_community",
+          "update_community",
+          "close_call"
+        ]
+      },
+      {
+        "name": "naive",
+        "permissions": [
+          "create_post",
+          "read_post",
+          "create_comment",
+          "read_comment",
+          "create_asset",
+          "read_asset",
+          "update_asset",
+          "delete_asset"
+        ]
+      },
+      {
+        "name": "expert",
+        "permissions": [
+          "create_call",
+          "start_call",
+          "close_call",
+          "create_community",
+          "delete_community",
+          "delete_post",
+          "delete_comment",
+          "read_asset"
+        ]
+      }
+    ]
+}

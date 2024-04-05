@@ -4,9 +4,12 @@ const app = express();
 const fs = require("fs");
 const ejs = require("ejs");
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
 var globalVariables = require('./public/js/global_variables');
 app.use(cookieParser());
 
+// .evn congif
+dotenv.config();
 
 // importing modals
 const Post = require('./models/Post');
@@ -23,8 +26,14 @@ const postRoutes  = require("./routes/postRoutes");
 const commentRoutes = require('./routes/commentRoutes');
 const stablishConnection = require("./db/connection");
 
+// importing Utility Classes
+const Validation = require('./utils/Validation');
+const { PEP,RBACMiddleware,ABACMiddleware,ChineseWallPolicy,PDP } = require("./utils/PolicyEnforcementPoint");
+
+// importing Middlewares
+const isNaive = require('./middlewares/isNaive');
 // Express Configuration
-const port = 5000;
+const port = process.env.PORT ||  5000;
 const viewspath = path.join(__dirname, "views");
 app.use(express.static(__dirname + "/public"));
 app.set("views", __dirname + "/views");
@@ -35,10 +44,15 @@ app.use(express.json());
 // Establishing the mongoose connection
 stablishConnection();
 
+// Routes 
+
 app.use("/api/assets", assetRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/posts",postRoutes);
 app.use("/api/comments",commentRoutes);
+
+// Creating Instances
+const rbacMiddleware = new RBACMiddleware();
 
 // Pages Rendering
 
@@ -83,7 +97,10 @@ app.get('/discuss/posts/:id',async (req,res)=>{
             .then(post => res.render("discuss/viewPost.ejs",{post}))
             .catch(err => console.error(err));
 });
-
+// Testing 
+app.get("/testrbac",isNaive,rbacMiddleware.execute("ban_post"),PDP.execute,(req,res)=>{
+    res.send("Rbac Implemented Successfully");
+})
 // Rendering 404 on unregistered routes
 app.all('*',(req,res)=>{
     res.render('error404.ejs');

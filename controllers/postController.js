@@ -4,8 +4,8 @@ const naiveUser = require('../models/naiveUser');
 const mongoose = require("mongoose");
 exports.createPost = async (req, res) => {
     try {
-        const { party, title, content, up, down } = req.body;
-        const newPost = new Post({ party, title, content, up, down });
+        const { community, title, content, up, down } = req.body;
+        const newPost = new Post({ community, title, content, up, down });
         const token = req.cookies.jwt;
         const decodedToken = jwt.verify(token, "Port-folio-hulala");
         const userId = decodedToken.id;
