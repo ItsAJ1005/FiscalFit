@@ -239,3 +239,35 @@ function calculateStandardDeviation(values) {
   return Math.sqrt(variance);
 }
 
+function calculateTax(income) {
+
+  // Tax slabs
+  const slabs = [
+      { limit: 300000, rate: 0 },
+      { limit: 600000, rate: 0.05 },
+      { limit: 900000, rate: 0.1 },
+      { limit: 1200000, rate: 0.15 },
+      { limit: 1500000, rate: 0.2 },
+      { limit: Infinity, rate: 0.3 }
+  ];
+
+  let taxCuts = [];
+  let sum=0;
+  // Calculate tax based on slabs
+  for (let i = 0; i < slabs.length; i++) {
+      if (income <= 0) break;
+
+      const slab = slabs[i];
+      const taxableAmount = Math.min(income, slab.limit);
+      const tax = taxableAmount * slab.rate;
+      sum+=tax;
+      taxCuts.push(tax);
+      income -= taxableAmount;
+  }
+  taxCuts.push(sum-50000);//standard deduction of 50000 for all employees and bussiness owners
+
+  return taxCuts;
+  //this will return an array of money cut for each bracket 
+  //for ex: [0(no tax),30000(5 percent tax ),......,TotalTax(sum of all)]
+  //every array will have the last value as the sum of all the brackets 
+}
