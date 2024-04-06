@@ -3,13 +3,14 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const monthlyGoldCostsData = require("../data/monthlyGoldCosts");
+const stockPrices = require('../data/stockPrices')
 const fs = require("fs");
 const path = require("path");
 
 exports.addAsset = async (req, res) => {
   try {
     const { assetClass, equity, gold, fixedDeposit, realEstate } = req.body;
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt || req.headers.jwt;
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
 
@@ -44,7 +45,7 @@ exports.addAsset = async (req, res) => {
 
 exports.calculateRealEstateDifferenceForUser = async (req, res) => {
   try {
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt || req.headers.jwt;
 
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
@@ -93,7 +94,7 @@ exports.calculateRealEstateDifferenceForUser = async (req, res) => {
 
 exports.calculateFDDifferenceForUser = async (req, res) => {
   try {
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt || req.headers.jwt;
 
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
@@ -142,7 +143,7 @@ exports.calculateFDDifferenceForUser = async (req, res) => {
 
 exports.calculateGoldProfitForUser = async (req, res) => {
   try {
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt || req.cookies.jwt;
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
     const user = await User.findById(userId);
@@ -186,7 +187,7 @@ exports.calculateGoldProfitForUser = async (req, res) => {
 
 exports.calculateSharpeRatio = async (req, res) => {
   try {
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt || req.headers.jwt;
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
     const user = await User.findById(userId);
@@ -238,4 +239,80 @@ function calculateStandardDeviation(values) {
   const variance = values.reduce((acc, val) => acc + (val - mean) ** 2, 0) / n;
   return Math.sqrt(variance);
 }
+
+exports.calculateStockProfit = async (req, res) => {
+  try {
+    // Load the stock prices data
+    const stockPrices = require("../data/stockPrices");
+    
+    // Get the JWT token from the request
+    const token = req.cookies.jwt || req.headers.jwt;
+    
+    // Verify the JWT token and extract user details
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+    const userId = decodedToken.id;
+
+    // Fetch user details from the database
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Extract the stock names from the data
+    const stockNames = Object.keys(stockPrices[0])
+      .filter(key => key !== 'Date'); // Exclude the 'Date' property
+
+    // Initialize an object to store the profit for each stock
+    const stockProfits = {};
+
+    // Iterate over each stock
+    stockNames.forEach(stockName => {
+      // Find the latest price for the stock
+      const latestPriceData = stockPrices[stockPrices.length - 1];
+      const latestPrice = latestPriceData[stockName];
+
+      // Retrieve the purchase date of the stock from the user's assets
+      const purchaseDate = user.assets[0]?.equity.find(asset => asset.stockName === stockName)?.dateOfPurchase;
+
+      if (purchaseDate === undefined) {
+        console.error(`Purchase date not found for ${stockName}`);
+        return;
+      }
+
+      // Find the nearest available date in the stockPrices data
+      const nearestDateData = stockPrices.reduce((nearest, data) => {
+        const currentDate = new Date(data.Date);
+        const purchaseDateDiff = Math.abs(new Date(purchaseDate) - currentDate);
+        const nearestDiff = Math.abs(new Date(nearest.Date) - new Date(purchaseDate));
+        return purchaseDateDiff < nearestDiff ? data : nearest;
+      });
+
+      // Find the price on the nearest date
+      const nearestDate = nearestDateData.Date;
+      const purchasePrice = nearestDateData[stockName];
+
+      // Retrieve the total investment (number of stocks * purchase price)
+      const totalInvestment = user.assets[0]?.equity.find(asset => asset.stockName === stockName)?.totalInvestment;
+
+      if (totalInvestment === undefined) {
+        console.error(`Total investment not found for ${stockName}`);
+        return;
+      }
+
+      // Calculate the profit
+      const profit = (latestPrice - purchasePrice) * totalInvestment;
+
+      // Store the profit for the stock
+      stockProfits[stockName] = profit;
+    });
+
+    // Return the stock profits
+    res.status(200).json(stockProfits);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 

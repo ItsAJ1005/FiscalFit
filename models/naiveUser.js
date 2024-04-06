@@ -3,7 +3,7 @@ const User = require("./User");
 const { assetSchema } = require('./Asset');
 
 const naiveUserSchema = mongoose.Schema({
-    assets: assetSchema,
+    assets: [assetSchema],
     posts: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Post'

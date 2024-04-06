@@ -27,7 +27,7 @@ const realEstateSchema = new mongoose.Schema({
 
 const assetSchema = new mongoose.Schema({
   assetClass: { type: String, required: true },
-  equity: equitySchema,
+  equity: [equitySchema], // Change to array type
   gold: goldSchema,
   fixedDeposit: fixedDepositSchema,
   realEstate: realEstateSchema,
