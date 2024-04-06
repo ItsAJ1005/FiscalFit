@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const naiveUser = require('./naiveUser');
+const User = require('./User');
 
 const expertUserSchema = mongoose.Schema({
     clients : [{
