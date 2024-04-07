@@ -1,8 +1,9 @@
 const bcrypt = require("bcrypt");
-const NaiveUser = require("../models/naiveUser"); // Import NaiveUser model
+const NaiveUser = require("../models/naiveUser"); 
 const jwt = require('jsonwebtoken');
 const ExpertUser = require("../models/expertUser");
-
+const User = require("../models/User");
+const supremeUser = require("../models/supremeUser");
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
   return jwt.sign({ id }, "Port-folio-hulala", {
@@ -13,12 +14,11 @@ const createToken = (id) => {
 exports.signup = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
-
     if (!email || !password || !username || !role) {
       return res.status(400).json({ message: "Username, email, password, and role are required" });
     }
 
-    const existingUser = await NaiveUser.findOne({ email });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
@@ -40,7 +40,7 @@ exports.signup = async (req, res) => {
       res.status(400).json({ message: "User creation failed" });  
     }
     const token = createToken(newUser._id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.cookie("jwt", token, { httpOnly: true,secure: false, maxAge: maxAge * 1000 });
     res.status(201).json({ message: "User created successfully", user: newUser._id });
   } catch (error) {
     console.error(error);
@@ -51,18 +51,18 @@ exports.signup = async (req, res) => {
 exports.signin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const naiveUser = await NaiveUser.findOne({ email });
-    if (!naiveUser) {
+    const user = await User.findOne({ email });
+    if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
-    const isPasswordValid = await bcrypt.compare(password, naiveUser.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    const token = createToken(naiveUser._id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).json({ message: "Login successful", user: naiveUser._id });
+    const token = createToken(user._id);
+    res.cookie("jwt", token, { httpOnly: true,secure: false, maxAge: maxAge * 1000 });
+    res.status(200).json({ message: "Login successful", user: user._id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -82,9 +82,9 @@ exports.logout = async (req, res) => {
 exports.changePassword = async (req, res) => {
   try {
     const { email, oldPassword, newPassword } = req.body;
-    const naiveUser = await NaiveUser.findOne({ email });
+    const user = await User.findOne({ email });
 
-    if (!naiveUser) {
+    if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
@@ -92,15 +92,15 @@ exports.changePassword = async (req, res) => {
       return res.status(400).json({ message: "Both oldPassword and newPassword are required" });
     }
 
-    const isPasswordValid = await bcrypt.compare(oldPassword, naiveUser.password);
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid old password" });
     }
 
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
-    naiveUser.password = hashedNewPassword;
-    await naiveUser.save();
+    user.password = hashedNewPassword;
+    await user.save();
 
     res.json({ message: "Password updated successfully" });
   } catch (error) {
@@ -111,8 +111,8 @@ exports.changePassword = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const naiveUsers = await NaiveUser.find();
-    res.json({ users: naiveUsers });
+    const users = await User.find();
+    res.json({ users });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

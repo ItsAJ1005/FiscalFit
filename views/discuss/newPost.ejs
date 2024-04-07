@@ -23,7 +23,7 @@
       <div
         class="mx-auto block max-w-md rounded-lg bg-white p-6 shadow-4 dark:bg-surface-dark"
       >
-        <form method="post" action="/api/posts/add" id="create-post-form">
+        <form method="post" action="/api/posts/create" id="create-post-form">
           <!--Community input-->
           <div class="relative mb-6" data-twe-input-wrapper-init>
             <input
@@ -97,7 +97,7 @@
         };
 
         const jwtToken = getCookie("jwt");
-        const response = await fetch("/api/posts/add", {
+        const response = await fetch("/api/posts/create", {
           method: "post",
           headers: {
             "Content-Type": "application/json",

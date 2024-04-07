@@ -3,9 +3,11 @@ const path = require("path");
 const app = express();
 const fs = require("fs");
 const ejs = require("ejs");
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 var globalVariables = require('./public/js/global_variables');
+app.use(cors());
 app.use(cookieParser());
 
 // .evn congif
@@ -24,6 +26,7 @@ const assetRoutes = require("./routes/assetRoutes");
 const authRoutes = require("./routes/authRoutes");
 const postRoutes  = require("./routes/postRoutes");
 const commentRoutes = require('./routes/commentRoutes');
+const communityRoutes = require('./routes/communityRoutes');
 const stablishConnection = require("./db/connection");
 
 // importing Utility Classes
@@ -50,7 +53,7 @@ app.use("/api/assets", assetRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/posts",postRoutes);
 app.use("/api/comments",commentRoutes);
-
+app.use("/api/communities",communityRoutes);
 // Creating Instances
 const rbacMiddleware = new RBACMiddleware();
 
@@ -85,17 +88,20 @@ app.get('/discuss',async (req,res) => {
 app.get('/discuss/posts/create',(req,res)=>{
   res.render('discuss/newPost.ejs');
 })
+app.get('/discuss/community/:id', async (req,res)=>{
+    res.render("discuss/viewCommunity.ejs");
+})
 // This route should be kept at the very bottom to prevent /anything  // res.render("discuss/viewpost.ejs",{post,data})
 app.get('/discuss/posts/:id',async (req,res)=>{
-  await Post.findById(req.params.id)
-            .populate("user")
-            .populate({
-              path: 'comments',
-              // Get users of the comments 
-              populate: { path: 'user' }
-            })
-            .then(post => res.render("discuss/viewPost.ejs",{post}))
-            .catch(err => console.error(err));
+    await Post.findById(req.params.id)
+              .populate("user")
+              .populate({
+                path: 'comments',
+                // Get users of the comments 
+                populate: { path: 'user' }
+              })
+              .then(post => res.render("discuss/viewPost.ejs",{post}))
+              .catch(err => res.render('error404.ejs'));
 });
 // Testing 
 app.get("/testrbac",isNaive,rbacMiddleware.execute("ban_post"),PDP.execute,(req,res)=>{

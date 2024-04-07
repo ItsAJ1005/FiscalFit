@@ -1,15 +1,21 @@
 const mongoose = require("mongoose");
 const User = require("./User");
-const {assetSchema} = require('./Asset');
+const { assetSchema } = require("./Asset");
 
 const naiveUserSchema = mongoose.Schema({
-    assets: [assetSchema], // Change this to an array of assetSchema
-    posts: [{
+  assets: [assetSchema], // Change this to an array of assetSchema
+  posts: [
+    {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Post'
-    }]
+      ref: "Post",
+    },
+  ],
+  community: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Community'
+  }]
 });
 
-const NaiveUser = User.discriminator('naiveUser', naiveUserSchema);
+const NaiveUser = User.discriminator("naiveUser", naiveUserSchema);
 
 module.exports = NaiveUser;

@@ -1,27 +1,32 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-    community: {type: String,required: true},
-    title: {type: String,required: true},
-    content: {type: String,required: true},
-    up: {type: Number, default: 0},
-    down: {type: Number, default: 0},
-    // createdAt : Time
-    // updatedAt(modifiedAt) : Time 
-    // is  added by mongoose and maintained
-    user: { // population is used
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "naiveUser",
-        required: true
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    up: { type: Number, default: 0 },
+    down: { type: Number, default: 0 },
+    isBanned: { type: String, default: false },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "naiveUser",
+      required: true,
     },
-    comments: [{
+    community: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Community'
+    },
+    comments: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment"
-    }]
-},{
-    timestamps: true
-});
+        ref: "Comment",
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const Post = mongoose.model('Post',postSchema);
+const Post = mongoose.model("Post", postSchema);
 
 module.exports = Post;

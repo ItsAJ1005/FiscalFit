@@ -11,7 +11,7 @@ router.post("/signup", authController.signup);
 router.post("/signin", authController.signin);
 router.get("/logout", authController.logout);
 router.get("/users",isAdmin,rbacMiddleware.execute("read_user"),PDP.execute,authController.getAllUsers);
-router.post("/change-password",rbacMiddleware.execute("update_user"),PDP.execute,authController.changePassword);
+router.post("/change-password",isAdmin,rbacMiddleware.execute("update_user"),PDP.execute,authController.changePassword);
 
 
 module.exports = router;
