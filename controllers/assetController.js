@@ -9,7 +9,7 @@ const path = require("path");
 exports.addAsset = async (req, res) => {
   try {
     const { assetClass, equity, gold, fixedDeposit, realEstate } = req.body;
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt || req.headers.jwt;
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
 
@@ -44,7 +44,7 @@ exports.addAsset = async (req, res) => {
 
 exports.calculateRealEstateDifferenceForUser = async (req, res) => {
   try {
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt || req.headers.jwt;
 
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
@@ -93,7 +93,7 @@ exports.calculateRealEstateDifferenceForUser = async (req, res) => {
 
 exports.calculateFDDifferenceForUser = async (req, res) => {
   try {
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt || req.headers.jwt;
 
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
@@ -142,7 +142,7 @@ exports.calculateFDDifferenceForUser = async (req, res) => {
 
 exports.calculateGoldProfitForUser = async (req, res) => {
   try {
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt || req.cookies.jwt;
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
     const user = await User.findById(userId);
@@ -186,7 +186,7 @@ exports.calculateGoldProfitForUser = async (req, res) => {
 
 exports.calculateSharpeRatio = async (req, res) => {
   try {
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt || req.headers.jwt;
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
     const user = await User.findById(userId);

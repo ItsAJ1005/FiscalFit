@@ -3,3 +3,6 @@
 
 #ignoring build module
 /public/bundle.js
+
+#ignoring .env
+.env
