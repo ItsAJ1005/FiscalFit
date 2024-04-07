@@ -1,6 +1,6 @@
 const Roles = require("../config/roles.json");
 
-class Permissions {
+class rbacPolicyDecisionPoint {
   constructor(){
     this.permissions = [];
   }
@@ -11,4 +11,4 @@ class Permissions {
   }
 }
 
-module.exports = Permissions;
+module.exports = rbacPolicyDecisionPoint;

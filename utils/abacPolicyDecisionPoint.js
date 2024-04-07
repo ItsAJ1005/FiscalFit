@@ -1,4 +1,4 @@
-class Assets {
+class abacPolicyDecisionPoint {
   constructor() {
 
     this.rolesSet = {
@@ -79,4 +79,4 @@ class Assets {
   }
 }
 
-module.exports = Assets;
+module.exports = abacPolicyDecisionPoint;

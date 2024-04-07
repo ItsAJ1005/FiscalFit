@@ -1,9 +1,9 @@
 const validation = require('./Validation');
-const permissions = require('./rbacPolicyDecisionPoint');
-const assets = require('./abacPolicyDecisionPoint');
+const rbacPolicyDecisionPoint = require('./rbacPolicyDecisionPoint');
+const abacPolicyDecisionPoint = require('./abacPolicyDecisionPoint');
 const Validation = new validation();
-const rbacPDP = new permissions();
-const abacPDP = new assets();
+const rbacPDP = new rbacPolicyDecisionPoint();
+const abacPDP = new abacPolicyDecisionPoint();
 const User = require('../models/User');
 const Comment = require('../models/Comment');
 const Community = require('../models/Community');
@@ -89,7 +89,7 @@ const Asset = require('../models/Asset');
             return res.status(403).json({ error: 'Access denied' });
         }
       }else if(req.middleware === 'abac'){
-        // creat conditional set
+        // create conditional set
         const conditionalSet = {
           ...(req.user.role && {role : req.user.role}),
           ...(req.permission && {action : req.permission}),
