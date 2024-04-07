@@ -57,7 +57,7 @@
     <!--Heading with the name-->
     <h5 class="m-3">Write comment with the name <span class="font-bold"><%=post.user.username%></span></h5>
     <!-- Comment Box : Write your messge here -->
-    <form id="comment-form" method="post" action="/api/comments/add">
+    <form id="comment-form" method="post" action="/api/comments/create">
       <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
           <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
               <label for="content" class="sr-only">Your comment</label>
@@ -116,7 +116,7 @@
     }
     console.log(formBody);
     const jwtToken = getCookie("jwt");
-    const response = await fetch("/api/comments/add",{
+    const response = await fetch("/api/comments/create",{
       method: "post",
       headers: {
         "Content-Type": "application/json",

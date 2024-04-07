@@ -10,7 +10,7 @@ const requirAuth = (req , res , next)=>{
             }
             else{
                 console.error(decodedToken);
-                next(decodedToken);
+                next();
             }
         })
     }else{
