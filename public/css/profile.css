@@ -1,0 +1,417 @@
+/*-----------------------------------*\
+  #style.css
+\*-----------------------------------*/
+
+/**
+ * 
+ */
+
+/*-----------------------------------*\
+  #CUSTOM PROPERTY
+\*-----------------------------------*/
+
+@font-face {
+    font-family: "Forzan";
+    src: url(/assets/fonts/ForzanLight-ALWAA.ttf);
+  }
+  @font-face {
+    font-family: "Michroma";
+    src: url(/assets/fonts/Michroma-Regular.ttf);
+  }
+  @font-face {
+    font-family: "graphikmedium";
+    src: url(/assets/fonts/GraphikMedium.otf);
+  }
+  @font-face {
+    font-family: "graphikregular";
+    src: url(/assets/fonts/GraphikRegular.otf);
+  }
+  @font-face {
+    font-family: "circular";
+    src: url(/assets/fonts/Circular-Medium.ttf);
+  }
+  @import url("https://fonts.googleapis.com/css2?family=Aboreto&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+  
+  :root {
+    --font-primary: "graphik-medium", Helvetica, Arial, sans-serif;
+  
+    --fs-base: "20px";
+  
+    --bg-main: #F5F5F5;
+  
+    --color-main: white;
+  }
+  
+  /*-----------------------------------*\
+      #RESET
+    \*-----------------------------------*/
+  
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  li {
+    list-style: none;
+  }
+  
+  a,
+  img,
+  span,
+  input,
+  select,
+  button {
+    display: block;
+  }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  img {
+    height: auto;
+  }
+  
+  input,
+  button,
+  select {
+    background: none;
+    border: none;
+    font: inherit;
+  }
+  
+  button {
+    cursor: pointer;
+  }
+  
+  input,
+  select {
+    width: 100%;
+    outline: none;
+  }
+  
+  address {
+    font-style: normal;
+  }
+  
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  
+  html {
+    font-family: var(--font-primary);
+    font-size: var(--fs-base);
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: var(--bg-main);
+    color: var(--color-main);
+    font-size: 20px;
+    line-height: 2px;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: var(--color-main);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: greenyellow;
+    border-radius: 4px;
+  }
+  
+  /*-----------------------------------*\
+      #SECTION WRAPPER
+    \*-----------------------------------*/
+  
+  
+  /*-----------------------------------*\
+      #HEADER
+    \*-----------------------------------*/
+  
+  header > .product-switcher {
+    width: 100%;
+    height: 56px;
+    background: #151e28;
+    opacity: 0.99;
+    border-top: 0.1px solid hsla(245.14, 13.83%, 50.39%, 0.5);
+    box-shadow: 0 15px 20px -10px rgba(0, 0, 0, 0.1);
+    z-index: 20;
+    padding: 0 24px;
+    position: relative;
+    justify-content: space-between;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+  }
+  
+  .header-inner-container {
+    height: 56px;
+    border: none;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .logo-combo {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    justify-content: left;
+    font-size: 13px;
+  }
+  .logo-outerBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 149px;
+  }
+  .logo-innerBox {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 125px;
+  }
+  #logo-main-img {
+    height: 39px;
+  }
+  
+  .stockSearchWidget {
+    background: #1e2834;
+    display: flex;
+    padding: 6px;
+    border-radius: 6px;
+  }
+  .combobox-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    width: 45vw;
+  }
+  
+  .combobox-inner > input {
+    padding: 5px 40px;
+  }
+  
+  .combobox-inner > span {
+    height: 28px;
+    width: 28.9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    padding: 4px 12px;
+    background: #d9d9d91a;
+  }
+  
+  .listbox {
+    position: absolute;
+    height: 40vh;
+    width: 45.83vw;
+    top: 79%;
+    left: 12%;
+    background: white;
+    border-radius: 0px 0 10px 10px;
+    visibility: hidden;
+  }
+  
+  #search-stock-input:focus {
+    background: white;
+    border-radius: 5px;
+  
+  }
+  .stockSearchWidget:active:hover {
+    background: white;
+    border-radius: 10px;
+  }
+  
+  nav {
+    height: 56px;
+    font-size: 15px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+  }
+  nav > .header-btn {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 8px 0px 0px;
+    padding: 12px;
+    border-radius: 10px;
+    font-family: "graphik-medium";
+  }
+  nav > .header-btn > span {
+    padding: 0 0 0 8px;
+  }
+  
+  #login-btn > span > img {
+    height: 16px;
+  }
+  
+  nav > .header-btn:hover {
+    background: hsla(207.27, 4.56%, 52.75%, 0.3);
+    transition: 0.45s;
+  }
+  
+  nav > .header-btn > a {
+    margin-left: 4px;
+  }
+  
+  nav > .header-btn > span > img {
+    height: 16px;
+  }
+  
+  #login-btn {
+    background: white;
+    color: #151e28;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    width: 105px;
+    height: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 8px 0px 0px ;
+    padding: 12px;
+    border-radius: 10px;
+    font-family: 'graphik-medium';
+  }
+  
+  #login-btn:hover {
+    background: rgb(217, 224, 214);
+    scale:105%;
+    transition: ease;
+  }
+  
+  /* Dropdown container for more-btn */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top:6.5vh;
+    right:9.16vw;
+    background-color: #232d38;
+    min-width: 25vw;
+    height: 40vh;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 8px;
+  }
+  
+  /* Dropdown links */
+  .group {
+    color: white;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .sec1 {
+    margin-top: 2vh;
+    font-family: 'graphik-medium';
+    font-size: 20px;
+    height: 3vh;
+    border-bottom: 1px solid rgb(88, 234, 83);
+  }
+  .sec2 {
+    margin-inline: 1vw;
+    display: flex;
+    gap: 1.4vw;
+  
+  }
+  
+  .dropdown-content a img {
+    width: 2vw;
+  }
+  
+  .dropdown-content > .sec2 {
+    font-size: 12px;
+    font-family: 'michroma';
+  }
+  
+  /* Show the dropdown content when hovering over the dropdown button */
+  #more-btn:hover .dropdown-content {
+    display: block;
+    transition: 0.3s;
+  }
+  
+  
+  /* 
+    infinite scroller 
+  */
+  .hero {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 0;
+  }
+  .hero > .infinite-scrollbar {
+    height: 27px;
+    background: #151e28;
+  }
+  
+  /* innerText Greeting */
+  #Greeting {
+    color: #f9f9f9;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    padding: 0.69rem;
+    justify-content: center;
+    display: flex;
+    box-sizing: border-box;
+    font-family: "graphik-medium", Helvetica, Arial, sans-serif;
+  }
+  
+  #container {
+    width: 100%;
+    height: 1px;
+  
+  }
+  .GradientBorder {
+    position: relative;
+    width: 100%;
+    padding: 1.5px;
+  }
+  .GradientBorder::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(45deg, #ffd800, #ff5520, #750cf2, #0cbcf2);
+    z-index: -1;
+  }
+  .GradientBorder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, #ffd800, #ff5520, #750cf2, #0cbcf2);
+    z-index: -2;
+    filter: blur(40px);
+  }
+  
