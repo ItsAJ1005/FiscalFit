@@ -27,10 +27,11 @@ const realEstateSchema = new mongoose.Schema({
 
 const assetSchema = new mongoose.Schema({
   assetClass: { type: String, required: true },
-  equity: equitySchema,
+  equity: [equitySchema],
   gold: goldSchema,
   fixedDeposit: fixedDepositSchema,
   realEstate: realEstateSchema,
+  income: { type: Number, required: true } // Adding the income field
 });
 
 const userSchema = new mongoose.Schema({
