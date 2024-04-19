@@ -5,12 +5,12 @@ const User = require("../models/User");
 class Validation{
     constructor(){}
     
-    getPayload(token){
+    async getPayload(token){
         const decodedToken = jwt.verify(token,"Port-folio-hulala");
         return decodedToken;
     }
     async getUser(token){
-        const decodedToken = this.getPayload(token);
+        const decodedToken = await this.getPayload(token);
         if(!mongoose.Types.ObjectId.isValid(decodedToken.id)){
             console.error("Invalid User Id");
             return null;

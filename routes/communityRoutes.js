@@ -10,4 +10,7 @@ const communityController = require("../controllers/communityController");
 
 router.post("/create",isExpert,rbacMiddleware.execute("create_community"),PDP.execute,communityController.createCommunity);
 router.put("/ban",isAdmin,rbacMiddleware.execute("ban_community"),PDP.execute,communityController.banCommunity);
+// router.update("/update",isAdmin,rbacMiddleware.execute("update_community"),PDP.execute,communityController.updateCommunity);
+router.put("/delete",isAdmin,rbacMiddleware.execute("delete_community",PDP.execute,communityController.deleteCommunity));
+
 module.exports = router;

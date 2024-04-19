@@ -10,4 +10,5 @@ router.post("/create",abacMiddleware.execute("create_comment","post"),PDP.execut
 router.delete("/delete",isAdmin,rbacMiddleware.execute("delete_comment"),PDP.execute,commentControllers.deleteComment);
 router.put("/update",isAdmin,rbacMiddleware.execute("update_comment"),PDP.execute,commentControllers.updateComment);
 router.put("/ban",isAdmin,rbacMiddleware.execute("ban_post"),PDP.execute,commentControllers.banComment);
+
 module.exports = router;

@@ -36,3 +36,13 @@ exports.banCommunity = async (req,res)=>{
         console.error(err);
     }
 }
+
+exports.deleteCommunity = async (req,res)=>{
+    try{
+        const {resourse} = req.body;
+        await Community.findByIdAndDelete(resourse);
+        res.status(204).json({message : `Successfully Community with id ${resourse} deleted`});
+    }catch(err){
+
+    }
+}

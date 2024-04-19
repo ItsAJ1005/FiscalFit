@@ -27,6 +27,7 @@ const authRoutes = require("./routes/authRoutes");
 const postRoutes  = require("./routes/postRoutes");
 const commentRoutes = require('./routes/commentRoutes');
 const communityRoutes = require('./routes/communityRoutes');
+const userRoutes = require("./routes/userRoutes");
 const stablishConnection = require("./db/connection");
 
 // importing Utility Classes
@@ -35,6 +36,7 @@ const { PEP,RBACMiddleware,ABACMiddleware,ChineseWallPolicy,PDP } = require("./u
 
 // importing Middlewares
 const isNaive = require('./middlewares/isNaive');
+const Community = require("./models/Community");
 
 // Express Configuration
 const port = process.env.PORT ||  5000;
@@ -55,6 +57,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/posts",postRoutes);
 app.use("/api/comments",commentRoutes);
 app.use("/api/communities",communityRoutes);
+app.use("/api/users",userRoutes);
 // Creating Instances
 const rbacMiddleware = new RBACMiddleware();
 
@@ -81,16 +84,13 @@ app.get('/register',(req,res)=>{
 })
 
 // discuss
-app.get('/discuss',async (req,res) => {
-  await Post.find({})
+app.get('/discuss/home',async (req,res) => {
+  await Post.aggregate().sample(4)
             .then((data) => res.render('discuss/index.ejs',{jwt:req.cookies.jwt,data:data}))
             .catch((err) => console.error(err))
 });
 app.get('/discuss/posts/create',(req,res)=>{
   res.render('discuss/newPost.ejs');
-})
-app.get('/discuss/community/:id', async (req,res)=>{
-    res.render("discuss/viewCommunity.ejs");
 })
 // This route should be kept at the very bottom to prevent /anything  // res.render("discuss/viewpost.ejs",{post,data})
 app.get('/discuss/posts/:id',async (req,res)=>{
@@ -104,9 +104,14 @@ app.get('/discuss/posts/:id',async (req,res)=>{
               .then(post => res.render("discuss/viewPost.ejs",{post}))
               .catch(err => res.render('error404.ejs'));
 });
-// Testing 
-app.get("/testrbac",isNaive,rbacMiddleware.execute("ban_post"),PDP.execute,(req,res)=>{
-    res.send("Rbac Implemented Successfully");
+// Communities with id
+app.get('/discuss/communities/:id', async (req,res)=>{
+  await Community.findById(req.params.id)
+                  .populate('owner')
+                  .populate('members')
+                  .populate('posts')
+                  .then(community => res.render("discuss/viewCommunity.ejs",community))
+                  .catch(err => res.render("error404.ejs"))
 })
 // Rendering 404 on unregistered routes
 app.all('*',(req,res)=>{

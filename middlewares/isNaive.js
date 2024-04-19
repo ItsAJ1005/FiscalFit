@@ -3,6 +3,9 @@ const Validation = new validation();
 
 const isNaive = async (req,res,next) => {
     const User = await Validation.getUser(req.cookies.jwt);
+    if(User === null){
+        return res.status(400).json({message: "User not found"});
+    }
     if(User.role == 'naive'){
         next();
     }else{

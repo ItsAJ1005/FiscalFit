@@ -66,3 +66,13 @@ exports.banPost = async (req,res)=>{
         console.error(err);
     }
 }
+
+exports.deletePost = async (req,res)=>{
+    try{
+        const {resourse} = req.body;
+        const postToDelte = await Post.findByIdAndDelete(resourse);
+        res.status(204).json({message: `Post with id ${resourse} deleted successfully`});
+    }catch(err){
+        console.log(err);
+    }
+}
