@@ -26,6 +26,11 @@ const realEstateSchema = new mongoose.Schema({
 });
 
 const assetSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "naiveUser",
+    required: true,
+  },
   assetClass: { type: String, required: true },
   equity: equitySchema,
   gold: goldSchema,
