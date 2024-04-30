@@ -9,7 +9,8 @@ const path = require("path");
 
 exports.addAsset = async (req, res) => {
   try {
-    const { assetClass, equity, gold, fixedDeposit, realEstate } = req.body;
+    const { assetClass, equity, gold, fixedDeposit, realEstate, income } =
+      req.body;
     const token = req.cookies.jwt || req.headers.jwt;
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
@@ -26,17 +27,17 @@ exports.addAsset = async (req, res) => {
       gold,
       fixedDeposit,
       realEstate,
+      income, // Adding income to the new asset
     });
 
     user.assets.push(newAsset);
 
     await user.save();
-
     await newAsset.save();
 
-    res
-      .status(201)
-      .json({ message: `Asset added successfully to user ${userId}` });
+    res.status(201).json({
+      message: `Asset added successfully to user ${userId}`,
+    });
   } catch (error) {
     console.error(`Error: ${error}`);
     res.status(500).json({ message: "Server error" });
@@ -139,8 +140,6 @@ exports.calculateFDDifferenceForUser = async (req, res) => {
   }
 };
 
-
-
 exports.calculateGoldProfitForUser = async (req, res) => {
   try {
     const token = req.cookies.jwt || req.cookies.jwt;
@@ -154,29 +153,39 @@ exports.calculateGoldProfitForUser = async (req, res) => {
 
     const assetsObject = user.assets[0];
     if (!assetsObject) {
-      return res.status(404).json({ message: "Assets object not found for the user" });
+      return res
+        .status(404)
+        .json({ message: "Assets object not found for the user" });
     }
 
     const goldAsset = assetsObject.gold;
     if (!goldAsset) {
-      return res.status(404).json({ message: "Gold asset not found for the user" });
+      return res
+        .status(404)
+        .json({ message: "Gold asset not found for the user" });
     }
 
     const goldPurchaseDate = goldAsset.dateOfPurchase;
     const goldGramsBought = goldAsset.gramsBought;
 
-    const monthlyGoldCost = monthlyGoldCostsData.filter(item => {
+    const monthlyGoldCost = monthlyGoldCostsData.filter((item) => {
       const itemDate = new Date(item.Date.trim());
-      return itemDate.getFullYear() >= goldPurchaseDate.getFullYear() &&
-        itemDate.getMonth() >= goldPurchaseDate.getMonth();
+      return (
+        itemDate.getFullYear() >= goldPurchaseDate.getFullYear() &&
+        itemDate.getMonth() >= goldPurchaseDate.getMonth()
+      );
     });
 
     if (!monthlyGoldCost) {
-      return res.status(404).json({ message: "Monthly gold cost not found for the purchase date" });
+      return res
+        .status(404)
+        .json({ message: "Monthly gold cost not found for the purchase date" });
     }
-    const scaledGoldCost = monthlyGoldCost.map(obj => {
-      return parseFloat(obj.INR.replace(',', '')) * goldGramsBought / 2.834952; 
-    }); 
+    const scaledGoldCost = monthlyGoldCost.map((obj) => {
+      return (
+        (parseFloat(obj.INR.replace(",", "")) * goldGramsBought) / 2.834952
+      );
+    });
 
     return res.json({ scaledGoldCost });
   } catch (error) {
@@ -198,32 +207,48 @@ exports.calculateSharpeRatio = async (req, res) => {
 
     const assetsObject = user.assets[0];
     if (!assetsObject) {
-      return res.status(404).json({ message: "Assets object not found for the user" });
+      return res
+        .status(404)
+        .json({ message: "Assets object not found for the user" });
     }
 
     let totalReturns = 0;
     let totalInvestment = 0;
-    ['equity', 'gold', 'fixedDeposit', 'realEstate'].forEach(assetClass => {
+    ["equity", "gold", "fixedDeposit", "realEstate"].forEach((assetClass) => {
       const asset = assetsObject[assetClass];
       if (asset) {
-        totalReturns += asset.totalInvestment || asset.principalAmount || asset.purchasePrice || 0;
-        totalInvestment += asset.totalInvestment || asset.principalAmount || asset.purchasePrice || 0;
+        totalReturns +=
+          asset.totalInvestment ||
+          asset.principalAmount ||
+          asset.purchasePrice ||
+          0;
+        totalInvestment +=
+          asset.totalInvestment ||
+          asset.principalAmount ||
+          asset.purchasePrice ||
+          0;
       }
     });
     const expectedReturn = totalReturns / totalInvestment;
 
-    const returnsArray = ['equity', 'gold', 'fixedDeposit', 'realEstate'].map(assetClass => {
-      const asset = assetsObject[assetClass];
-      if (asset) {
-        return (asset.totalInvestment || asset.principalAmount || asset.purchasePrice || 0) / totalInvestment;
+    const returnsArray = ["equity", "gold", "fixedDeposit", "realEstate"].map(
+      (assetClass) => {
+        const asset = assetsObject[assetClass];
+        if (asset) {
+          return (
+            (asset.totalInvestment ||
+              asset.principalAmount ||
+              asset.purchasePrice ||
+              0) / totalInvestment
+          );
+        }
+        return 0;
       }
-      return 0;
-    });
+    );
     const standardDeviation = calculateStandardDeviation(returnsArray);
 
-    const riskFreeRate = 0.02; 
+    const riskFreeRate = 0.02;
 
- 
     const sharpeRatio = (expectedReturn - riskFreeRate) / standardDeviation;
 
     res.json({ sharpeRatio });
@@ -240,6 +265,59 @@ function calculateStandardDeviation(values) {
   return Math.sqrt(variance);
 }
 
+exports.calculateTaxForUser = async (req, res) => {
+  try {
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+    const userId = decodedToken.id;
+        // Check if the assets array is empty
+    if (user.assets.length === 0) {
+      return res.status(400).json({ message: "No assets found for the user" });
+    }
+
+    // Retrieve the income from the first asset
+    const income = user.assets[0].income;
+
+    // Ensure that income is a valid number
+    if (typeof income !== "number" || isNaN(income)) {
+      return res.status(400).json({ message: "Invalid income value" });
+    }
+
+    // Tax slabs
+    const slabs = [
+      { limit: 300000, rate: 0 },
+      { limit: 600000, rate: 0.05 },
+      { limit: 900000, rate: 0.1 },
+      { limit: 1200000, rate: 0.15 },
+      { limit: 1500000, rate: 0.2 },
+      { limit: Infinity, rate: 0.3 },
+    ];
+
+    let tax = 0;
+    let remainingIncome = income;
+
+    // Calculate tax based on slabs
+    for (let i = 0; i < slabs.length; i++) {
+      const slab = slabs[i];
+      if (remainingIncome <= 0) break;
+
+      if (remainingIncome > slab.limit) {
+        tax += slab.limit * slab.rate;
+        remainingIncome -= slab.limit;
+      } else {
+        tax += remainingIncome * slab.rate;
+        remainingIncome = 0;
+      }
+    }
+
+    res.status(200).json({ tax });
+  } catch (error) {
+    console.error(`Error: ${error}`);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
 exports.calculateStockProfit = async (req, res) => {
   try {
     // Load the stock prices data
@@ -251,14 +329,13 @@ exports.calculateStockProfit = async (req, res) => {
     // Verify the JWT token and extract user details
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
-
+    
     // Fetch user details from the database
     const user = await User.findById(userId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     // Extract the stock names from the data
     const stockNames = Object.keys(stockPrices[0])
       .filter(key => key !== 'Date'); // Exclude the 'Date' property
@@ -314,5 +391,4 @@ exports.calculateStockProfit = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
