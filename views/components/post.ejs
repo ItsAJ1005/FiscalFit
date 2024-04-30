@@ -1,7 +1,7 @@
 <div class="post">
         <a href="posts/<%=post._id%>">
         <div class="post-header">
-            <div class="post-logo"><%=post.party%></div>
+            <div class="post-logo"><%=post.community%></div>
             <div class="post-time"><%=post.createdAt.getDate()%>/<%=post.createdAt.getMonth()%>/<%=post.createdAt.getFullYear()%> | <%=post.createdAt.getHours()%>:<%=String(post.createdAt.getMinutes()).padStart(2, "0")%></div>
             <div class="post-join">
                 <button>Join</button>
