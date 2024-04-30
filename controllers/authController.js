@@ -4,8 +4,8 @@ const NaiveUser = require("../models/naiveUser");
 const jwt = require('jsonwebtoken');
 const ExpertUser = require("../models/expertUser");
 const User = require("../models/User");
-const supremeUser = require("../models/supremeUser");
 
+const SupremeUser = require("../models/supremeUser");
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
   return jwt.sign({ id }, "Port-folio-hulala", {
@@ -27,9 +27,14 @@ exports.signup = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    let newUser = null; // Initialize newUser as null
 
-    if (role === 'naive') {
+    let newUser = "";
+    if(req.body.role == 'supreme'){
+      const newSupremeUser = new SupremeUser({ username, email, password: hashedPassword, role });
+      newUser = newSupremeUser;
+      await newSupremeUser.save();
+    }
+    else if(req.body.role === 'naive'){
       const newNaiveUser = new NaiveUser({ username, email, password: hashedPassword, role });
       newUser = newNaiveUser;
       await newNaiveUser.save();

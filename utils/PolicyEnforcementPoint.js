@@ -15,7 +15,6 @@ const Asset = require('../models/Asset');
     }
  }
 
-
  class RBACMiddleware extends Middleware {
     
     execute(permission) {
@@ -91,9 +90,19 @@ const Asset = require('../models/Asset');
       }else if(req.middleware === 'abac'){
         // create conditional set
         const conditionalSet = {
-          ...(req.user.role && {role : req.user.role}),
+          user:{
+            ...(req.user.id && {id: req.user.id}),
+            attributes: {
+              ...(req.user.role && {role : req.user.role})
+            }
+          },
           ...(req.permission && {action : req.permission}),
-          ...(req.asset?.isBanned===true && {isBanned : isBanned})
+          resourse : {
+            ...(req.asset.type && {type : req.asset.type}),
+            attributes : {
+              ...(req.asset?.isBanned===true && {isBanned : isBanned})
+            }
+          }
         }
         if(abacPDP.isAllowed(conditionalSet)){
           return next();

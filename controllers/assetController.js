@@ -21,7 +21,9 @@ exports.addAsset = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    console.log("User ID:", userId);
     const newAsset = new Asset({
+      user: userId ,
       assetClass,
       equity,
       gold,

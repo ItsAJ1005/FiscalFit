@@ -1,9 +1,11 @@
 const validation = require('../utils/Validation');
 const Validation = new validation();
 
-const isNaive = async (req,res,next) => {
+const isAdmin = async (req,res,next) => {
     const User = await Validation.getUser(req.cookies.jwt);
-    // req.user = User;
+    if(User === null){
+        return res.status(400).json({message: "User not found"});
+    }
     if(User.role == 'supreme'){
         next();
     }else{
@@ -11,4 +13,4 @@ const isNaive = async (req,res,next) => {
     }
 }
 
-module.exports = isNaive;
+module.exports = isAdmin;
