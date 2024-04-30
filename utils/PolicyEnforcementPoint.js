@@ -15,7 +15,6 @@ const Asset = require('../models/Asset');
     }
  }
 
-
  class RBACMiddleware extends Middleware {
     
     execute(permission) {
