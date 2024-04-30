@@ -11,5 +11,8 @@ router.get("/real-estate-difference",isNaive,rbacMiddleware.execute("read_asset"
 router.get("/fd-difference",isNaive,rbacMiddleware.execute("read_asset"),PDP.execute,assetController.calculateFDDifferenceForUser);
 router.get("/gold/profit",isNaive,rbacMiddleware.execute("read_asset"),PDP.execute,calculateGoldProfitForUser);
 router.get("/investment-risk",isNaive,rbacMiddleware.execute("read_asset"),PDP.execute,assetController.calculateSharpeRatio);
+router.get("/stock/profit", assetController.calculateStockProfit);
+router.get("/calculateTaxForUser", assetController.calculateTaxForUser);
 
 module.exports = router;
+
