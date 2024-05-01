@@ -82,7 +82,15 @@ app.get('/login',(req,res)=>{
 app.get('/register',(req,res)=>{
   res.render('register.ejs');
 })
-
+// admin panel
+app.get('/admin',async (req,res) => {
+  const naiveUser = await naiveUser.find({});
+  const expertUser = await adminUser.find({});
+  const communities = await Community.find({});
+  const posts = await Post.find({});
+  const comments = await Comment.find({});
+  res.render('admin.ejs');
+})
 // discuss
 app.get('/discuss/home',async (req,res) => {
   req.role = req.cookies.jwt ? await validation.getRole(req.cookies.jwt) : 'anonymous';
