@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Get context with jQuery - using jQuery's .get() method.
+    // Get context for the chart
     const ctx = document.getElementById('priceChart').getContext('2d');
-    
+
     // Fetch purchase price data from the API endpoint
     fetch('api/assets/userRealEstateInvestment')
         .then(response => {
@@ -11,14 +11,13 @@ document.addEventListener("DOMContentLoaded", function() {
             return response.json();
         })
         .then(data => {
-            // Once data is fetched successfully, interpolate to cover 12 months
-            const purchasePriceData = data.purchasePrice;
-            const interpolatedData = interpolateData(purchasePriceData, 12);
+            // Extract purchase price from the fetched data
+            const purchasePrice = data.purchasePrice;
 
-            // Sample data for demonstration (Today Price)
-            const todayPriceData = [255000, 260000, 265000, 268000, 272000, 275000, 280000, 285000, 290000, 295000, 300000, 305000];
+            // Interpolate purchase price data to cover 12 months using quadratic interpolation
+            const interpolatedData = quadraticInterpolation(purchasePrice, 12);
 
-            // Combined data for the chart
+            // Chart data
             const chartData = {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
@@ -26,19 +25,15 @@ document.addEventListener("DOMContentLoaded", function() {
                     borderColor: 'rgb(255, 99, 132)',
                     data: interpolatedData,
                     fill: false
-                }, {
-                    label: 'Today Price',
-                    borderColor: 'rgb(54, 162, 235)',
-                    data: todayPriceData,
-                    fill: false
                 }]
             };
 
+            // Chart options
             const options = {
                 responsive: true,
                 title: {
                     display: true,
-                    text: 'Real Estate Prices Over One Year'
+                    text: 'Real Estate Purchase Price Over One Year'
                 },
                 scales: {
                     xAxes: [{
@@ -57,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
             };
 
             // Create the chart
-            const myChart = new Chart(ctx, {
+            new Chart(ctx, {
                 type: 'line',
                 data: chartData,
                 options: options
@@ -69,12 +64,12 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 });
 
-// Function to interpolate data to cover specified number of months
-function interpolateData(data, targetMonths) {
+// Function to perform quadratic interpolation
+function quadraticInterpolation(data, targetMonths) {
     const result = [];
-    const interval = Math.floor(data.length / targetMonths);
-    for (let i = 0; i < data.length; i += interval) {
-        result.push(data[i]);
+    const step = Math.floor(data / (targetMonths - 1));
+    for (let i = 0; i < targetMonths; i++) {
+        result.push(i * i * step);
     }
     return result;
 }
