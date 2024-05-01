@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="../public/css/profile.css">        
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <script type="application/javascript" src="js/tickrtape.js"></script>
 </head>
 <body>
@@ -106,7 +107,7 @@
                           <img src="/public/assets/icons/business-report.png"></img>
                       </span>
 
-                      <a href="/screener">Screener</a>
+                      <a href="">Screener</a>
                   </button>
 
                   <!-- more-btn -->
@@ -172,6 +173,7 @@
                           <span>
                               <img src="/public/assets/icons/drop-down.png  "></img>
                           </span>
+
                       </button>
                   </a>
                   
@@ -182,6 +184,7 @@
 
     <div class="between">
         <div class="left">
+            
 
             <div class="left-t">
 
@@ -190,15 +193,21 @@
                     <div class="background-img-top-div">
                         <div class="worth">
                             <!-- add worth through js -->
-                            <p>2,02,382</p>
+                            <p >2,02,382</p>
                         </div>
 
-                        <div class="edit-profile">
-                            <button class="edit-btn"></button>
+                        <div class="edit-profile list-group ">
+                            <button class="edit-btn" onclick="toggle_visibility('profileEditPopup')"></button>
+                          <!-- <button class="profile-edit" onclick="toggle_visibility('profileEditPopup')" style="color:black">Edit</button> -->
+
+
+                            
                         </div>
+                        
 
 
                     </div>
+                    
 
                     <div class="background-img-bottom-div">
 
@@ -230,21 +239,169 @@
 
                     <li class="list-group-item">
                       <p>Stock Holdings</p>
+                          <button class="edit" onclick="toggle_visibility('stockHoldingsPopup')">Edit</button>
+
                           
+
+                          <div class="centered-div" id="stockHoldingsPopup">
+                            <h4><strong>Edit your stock holdings</strong></h4>
+
+                            <div class="input-group my-2 flex-nowrap">
+                                <span class="input-group-text" id="addon-wrapping">@</span>
+                                <input required type="text" class="form-control" placeholder="StockName" aria-label="Stockname" aria-describedby="addon-wrapping">
+                             </div>
+
+                             <div class="input-group my-2 mb-3">
+                                <span class="input-group-text">₹ </span>
+                                <input required type="text" class="form-control" placeholder="Enter share price at purchase" aria-label="Amount (to the nearest rupee)">
+                                <span class="input-group-text">.00</span>
+                              </div>
+
+                             <div class="relative my-2 max-w-sm">
+
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                  </svg>
+                                </div>
+
+                                <input required datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date {yyyy-mm-dd}">
+                              </div>
+
+                              <div class="btn-group end" role="group" aria-label="Basic outlined example">
+                                <button type="button" class="btn btn-outline-success">Save</button>
+                                <button type="button" class="btn btn-outline-primary" onclick="toggle_visibility('stockHoldingsPopup')">Discard</button>
+                              </div>
+
+
+
+                              <!-- profile edit -->
+                              <div class="centered-div" id="profileEditPopup">
+                                <h4><strong>Edit your profile password detais: </strong></h4>
+    
+                                <div class="input-group my-2 flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping">Password</span>
+                                    <input required type="text" class="form-control" placeholder="Enter old password" aria-label="oldPassword" aria-describedby="addon-wrapping">
+                                 </div>
+    
+    
+     
+    
+                                  <div class="btn-group end" role="group" aria-label="Basic outlined example">
+                                    <button type="button" class="btn btn-outline-success">Save</button>
+                                    <button type="button" class="btn btn-outline-primary" onclick="toggle_visibility('profileEditPopup')">Discard</button>
+                                  </div>
+
+
+
+
+                        </div>
                     </li>
 
 
-                    <li class="list-group-item">Gold
+                    <li class="list-group-item">Gold    
+
+                        <button class="edit" onclick="toggle_visibility('goldPopup')">Edit</button>
+
+                          <div class="centered-div" id="goldPopup">
+                            <h4><strong>Edit your Gold details</strong></h4>
+
+                            <div class="input-group my-2 flex-nowrap">
+                                <span class="input-group-text" id="addon-wrapping">@</span>
+                                <input  required type="number" class="form-control" placeholder="Quantity (g)" aria-label="gold-quantity" aria-describedby="addon-wrapping">
+                             </div>
+
+                             <div class="input-group my-2 mb-3">
+                                <span class="input-group-text">₹ </span>
+                                <input required type="number" class="form-control" placeholder="Enter price price at purchase per 10g" aria-label="Amount (to the nearest rupee)">
+                                <span class="input-group-text">.00</span>
+                              </div>
+
+                             <div class="relative my-2 max-w-sm">
+
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                  </svg>
+                                </div>
+
+                                <input required datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date of purchase {yyyy-mm-dd}">
+                              </div>
+
+                              <div class="btn-group end" role="group" aria-label="Basic outlined example">
+                                <button type="button" class="btn btn-outline-success">Save</button>
+                                <button type="button" class="btn btn-outline-primary" onclick="toggle_visibility('goldPopup')">Discard</button>
+                              </div>
+
 
                     </li>
 
 
                     <li class="list-group-item">Fixed Deposits
 
+                        <button class="edit" onclick="toggle_visibility('depositPopup')">Edit</button>
+
+                        <div class="centered-div" id="depositPopup">
+                          <h4><strong>Edit your Fixed Deposits</strong></h4>
+
+                          <div class="input-group my-2 flex-nowrap">
+                              <span class="input-group-text" id="addon-wrapping">@</span>
+                              <input type="number" class="form-control" placeholder="Interest rate" aria-label="interest-rate" aria-describedby="addon-wrapping">
+                           </div>
+
+                           <div class="input-group my-2 mb-3">
+                              <span class="input-group-text">₹ </span>
+                              <input type="number" class="form-control" placeholder="Principle amount" aria-label="Amount (to the nearest rupee)">
+                              <span class="input-group-text">.00</span>
+                            </div>
+
+                            <div class="input-group my-2 flex-nowrap">
+                                <span class="input-group-text" id="addon-wrapping">Tenure</span>
+                                <input required type="number" class="form-control" placeholder="Only numbers are allowed" aria-label="Tenure" aria-describedby="addon-wrapping">
+                             </div>
+
+                           <div class="relative my-2 max-w-sm">
+
+                              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                </svg>
+                              </div>
+
+                              <input datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date of purchase {yyyy-mm-dd}">
+                            </div>
+
+                            <div class="btn-group end" role="group" aria-label="Basic outlined example">
+                              <button type="button" class="btn btn-outline-success">Save</button>
+                              <button type="button" class="btn btn-outline-primary" onclick="toggle_visibility('depositPopup')">Discard</button>
+                            </div>
+
+
                     </li>
 
 
                     <li class="list-group-item">Real Estates
+
+                        <button class="edit" onclick="toggle_visibility('realEstatePopup')">Edit</button>
+
+                          <div class="centered-div" id="realEstatePopup">
+                            <h4><strong>Edit Real Estates </strong></h4>
+
+                            <div class="input-group my-2 flex-nowrap">
+                                <span class="input-group-text" id="addon-wrapping">Purchase Price </span>
+                                <input required type="text" class="form-control" placeholder="Price at purchase" aria-label="Purchase price" aria-describedby="addon-wrapping">
+                             </div>
+
+                             <div class="input-group my-2 mb-3">
+                                <span class="input-group-text">₹ </span>
+                                <input required type="text" class="form-control" placeholder="Enter current price" aria-label="Amount (to the nearest rupee)">
+                                <span class="input-group-text">.00</span>
+                              </div>
+
+                              <div class="btn-group end" role="group" aria-label="Basic outlined example">
+                                <button type="button" class="btn btn-outline-success">Save</button>
+                                <button type="button" class="btn btn-outline-primary" onclick="toggle_visibility('realEstatePopup')">Discard</button>
+                              </div>
 
                     </li>
 
@@ -283,15 +440,27 @@
 
             </div>
         </div>
+
     </div>
+
+
 
 
     <footer>© Fiscal Fit 2024. All rights reserved. Made with ♥</footer>
 
   
     
+    <script>
+        function toggle_visibility(id) {
+            var e = document.getElementById(id);
+            if(e.style.display == 'block')
+               e.style.display = 'none';
+            else
+               e.style.display = 'block';
+        }
+    </script>
     
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></scr>
 </body>
 </html>
