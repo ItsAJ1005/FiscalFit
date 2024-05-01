@@ -18,6 +18,16 @@ class Validation{
         const user = await User.findById(decodedToken.id);
         return user;
     }
+
+    async getRole(token){
+        const decodedToken = await this.getPayload(token);
+        if(!mongoose.Types.ObjectId.isValid(decodedToken.id)){
+            console.error("Invalid User Id");
+            return null;
+        }
+        const user = await User.findById(decodedToken.id);
+        return user.role;
+    }
 }
 
 module.exports = Validation;

@@ -6,14 +6,10 @@ const Community = require('../models/Community.js');
 exports.createPost = async (req, res) => {
     try {
         const { resourse, title, content } = req.body;
-        console.log(resourse);
         const community = await Community.findById(resourse);
-        console.log(community);
-        // console.log(2);
         if(!community){
             return res.status(400).json({message: "Such community does not exists"});
         }
-        // console.log(3);
         const newPost = new Post({title, content});
         newPost.community = resourse;
         const token = req.cookies.jwt;
@@ -28,8 +24,10 @@ exports.createPost = async (req, res) => {
             console.error("User not found for ID:", userId);
             return res.status(404).json({ message: "User not found" });
         }
-
+        
+        community.posts.push(newPost._id);
         newPost.user = author._id;
+        await community.save();
         await newPost.save();
         res.status(201).json({ message: `Post added successfully with ID: ${newPost._id}` });
     } catch (err) {

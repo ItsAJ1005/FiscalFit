@@ -7,7 +7,17 @@
     <link rel="stylesheet" href="/css/portfolio.css">
     <link rel="stylesheet" href="/css/portfolio-slider.css">
     <link rel="stylesheet" href="/css/buttons/awesome-text.css">
-    <link rel="accesible icon" href="./assets/icons/the-trees-svgrepo-com.svg" type="image/svg+xml">
+    <link rel="accesible icon" href="./assets/icons/the-trees-svgrepo-com.svg" type="image/svg+xml">    
+    <!--modules for charts-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.css">   
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.min.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js"></script>
+
 </head>
 <body>
     <div class="hero">
@@ -294,8 +304,58 @@
             
         </footer>
 
+         <!-- CHARTS -->
 
-        <script src="/js/slider.js"></script>
-        <script src="https://cdn.lordicon.com/lordicon.js"></script>
+        <h1 style="font-family: 'Michroma'; font-size:4vh; margin: 0px 0px 40px 40px;">Analyse your worth</h1>
+
+        <div class="charts12">
+            <div id="fixedDeposit-Chart" class="fixedDepositChart">
+                <canvas id="fixedDepositChart"></canvas>
+            </div>
+        
+        
+            <div class="gold-chart">
+                <div style="position: relative;">
+                    <canvas id="goldCostsChart"  width="800" height="400"></canvas>
+                    <div id="zoomControls" style="position: absolute; top: 10px; right: 10px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    <div class="chart3">
+        <div id="portfolio-chart">
+            <canvas id="ringChart"></canvas>
+            <h2 style="text-align: center;margin-top: 4vh;">Your investments in %</h2>
+            <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script> -->
+        </div>
+
+        <div class="pie-chart-data">
+            <h1 >All your investments at one place!</h1>
+        </div>
+    </div>
+    
+
+
+    <div class="realestate-chart">
+        <canvas id="priceChart" width="600" height="200"></canvas>
+    </div>
+
+
+    <div class="eqity-chart">
+        <canvas id="stockGrowthChart" width="600" height="200"></canvas>
+    </div>
+
+
+
+
+    <script type="module" src="./js/fd.js"></script>
+    <script type="module" src="./js/equity.js"></script>
+    <script type="module" src="./js/gold.js"></script>
+    <script type="module" src="./js/portfolio.js"></script>
+    <script type="module" src="./js/realestate.js"></script>
+    <script src="/js/slider.js"></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
 </body>
 </html>

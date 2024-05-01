@@ -542,6 +542,32 @@
       border-radius: 20px;
     }
 
+    .edit {
+      background: #eae7e4;
+      height: 4vh;
+      width: 4vw;
+      border-radius: 20px;
+    }
+    .edit:hover{
+      background: #d6c7b8;
+      transform: scale(1.1);
+      transition: 0.2s ease-in-out;
+    }
+
+    .centered-div {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 40vw;
+      transform: translate(-50%, -50%);
+      z-index: 9999; /* Ensure it's on top of everything */
+      background-color: #ffffff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+
     .list-group-item {
       padding: 8px;
       font-size: 16px;

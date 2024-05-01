@@ -1,34 +1,24 @@
-<div class="post">
-        <a href="posts/<%=post._id%>">
-        <div class="post-header">
-            <div class="post-logo"><%=post.community%></div>
-            <div class="post-time"><%=post.createdAt.getDate()%>/<%=post.createdAt.getMonth()%>/<%=post.createdAt.getFullYear()%> | <%=post.createdAt.getHours()%>:<%=String(post.createdAt.getMinutes()).padStart(2, "0")%></div>
-            <div class="post-join">
-                <button>Join</button>
+<div class="post card mb-3 shadow-sm">
+    <a href="/discuss/posts/<%=post._id%>" class="text-decoration-none">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="post-logo"><%=post.community.name%></div>
+                <div class="post-time"><%=post.createdAt.toDateString()%> | <%=post.createdAt.toLocaleTimeString()%></div>
+                <div class="post-join">
+                    <button class="btn btn-light">Join</button>
+                </div>
             </div>
-            <!-- <div class="post-options"></div> -->
         </div>
-    <div class="post-main">
-        <div class="post-title">
-            <%=post.title%>
+        <div class="card-body">
+            <h5 class="card-title"><%=post.title%></h5>
+            <p class="card-text"><%=post.content%></p>
         </div>
-        <div class="post-content">
-            <%=post.content%>
+        <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+            <div class="post-vote">
+                <button class="btn btn-success">Up</button>&#8739;<%=post.up - post.down%>&#8739;<button class="btn btn-danger">Down</button>
+            </div>
+            <button class="btn btn-secondary">Comment</button>
+            <button class="btn btn-info">Share</button>
         </div>
-    </div>
-    <div class="post-footer">
-        <div class="post-vote">
-            <button>Up</button>&#8739;<%=post.up - post.down%>&#8739;<button>Down</button>
-        </div>
-        <button>Comnt</button>
-        <button>Share</button>
-    </div>
     </a>
 </div>
-
-<style>
-    a{
-        all: unset;
-        cursor: pointer;
-    }
-</style>

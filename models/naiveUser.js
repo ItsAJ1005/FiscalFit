@@ -11,7 +11,7 @@ const naiveUserSchema = mongoose.Schema({
       ref: "Post",
     },
   ],
-  community: [{
+  communities: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Community'
   }]
