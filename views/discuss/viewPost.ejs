@@ -109,12 +109,10 @@
     const commentForm = document.getElementById("comment-form");
     const formData = new FormData(commentForm);
     const postId = window.location.pathname.split('/').pop();
-    console.log(formData);
     const formBody = {
       content : formData.get("content"),
       post : postId
     }
-    console.log(formBody);
     const jwtToken = getCookie("jwt");
     const response = await fetch("/api/comments/create",{
       method: "post",
@@ -127,6 +125,7 @@
     if(response.ok){
       location.reload();
     }else{
+      console.error(response);
       alert(response.message);
     }
   });

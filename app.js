@@ -60,7 +60,7 @@ app.use("/api/communities",communityRoutes);
 app.use("/api/users",userRoutes);
 // Creating Instances
 const rbacMiddleware = new RBACMiddleware();
-
+const validation = new Validation();
 // Pages Rendering
 
 // main
@@ -85,12 +85,13 @@ app.get('/register',(req,res)=>{
 
 // discuss
 app.get('/discuss/home',async (req,res) => {
+  req.role = req.cookies.jwt ? await validation.getRole(req.cookies.jwt) : 'anonymous';
   await Post.aggregate().sample(4)
-            .then((data) => res.render('discuss/index.ejs',{jwt:req.cookies.jwt,data:data}))
+            .then((data) => res.render('discuss/index.ejs',{jwt:req.cookies.jwt,data:data,role: req.role}))
             .catch((err) => console.error(err))
 });
-app.get('/discuss/posts/create',(req,res)=>{
-  res.render('discuss/newPost.ejs');
+app.get('/discuss/communities/create',(req,res)=>{
+  res.render('discuss/newCommunity.ejs');
 })
 // This route should be kept at the very bottom to prevent /anything  // res.render("discuss/viewpost.ejs",{post,data})
 app.get('/discuss/posts/:id',async (req,res)=>{
@@ -106,11 +107,14 @@ app.get('/discuss/posts/:id',async (req,res)=>{
 });
 // Communities with id
 app.get('/discuss/communities/:id', async (req,res)=>{
+  const community = await Community.findById(req.params.id);
   await Community.findById(req.params.id)
                   .populate('owner')
                   .populate('members')
                   .populate('posts')
-                  .then(community => res.render("discuss/viewCommunity.ejs",community))
+                  .then((community) =>{
+                    res.render("discuss/viewCommunity.ejs",{community}) // 6631fa6022c03d8fa99ed0da
+                  })
                   .catch(err => res.render("error404.ejs"))
 })
 // Rendering 404 on unregistered routes
@@ -120,5 +124,4 @@ app.all('*',(req,res)=>{
 
 // listing app on defined PORT
 app.listen(port, () => {
-  console.log(`The server is up and running on ${port}`);
 });

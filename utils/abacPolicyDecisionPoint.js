@@ -134,7 +134,6 @@ class abacPolicyDecisionPoint {
 
   isAllowed(conditionalSet) {
     return this.allowed.some((data) => {
-      console.log(data);
       return JSON.stringify(data) === JSON.stringify(conditionalSet);
     });
   }

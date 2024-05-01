@@ -13,28 +13,45 @@ const createToken = (id) => {
   });
 };
 
+const emailRegex = /^[^\s@]+@gmail\.com$/; 
+
 exports.signup = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
 
+    // Validation for required fields
     if (!email || !password || !username || !role) {
       return res.status(400).json({ message: "Username, email, password, and role are required" });
     }
 
-    const existingUser = await NaiveUser.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+    // Validation for email format
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: "Invalid email format. Email should end with @gmail.com" });
+    }
+
+    // Validation for password length
+    if (password.length < 8) {
+      return res.status(400).json({ message: "Password should be at least 8 characters long" });
+    }
+
+    const existingEmailUser = await NaiveUser.findOne({ email });
+    if (existingEmailUser) {
+      return res.status(400).json({ message: "User with this email already exists" });
+    }
+
+    const existingUsernameUser = await NaiveUser.findOne({ username });
+    if (existingUsernameUser) {
+      return res.status(400).json({ message: "User with this username already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     let newUser = "";
-    if(req.body.role == 'supreme'){
+    if (req.body.role === 'supreme') {
       const newSupremeUser = new SupremeUser({ username, email, password: hashedPassword, role });
       newUser = newSupremeUser;
       await newSupremeUser.save();
-    }
-    else if(req.body.role === 'naive'){
+    } else if (req.body.role === 'naive') {
       const newNaiveUser = new NaiveUser({ username, email, password: hashedPassword, role });
       newUser = newNaiveUser;
       await newNaiveUser.save();
@@ -43,10 +60,8 @@ exports.signup = async (req, res) => {
       newUser = newExpertUser;
       await newExpertUser.save();
     } else {
-     
       return res.status(400).json({ message: "Role can either be naive or expert" });
     }
-
 
     if (!newUser) {
       return res.status(400).json({ message: "User creation failed" });
