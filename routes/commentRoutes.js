@@ -5,9 +5,9 @@ const { PEP,RBACMiddleware,ABACMiddleware,ChineseWallPolicy,PDP } = require("../
 const isAdmin = require("../middlewares/isAdmin");
 const rbacMiddleware = new RBACMiddleware();
 const abacMiddleware = new ABACMiddleware();
-
+const chineseWallPolicy = new ChineseWallPolicy();
 router.post("/create",abacMiddleware.execute("create_comment","post"),PDP.execute,commentControllers.createComment); // abac
-router.delete("/delete",isAdmin,rbacMiddleware.execute("delete_comment"),PDP.execute,commentControllers.deleteComment);
+router.delete("/delete",chineseWallPolicy.execute("delete_comment"),PDP.execute,commentControllers.deleteComment);
 router.put("/update",isAdmin,rbacMiddleware.execute("update_comment"),PDP.execute,commentControllers.updateComment);
 router.put("/ban",isAdmin,rbacMiddleware.execute("ban_post"),PDP.execute,commentControllers.banComment);
 

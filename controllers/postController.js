@@ -6,10 +6,14 @@ const Community = require('../models/Community.js');
 exports.createPost = async (req, res) => {
     try {
         const { resourse, title, content } = req.body;
+        console.log(resourse);
         const community = await Community.findById(resourse);
+        console.log(community);
+        // console.log(2);
         if(!community){
-            res.status(400).json({message: "Such community does not exists"});
+            return res.status(400).json({message: "Such community does not exists"});
         }
+        // console.log(3);
         const newPost = new Post({title, content});
         newPost.community = resourse;
         const token = req.cookies.jwt;
@@ -71,7 +75,7 @@ exports.deletePost = async (req,res)=>{
     try{
         const {resourse} = req.body;
         const postToDelte = await Post.findByIdAndDelete(resourse);
-        res.status(204).json({message: `Post with id ${resourse} deleted successfully`});
+        res.status(203).json({message: `Post with id ${resourse} deleted successfully`});
     }catch(err){
         console.log(err);
     }

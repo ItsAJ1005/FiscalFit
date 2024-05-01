@@ -43,6 +43,7 @@ exports.deleteCommunity = async (req,res)=>{
         await Community.findByIdAndDelete(resourse);
         res.status(204).json({message : `Successfully Community with id ${resourse} deleted`});
     }catch(err){
-
+        console.error(err);
+        res.status(500).json({message : "Internal Server Error"});
     }
 }

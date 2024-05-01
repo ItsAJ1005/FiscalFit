@@ -13,7 +13,7 @@ class abacPolicyDecisionPoint {
       readUser: "read_user",
       updateUser: "update_user",
       deletePost: "delete_post",
-      createPost: "create-post",
+      createPost: "create_post",
       banPost: "ban_post",
       readPost: "read_post",
       updatePost: "update_post",
@@ -40,40 +40,101 @@ class abacPolicyDecisionPoint {
       unBanned : false,
       banned: true,
       removed: true,
+      post: "post",
+      community: "community",
+      comment: "comment",
+      asset: "asset"
     };
     
     this.allowed = [
       {
-        role: this.rolesSet.supreme,
+        user:{
+          attributes: {
+            role: this.rolesSet.supreme,
+          }
+        },
         action: this.actionsSet.createComment,
-        isBanned: this.resourcesSet.banned
+        resourse : {
+          type:this.resourcesSet.post,
+          attributes : {
+            isBanned: this.resourcesSet.banned
+          }
+        }
       },
       {
-        role : this.rolesSet.naive,
+        user:{
+          attributes: {
+            role: this.rolesSet.naive,
+          }
+        },
         action: this.actionsSet.createComment,
+        resourse : {
+          type:this.resourcesSet.post,
+          attributes : {
+            // isBanned: this.resourcesSet.unBanned
+          }
+        }
       },
       {
-        role : this.rolesSet.supreme,
+        user:{
+          attributes: {
+            role: this.rolesSet.supreme,
+          }
+        },
         action: this.actionsSet.createComment,
+        resourse : {
+          type:this.resourcesSet.post,
+          attributes : {
+            // isBanned: this.resourcesSet.unBanned
+          }
+        }
+      },
+      {
+        user:{
+          attributes: {
+            role: this.rolesSet.naive,
+          }
+        },
+        action: this.actionsSet.createPost,
+        resourse : {
+          type:this.resourcesSet.community,
+          attributes : {
+            // isBanned: this.resourcesSet.unBanned
+          }
+        }
       },{
-        role : this.rolesSet.naive,
-        action : this.actionsSet.createPost
+        user:{
+          attributes: {
+            role: this.rolesSet.supreme,
+          }
+        },
+        action: this.actionsSet.createPost,
+        resourse : {
+          type:this.resourcesSet.community,
+          attributes : {
+            isBanned: this.resourcesSet.banned
+          }
+        }
       },{
-        role : this.rolesSet.expert,
-        action : this.actionsSet.createPost
-      },{
-        role : this.rolesSet.supreme,
-        action : this.actionsSet.createPost,
-        isBanned: this.resourcesSet.banned
-      },{
-        role : this.rolesSet.naive,
-        action : this.actionsSet.createPost
+        user:{
+          attributes: {
+            role: this.rolesSet.supreme,
+          }
+        },
+        action: this.actionsSet.createPost,
+        resourse : {
+          type:this.resourcesSet.community,
+          attributes : {
+            // isBanned: this.resourcesSet.unBanned
+          }
+        }
       }
     ];
   }
 
   isAllowed(conditionalSet) {
     return this.allowed.some((data) => {
+      console.log(data);
       return JSON.stringify(data) === JSON.stringify(conditionalSet);
     });
   }

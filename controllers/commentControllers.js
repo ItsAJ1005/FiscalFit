@@ -43,6 +43,7 @@ exports.deleteComment = async (req,res)=>{
         const commentToDelete = await Comment.findById(resourse);
         if(commentToDelete){
             await Comment.findByIdAndDelete(resourse);
+            res.status(203).json({message : `Comment successfully deleted with id ${resourse}`});
         }else{
             res.status(400).json({message : "Comment does not exists"});
         }
