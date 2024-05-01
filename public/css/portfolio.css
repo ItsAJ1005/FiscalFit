@@ -30,6 +30,14 @@
   font-family: "circular";
   src: url(/assets/fonts/Circular-Medium.ttf);
 }
+@font-face {
+  font-family: "Levenim";
+  src: url(/public/assets/fonts/Levenim\ MT\ Bold.ttf);
+}
+@font-face {
+  font-family: "Levenimreg";
+  src: url(/public/assets/fonts/Levenim\ MT\ Regular.ttf);
+}
 @import url("https://fonts.googleapis.com/css2?family=Aboreto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
@@ -416,7 +424,40 @@ nav > .header-btn > span > img {
 }
 
 footer {
-  height: 20vh;
+  height: 5vh;
   width: 100%;
 
+}
+
+.fixedDepositChart{
+  height: 50vh;
+  width: 50vw;
+}
+
+.gold-chart {
+  height: 50vh;
+  width: 48vw;
+}
+
+.charts12 {
+  display: flex;
+}
+
+#portfolio-chart {
+  height: 50vh;
+  width: 50vw;
+  margin-left: 2vw;
+
+  margin-bottom: 38vh;
+}
+
+.pie-chart-data > h1 {
+  font-family: 'Michroma';
+  margin-top: 7vh;
+  margin-inline: 4vw;
+  color: #43f224;
+}
+
+.chart3 {
+  display: flex;;
 }

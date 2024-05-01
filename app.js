@@ -124,4 +124,6 @@ app.all('*',(req,res)=>{
 
 // listing app on defined PORT
 app.listen(port, () => {
+  console.log(`**server running at http://localhost:${port} **`);
 });
+
