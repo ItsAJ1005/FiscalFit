@@ -48,5 +48,5 @@ const creatPostButton = document.querySelector('.create-post-btn-container');
 
 
 creatPostButton.addEventListener('click',()=>{
-    window.location.href = "posts/create"
+    window.location.href = "communities/create"
 })

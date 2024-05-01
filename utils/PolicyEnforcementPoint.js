@@ -121,7 +121,6 @@ const Asset = require('../models/Asset');
             }
           }
         }
-        console.log(conditionalSet);
         if(abacPDP.isAllowed(conditionalSet)){
           return next();
         }else{
@@ -136,9 +135,7 @@ const Asset = require('../models/Asset');
             return res.status(403).json({ message: 'Access denied' });
           }else if(req.permission == 'delete' && req.resourse == 'post'){
             const post = await Post.findById(req.body.resourse);
-            console.log(post);
             if(String(post.user) == String(req.user._id)){
-              console.log(1);
               return next();
             }
           }else if(req.permission == 'delete' && req.resourse == 'comment'){

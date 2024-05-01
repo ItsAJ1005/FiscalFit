@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.0/dist/tailwind.min.css"> -->
     <link type="text/css" rel="stylesheet" href="index.css">
-    <link
+    <!-- <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css"
-  />
+  /> -->
   <script src="https://cdn.tailwindcss.com/3.3.0"></script>
 </head>
 <body>
@@ -21,12 +23,13 @@
             <div class="login-container">
                 <%if(jwt){%>
                     <button id="log-out">Log Out</button>
-                <%}else{%>
-                    <button id="log-in">Log In</button>
-                    <button>SignUp</button>
-                <%}%>
-            </div>
-        </div>
+                    <%}else{%>
+                        <button id="log-in">Log In</button>
+                        <button>SignUp</button>
+                        <%}%>
+                    </div>
+                </div>
+    </header>
             <div id="loginModal" class="credentials">
                 <div class="background">
                     <div class="shape shape1"></div>
@@ -89,34 +92,37 @@
                 <div class="social-item facebook"><i class="fab fa-facebook"></i> Facebook</div>
             </div>
         </form>
-        </div>             -->
+        </div>  -->
         <div class="popular">
             <div class="popular-heading">
                 Popular groups
             </div>
             <div class="popular-list">
                 <ul>
-                    <li>@/Ourfinance</li>
-                    <li>@/Tickertape</li>
-                    <li>@/Let'sdiscuss</li>
-                    <li>@/Ficalfit</li>
+                    <li><a href="/discuss/communities/6631fa6022c03d8fa99ed0da">@/Ourfinance</a></li>
+                    <li><a href="/discuss/communities/6631fa6822c03d8fa99ed0e1">@/Tickertape</a></li>
+                    <li><a href="/discuss/communities/6631fa7c22c03d8fa99ed0e8">@/Let'sdiscuss</a></li>
+                    <li><a href="/discuss/communities/6631f7492a8c0244beeeb14c">@/Ficalfit</a></li>
                 </ul>
             </div>
         </div>
         <!-- <div class="carousel"></div> -->
         <div class="create-post-btn-container" style="display: inline-block; margin-left: 500px;">
-                <%if(jwt){%>
-                    <%-include('../components/createPost')%>
+                <%if(role == 'expert'){%>
+                    <button
+                    type="button"
+                    class="inline-block rounded-full bg-warning px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-warning-3 transition duration-150 ease-in-out hover:bg-warning-accent-300 hover:shadow-warning-2 focus:bg-warning-accent-300 focus:shadow-warning-2 focus:outline-none focus:ring-0 active:bg-warning-600 active:shadow-warning-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                    Create Community
+                  </button>                  
                 <%}%>
         </div>
-        <div class="posts-container">
-            <% data.forEach(function(post){ %>
-                <%- include('../components/post', {post: post}) %>
-            <% }); %>
-        </div>
-    </header>
-
+    <div class="posts-container">
+        <% data.forEach(function(post){ %>
+            <%- include('../components/post', {post: post}) %>
+        <% }); %>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script type="application/javascript" src="index.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script> -->
 </body>
 </html>
