@@ -1,86 +1,77 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const ctx = document.getElementById('stockGrowthChart').getContext('2d');
+document.addEventListener("DOMContentLoaded", async function () {
+  const ctx = document.getElementById("stockGrowthChart").getContext("2d");
 
-  // Sample data for demonstration
-  const stockData = [
-    {
-      stockName: 'Stock A', 
-      growth: [5, 8, 12, 15] // Growth over the last 4 months
-    },
-    {
-      stockName: 'Stock B',
-      growth: [7, 10, 14, 17] // Growth over the last 4 months
-    },
-    {
-      stockName: 'Stock C',
-      growth: [9, 12, 16, 19] // Growth over the last 4 months
-    },
-    {
-      stockName: 'Stock D',
-      growth: [6, 9, 13, 16] // Growth over the last 4 months
-    },
-    {
-      stockName: 'Stock E',
-      growth: [8, 11, 15, 18] // Growth over the last 4 months
-    },
-    {
-      stockName: 'Stock F',
-      growth: [10, 13, 17, 20] // Growth over the last 4 months
-    }
-  ];
+  const stockValuesResponse = await fetch("api/assets/stock-values");
+  const stockValuesData = await stockValuesResponse.json();
+  stockValuesData.stockValues.forEach((stock) => {
+    stock.totalInvestment *= 85;
+  });
 
-  // Filter out stocks A to E
-  const desiredStocks = ['Stock A', 'Stock B', 'Stock C', 'Stock D', 'Stock E'];
-  const filteredStockData = stockData.filter(stock => desiredStocks.includes(stock.stockName));
+  const stockProfitResponse = await fetch("api/assets/stock/profit");
+  const stockProfitData = await stockProfitResponse.json();
 
   const data = {
-    labels: ['Stock A', 'Stock B', 'Stock C', 'Stock D'],
-    datasets: []
+    labels: [],
+    datasets: [
+      {
+        label: "Total Investment",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgba(255, 99, 132, 1)",
+        borderWidth: 2,
+        data: [],
+      },
+      {
+        label: "Profit",
+        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 2,
+        data: [],
+      },
+    ],
   };
 
-  filteredStockData.forEach((stock) => {
-    const dataset = {
-      label: stock.stockName,
-      backgroundColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.5)`,
-      borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-      borderWidth: 2,
-      data: stock.growth
-    };
-    data.datasets.push(dataset);
+  stockValuesData.stockValues.forEach((stockValue) => {
+    const stockName = stockValue.stockName;
+    const totalInvestment = stockValue.totalInvestment;
+    const profit = stockProfitData[stockName];
+
+    if (profit !== undefined) {
+      data.labels.push(stockName);
+      data.datasets[0].data.push(totalInvestment);
+      data.datasets[1].data.push(profit);
+    }
   });
 
   const options = {
     responsive: true,
     legend: {
       display: true,
-      position: 'right' // Show legend on the right side
-    },
-    tooltips: {
-      enabled: true,
-      mode: 'index',
-      intersect: false,
-      bodyFontSize: 14,
-      bodySpacing: 10
+      position: "top",
     },
     scales: {
-      xAxes: [{
-        stacked: false, // Change to false for displaying stocks individually
-        ticks: {
-          beginAtZero: true
-        }
-      }],
-      yAxes: [{
-        stacked: false, // Change to false for displaying stocks individually
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
+      xAxes: [
+        {
+          stacked: true,
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+      yAxes: [
+        {
+          stacked: true,
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
   };
 
+  // Render the chart
   const myChart = new Chart(ctx, {
-    type: 'bar',
+    type: "bar",
     data: data,
-    options: options
+    options: options,
   });
 });

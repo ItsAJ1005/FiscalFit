@@ -540,3 +540,78 @@ exports.updateEquityAttribute = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+exports.getAllStockValues = async (req, res) => {
+  try {
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+    const userId = decodedToken.id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const assetsObject = user.assets[0];
+    if (!assetsObject) {
+      return res
+        .status(404)
+        .json({ message: "Assets object not found for the user" });
+    }
+
+    const equityAssets = assetsObject.equity;
+    if (!equityAssets || equityAssets.length === 0) {
+      return res.status(404).json({ message: "Equity assets not found for the user" });
+    }
+
+    // Extract stock name and totalInvestment from each equity asset
+    const stockValues = equityAssets.map(asset => ({
+      stockName: asset.stockName,
+      totalInvestment: asset.totalInvestment
+    }));
+
+    res.status(200).json({ stockValues });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
+
+exports.getFixedDepositInfo = async (req, res) => {
+  try {
+    const token = req.cookies.jwt || req.headers.jwt;
+
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const assetsObject = user.assets[0];
+
+    if (!assetsObject) {
+      return res.status(404).json({ message: "Assets object not found for the user" });
+    }
+
+    const fixedDeposit = assetsObject.fixedDeposit;
+
+    if (!fixedDeposit) {
+      return res.status(404).json({ message: "Fixed deposit asset not found for the user" });
+    }
+
+    const { dateOfPurchase, principalAmount, interestRate, tenure } = fixedDeposit;
+
+
+    res.status(200).json({ dateOfPurchase, principalAmount, interestRate, tenure });
+  } catch (error) {
+    console.error(`Error: ${error}`);
+    res.status(500).json({ message: "Server error" });
+  }
+};
