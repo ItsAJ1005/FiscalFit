@@ -46,6 +46,7 @@ exports.addAsset = async (req, res) => {
   }
 };
 
+
 exports.calculateRealEstateDifferenceForUser = async (req, res) => {
   try {
     const token = req.cookies.jwt || req.headers.jwt;
@@ -272,7 +273,15 @@ exports.calculateTaxForUser = async (req, res) => {
     const token = req.cookies.jwt || req.headers.jwt;
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
-        // Check if the assets array is empty
+
+    // Retrieve the user from the database
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the assets array is empty
     if (user.assets.length === 0) {
       return res.status(400).json({ message: "No assets found for the user" });
     }
@@ -318,6 +327,7 @@ exports.calculateTaxForUser = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 
 exports.calculateStockProfit = async (req, res) => {
@@ -394,3 +404,139 @@ exports.calculateStockProfit = async (req, res) => {
   }
 };
 
+exports.updateAssetAttribute = async (req, res) => {
+  try {
+    const { attribute, value } = req.body;
+
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const asset = user.assets[0];
+
+    if (!asset) {
+      return res.status(404).json({ message: "Asset not found for the user" });
+    }
+
+    asset.gold[attribute] = value;
+
+    await user.save();
+
+    res.status(200).json({ message: "Asset attribute updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+exports.updateFDMetaAttribute = async (req, res) => {
+  try {
+    const { attribute, value } = req.body;
+
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const asset = user.assets[0];
+
+    if (!asset) {
+      return res.status(404).json({ message: "Asset not found for the user" });
+    }
+
+    asset.fixedDeposit[attribute] = value;
+
+    await user.save();
+
+    res.status(200).json({ message: "FD attribute updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+exports.updateRealEstateAttribute = async (req, res) => {
+  try {
+    const { attribute, value } = req.body;
+
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const asset = user.assets[0];
+
+    if (!asset) {
+      return res.status(404).json({ message: "Asset not found for the user" });
+    }
+
+    asset.realEstate[attribute] = value;
+
+    await user.save();
+
+    res.status(200).json({ message: "Real Estate attribute updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+exports.updateEquityAttribute = async (req, res) => {
+  try {
+    const { attribute, value } = req.body;
+
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const asset = user.assets[0];
+
+    if (!asset) {
+      return res.status(404).json({ message: "Asset not found for the user" });
+    }
+
+    const equityIndex = asset.equity.findIndex(equity => equity[attribute] !== undefined);
+
+    if (equityIndex === -1) {
+      return res.status(404).json({ message: "Equity asset not found with the specified attribute" });
+    }
+
+    asset.equity[equityIndex][attribute] = value;
+
+    await user.save();
+
+    res.status(200).json({ message: "Equity attribute updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

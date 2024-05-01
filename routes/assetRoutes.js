@@ -14,5 +14,12 @@ router.get("/investment-risk",isNaive,rbacMiddleware.execute("read_asset"),PDP.e
 router.get("/stock/profit", assetController.calculateStockProfit);
 router.get("/calculateTaxForUser", assetController.calculateTaxForUser);
 
+
+router.put("/gold", assetController.updateAssetAttribute);
+router.put('/fd', assetController.updateFDMetaAttribute);
+router.put('/realEstate', assetController.updateRealEstateAttribute);
+router.put('/equity', assetController.updateEquityAttribute);
+
+
 module.exports = router;
 
