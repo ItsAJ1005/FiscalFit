@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2; /* Off-white background */
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 200px;
+            background-color: #1e3a8a; /* Dark blue navbar */
+            color: #fff; /* White text */
+            padding-top: 20px;
+        }
+        .navbar ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .navbar li {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .navbar li:hover {
+            background-color: #2c5282; /* Darker shade of blue on hover */
+        }
+        .content {
+            margin-left: 220px; /* Adjust based on navbar width */
+            padding: 20px;
+        }
+        h1 {
+            color: #1e3a8a; /* Dark blue heading */
+        }
+        h2 {
+            color: #333; /* Dark gray heading */
+        }
+
+        /* Navigation bar styles */
+        nav {
+            background-color: #2c3e50; /* Slightly dark blue */
+        }
+        nav .nav-link {
+            color: #fff; /* White text */
+        }
+        /* Main content styles */
+        body {
+            background-color: #f5f6fa; /* Off-white background */
+        }
+        /* Dropdown styles */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            z-index: 1000;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            min-width: 160px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .dropdown-menu li {
+            list-style: none;
+        }
+        .dropdown-menu li a {
+            display: block;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.3s;
+        }
+        .dropdown-menu li a:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <ul>
+        <li>Home</li>
+        <li class="dropdown">
+            <div class="nav-link">Users</div>
+            <ul class="dropdown-menu">
+                <li><a href="#naive-user-section">Naive Users</a></li>
+                <li><a href="#expert-user-section">Expert Users</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <div class="nav-link">Main</div>
+            <ul class="dropdown-menu">
+                <li><a href="#post-section">Posts</a></li>
+                <li><a href="#community-section">Community</a></li>
+                <li><a href="#comments-section">Comments</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<div class="content">
+    
+    <h1>Main Heading</h1>
+    
+    <div id="naive-user-section">
+        <h2>Naive Users Section</h2>
+        <div class="bg-gray-900 h-full text-white">
+            <div class="container mx-auto px-4 py-8">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold">Comments</h1>
+                    <!-- Add filter options if needed -->
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full bg-FFF2E1 shadow-md rounded-lg overflow-hidden">
+                        <thead>
+                            <tr class="bg-EAD8C0">
+                                <th class="py-3 px-6 text-left">#</th>
+                                <th class="py-3 px-6 text-left">Content</th>
+                                <th class="py-3 px-6 text-left">User</th>
+                                <th class="py-3 px-6 text-left">Post</th>
+                                <th class="py-3 px-6 text-left">Replies</th>
+                                <th class="py-3 px-6 text-left">Status</th>
+                                <th class="py-3 px-6 text-left">Created At</th>
+                                <th class="py-3 px-6 text-left">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700">
+                            <% naiveUser.posts.forEach((post, index) => { %>
+                                <% post.comments.forEach((comment, idx) => { %>
+                                    <tr>
+                                        <td class="py-4 px-6"><%= idx + 1 %></td>
+                                        <td class="py-4 px-6"><%= comment.content %></td>
+                                        <td class="py-4 px-6"><%= naiveUser._id %></td>
+                                        <td class="py-4 px-6"><%= post._id %></td>
+                                        <td class="py-4 px-6">
+                                            <% if (comment.replies && comment.replies.length > 0) { %>
+                                                <%= comment.replies.length %>
+                                            <% } else { %>
+                                                0
+                                            <% } %>
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            <% if (comment.isBanned) { %>
+                                                Banned
+                                            <% } else { %>
+                                                Active
+                                            <% } %>
+                                        </td>
+                                        <td class="py-4 px-6"><%= comment.createdAt %></td>
+                                        <td class="py-4 px-6">
+                                            <!-- Add actions like edit, delete, ban, etc. -->
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <p>Content for Naive Users</p>
+        <div class="mx-auto block max-w-sm rounded-lg bg-white p-6 shadow-4 dark:bg-surface-dark">
+            <form>
+              <!-- Assets input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="text"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="assets"
+                  placeholder="Enter assets" />
+                <label
+                  for="assets"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Assets</label
+                >
+              </div>
+          
+              <!-- Posts input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="text"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="posts"
+                  placeholder="Enter posts" />
+                <label
+                  for="posts"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Posts</label
+                >
+              </div>
+          
+              <!-- Community input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="text"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="community"
+                  placeholder="Enter community" />
+                <label
+                  for="community"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Community</label
+                >
+              </div>
+          
+              <!-- Submit button -->
+              <button
+                type="submit"
+                class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                data-twe-ripple-init
+                data-twe-ripple-color="light">
+                Submit
+              </button>
+            </form>
+          </div>
+          
+    </div>
+    <div id="expert-user-section">
+        <h2>Expert Users Section</h2>
+        <div class="bg-gray-900 h-full text-white">
+            <div class="container mx-auto px-4 py-8">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold">Expert User Details</h1>
+                    <!-- Add filter options if needed -->
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full bg-FFF2E1 shadow-md rounded-lg overflow-hidden">
+                        <thead>
+                            <tr class="bg-EAD8C0">
+                                <th class="py-3 px-6 text-left">#</th>
+                                <th class="py-3 px-6 text-left">User</th>
+                                <th class="py-3 px-6 text-left">Communities Owned</th>
+                                <th class="py-3 px-6 text-left">Clients (Naive Users)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700">
+                            <% expertUsers.forEach((expertUser, index) => { %>
+                                <tr>
+                                    <td class="py-4 px-6"><%= index + 1 %></td>
+                                    <td class="py-4 px-6"><%= expertUser.name %></td>
+                                    <td class="py-4 px-6">
+                                        <% expertUser.communities_owned.forEach((community) => { %>
+                                            <p><%= community.name %></p>
+                                        <% }) %>
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        <% expertUser.clients.forEach((client) => { %>
+                                            <p><%= client.name %></p>
+                                        <% }) %>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <p>Content for Expert Users</p>
+        <div class="mx-auto block max-w-sm rounded-lg bg-white p-6 shadow-4 dark:bg-surface-dark">
+            <form>
+              <!-- Communities owned input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="text"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="communitiesOwned"
+                  placeholder="Enter communities owned" />
+                <label
+                  for="communitiesOwned"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Communities Owned</label
+                >
+              </div>
+          
+              <!-- Clients input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="text"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="clients"
+                  placeholder="Enter clients" />
+                <label
+                  for="clients"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Clients</label
+                >
+              </div>
+          
+              <!-- Submit button -->
+              <button
+                type="submit"
+                class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                data-twe-ripple-init
+                data-twe-ripple-color="light">
+                Submit
+              </button>
+            </form>
+          </div>
+          
+        
+    </div>
+
+    <div id="post-section">
+        <h2>Post Section</h2>
+        <div class="bg-gray-900 h-full text-white">
+            <div class="container mx-auto px-4 py-8">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold">Posts</h1>
+                    <!-- Add filter options if needed -->
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full bg-FFF2E1 shadow-md rounded-lg overflow-hidden">
+                        <thead>
+                            <tr class="bg-EAD8C0">
+                                <th class="py-3 px-6 text-left">#</th>
+                                <th class="py-3 px-6 text-left">Title</th>
+                                <th class="py-3 px-6 text-left">Content</th>
+                                <th class="py-3 px-6 text-left">Upvotes</th>
+                                <th class="py-3 px-6 text-left">Downvotes</th>
+                                <th class="py-3 px-6 text-left">User</th>
+                                <th class="py-3 px-6 text-left">Community</th>
+                                <th class="py-3 px-6 text-left">Comments</th>
+                                <th class="py-3 px-6 text-left">Status</th>
+                                <th class="py-3 px-6 text-left">Created At</th>
+                                <th class="py-3 px-6 text-left">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700">
+                            <% posts.forEach((post, index) => { %>
+                                <tr>
+                                    <td class="py-4 px-6"><%= index + 1 %></td>
+                                    <td class="py-4 px-6"><%= post.title %></td>
+                                    <td class="py-4 px-6"><%= post.content %></td>
+                                    <td class="py-4 px-6"><%= post.up %></td>
+                                    <td class="py-4 px-6"><%= post.down %></td>
+                                    <td class="py-4 px-6"><%= post.user %></td>
+                                    <td class="py-4 px-6"><%= post.community %></td>
+                                    <td class="py-4 px-6">
+                                        <% if (post.comments && post.comments.length > 0) { %>
+                                            <%= post.comments.length %>
+                                        <% } else { %>
+                                            0
+                                        <% } %>
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        <% if (post.isBanned) { %>
+                                            Banned
+                                        <% } else { %>
+                                            Active
+                                        <% } %>
+                                    </td>
+                                    <td class="py-4 px-6"><%= post.createdAt %></td>
+                                    <td class="py-4 px-6">
+                                        <!-- Add actions like edit, delete, ban, etc. -->
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <p>Content for Posts</p>
+        <div class="mx-auto block max-w-sm rounded-lg bg-white p-6 shadow-4 dark:bg-surface-dark">
+            <form id="postForm">
+              <!-- Title input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="text"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="title"
+                  placeholder="Enter title" />
+                <label
+                  for="title"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Title</label
+                >
+              </div>
+          
+              <!-- Content input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <textarea
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="content"
+                  placeholder="Enter content"
+                  rows="4"></textarea>
+                <label
+                  for="content"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Content</label
+                >
+              </div>
+          
+              <!-- Up input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="number"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="up"
+                  placeholder="Enter up count" />
+                <label
+                  for="up"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Up</label
+                >
+              </div>
+          
+              <!-- Down input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="number"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="down"
+                  placeholder="Enter down count" />
+                <label
+                  for="down"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Down</label
+                >
+              </div>
+          
+              <!-- IsBanned input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="checkbox"
+                  class="peer block min-h-[auto] w-[1.25rem] h-[1.25rem] peer-placeholder-transparent peer-focus:ring-0"
+                  id="isBanned" />
+                <label
+                  for="isBanned"
+                  class="pointer-events-none ml-3 text-neutral-500"
+                  >Is Banned</label
+                >
+              </div>
+          
+              <!-- User ID input -->
+              <input
+                type="hidden"
+                id="user"
+                value="user_id_here" /> <!-- Replace with actual user ID -->
+          
+              <!-- Submit button -->
+              <button
+                type="submit"
+                class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >Submit</button>
+            </form>
+          </div>
+          <script>
+            // Function to handle form submission
+            document.getElementById('postForm').addEventListener('submit', async function(event) {
+              event.preventDefault(); // Prevent default form submission
+              
+              // Get form data
+              const title = document.getElementById('title').value;
+              const content = document.getElementById('content').value;
+              const up = document.getElementById('up').value;
+              const down = document.getElementById('down').value;
+              const isBanned = document.getElementById('isBanned').checked;
+              const user = document.getElementById('user').value;
+          
+              // Example of sending form data using fetch API
+              const formData = {
+                title: title,
+                content: content,
+                up: up,
+                down: down,
+                isBanned: isBanned,
+                user: user
+              };
+          
+              try {
+                const response = await fetch('/create-post', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(formData)
+                });
+          
+                if (!response.ok) {
+                  throw new Error('Failed to create post');
+                }
+          
+                const data = await response.json();
+                console.log(data); // Handle successful response
+              } catch (error) {
+                console.error(error); // Handle error
+              }
+            });
+          </script>
+          
+    </div>
+    <div id="community-section">
+        <h2>Community Section</h2>
+        <div class="bg-gray-900 h-full text-white">
+            <div class="container mx-auto px-4 py-8">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold">Communities</h1>
+                    <!-- Add filter options if needed -->
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full bg-FFF2E1 shadow-md rounded-lg overflow-hidden">
+                        <thead>
+                            <tr class="bg-EAD8C0">
+                                <th class="py-3 px-6 text-left">#</th>
+                                <th class="py-3 px-6 text-left">Name</th>
+                                <th class="py-3 px-6 text-left">Owner</th>
+                                <th class="py-3 px-6 text-left">Members</th>
+                                <th class="py-3 px-6 text-left">Posts</th>
+                                <th class="py-3 px-6 text-left">Status</th>
+                                <th class="py-3 px-6 text-left">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700">
+                            <% communities.forEach((community, index) => { %>
+                                <tr>
+                                    <td class="py-4 px-6"><%= index + 1 %></td>
+                                    <td class="py-4 px-6"><%= community.name %></td>
+                                    <td class="py-4 px-6"><%= community.owner %></td>
+                                    <td class="py-4 px-6">
+                                        <% if (community.members && community.members.length > 0) { %>
+                                            <%= community.members.length %>
+                                        <% } else { %>
+                                            0
+                                        <% } %>
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        <% if (community.posts && community.posts.length > 0) { %>
+                                            <%= community.posts.length %>
+                                        <% } else { %>
+                                            0
+                                        <% } %>
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        <% if (community.isBanned) { %>
+                                            Banned
+                                        <% } else { %>
+                                            Active
+                                        <% } %>
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        <!-- Add actions like edit, delete, ban, etc. -->
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <p>Content for Community</p>
+        <div class="mx-auto block max-w-sm rounded-lg bg-white p-6 shadow-4 dark:bg-surface-dark">
+            <form>
+              <!-- Community Name input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="text"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="communityName"
+                  placeholder="Enter community name" />
+                <label
+                  for="communityName"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Community Name</label
+                >
+              </div>
+          
+              <!-- Owner input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="text"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="owner"
+                  placeholder="Enter owner ID" />
+                <label
+                  for="owner"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Owner ID</label
+                >
+              </div>
+          
+              <!-- Members input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="text"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="members"
+                  placeholder="Enter member IDs (comma-separated)" />
+                <label
+                  for="members"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Member IDs</label
+                >
+              </div>
+          
+              <!-- Posts input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="text"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="posts"
+                  placeholder="Enter post IDs (comma-separated)" />
+                <label
+                  for="posts"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Post IDs</label
+                >
+              </div>
+          
+              <!-- isBanned input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="checkbox"
+                  class="peer min-h-[auto] rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="isBanned" />
+                <label
+                  for="isBanned"
+                  class="pointer-events-none text-neutral-500 pl-3"
+                  >Is Banned</label
+                >
+              </div>
+          
+              <!--Submit button-->
+              <button
+                type="submit"
+                class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                data-twe-ripple-init
+                data-twe-ripple-color="light">
+                Submit
+              </button>
+            </form>
+          </div>
+          
+    </div>
+    <div id="comments-section">
+        <h2>Comments Section</h2>
+        <div class="bg-gray-900 h-full text-white">
+            <div class="container mx-auto px-4 py-8">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold">Comments</h1>
+                    <!-- Add filter options if needed -->
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full bg-FFF2E1 shadow-md rounded-lg overflow-hidden">
+                        <thead>
+                            <tr class="bg-EAD8C0">
+                                <th class="py-3 px-6 text-left">#</th>
+                                <th class="py-3 px-6 text-left">Content</th>
+                                <th class="py-3 px-6 text-left">User</th>
+                                <th class="py-3 px-6 text-left">Post</th>
+                                <th class="py-3 px-6 text-left">Replies</th>
+                                <th class="py-3 px-6 text-left">Status</th>
+                                <th class="py-3 px-6 text-left">Created At</th>
+                                <th class="py-3 px-6 text-left">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700">
+                            <% comments.forEach((comment, index) => { %>
+                                <tr>
+                                    <td class="py-4 px-6"><%= index + 1 %></td>
+                                    <td class="py-4 px-6"><%= comment.content.join(", ") %></td>
+                                    <td class="py-4 px-6"><%= comment.user %></td>
+                                    <td class="py-4 px-6"><%= comment.post %></td>
+                                    <td class="py-4 px-6">
+                                        <% if (comment.replies && comment.replies.length > 0) { %>
+                                            <%= comment.replies.length %>
+                                        <% } else { %>
+                                            0
+                                        <% } %>
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        <% if (comment.isBanned) { %>
+                                            Banned
+                                        <% } else { %>
+                                            Active
+                                        <% } %>
+                                    </td>
+                                    <td class="py-4 px-6"><%= comment.createdAt %></td>
+                                    <td class="py-4 px-6">
+                                        <!-- Add actions like edit, delete, ban, etc. -->
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <p>Content for Comments</p>
+        <div class="mx-auto block max-w-sm rounded-lg bg-white p-6 shadow-4 dark:bg-surface-dark">
+            <form>
+              <!-- Content input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <textarea
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="content"
+                  placeholder="Enter comment content"></textarea>
+                <label
+                  for="content"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Comment Content</label
+                >
+              </div>
+          
+              <!-- isBanned input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="checkbox"
+                  class="peer min-h-[auto] rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="isBanned" />
+                <label
+                  for="isBanned"
+                  class="pointer-events-none text-neutral-500 pl-3"
+                  >Is Banned</label
+                >
+              </div>
+          
+              <!-- User input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="text"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="user"
+                  placeholder="Enter user ID" />
+                <label
+                  for="user"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >User ID</label
+                >
+              </div>
+          
+              <!-- Post input -->
+              <div class="relative mb-12" data-twe-input-wrapper-init>
+                <input
+                  type="text"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                  id="post"
+                  placeholder="Enter post ID" />
+                <label
+                  for="post"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
+                  >Post ID</label
+                >
+              </div>
+          
+              <!--Submit button-->
+              <button
+                type="submit"
+                class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                data-twe-ripple-init
+                data-twe-ripple-color="light">
+                Submit
+              </button>
+            </form>
+          </div>
+          
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      
+      document.querySelectorAll(".dropdown").forEach(function(dropdown) {
+        dropdown.querySelector(".nav-link").addEventListener("click", function () {
+          dropdown.querySelector(".dropdown-menu").classList.toggle("hidden");
+        });
+
+        
+        window.addEventListener("click", function (event) {
+          var dropdownMenu = dropdown.querySelector(".dropdown-menu");
+          if (!event.target.matches(".nav-link") && !dropdownMenu.classList.contains("hidden")) {
+            dropdownMenu.classList.add("hidden");
+          }
+        });
+      });
+    });
+</script>
+
+</body>
+</html>
