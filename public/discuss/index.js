@@ -13,7 +13,7 @@ if(logoutButton){
         })
         .then(response => {
             if (response.ok) {
-                window.location.href = '/discuss'; 
+                window.location.href = '/discuss/home'; 
             } else {
                 console.error('Logout request failed:', response.statusText);
             }

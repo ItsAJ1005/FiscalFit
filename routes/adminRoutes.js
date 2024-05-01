@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controllers/userController");
+const assetController = require("../controllers/assetController");
 const { calculateGoldProfitForUser } = require("../controllers/assetController")
 const { PEP,RBACMiddleware,ABACMiddleware,ChineseWallPolicy,PDP } = require("../utils/PolicyEnforcementPoint");
 const rbacMiddleware = new RBACMiddleware();
-const isAdmin = require("../middlewares/isAdmin");
+const isNaive = require("../middlewares/isNaive");
 
 
-router.delete("/:id",isAdmin,rbacMiddleware.execute("delete_user"),PDP.execute,userController.deleteUser);
+router.get("/users",isAdmin,rbacMiddleware.execute("read_user"),PDP.execute,authController.getAllUsers);
 
 module.exports = router;

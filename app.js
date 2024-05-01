@@ -3,10 +3,15 @@ const path = require("path");
 const app = express();
 const fs = require("fs");
 const ejs = require("ejs");
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
 var globalVariables = require('./public/js/global_variables');
+app.use(cors());
 app.use(cookieParser());
 
+// .evn congif
+dotenv.config();
 
 // importing modals
 const Post = require('./models/Post');
@@ -21,10 +26,20 @@ const assetRoutes = require("./routes/assetRoutes");
 const authRoutes = require("./routes/authRoutes");
 const postRoutes  = require("./routes/postRoutes");
 const commentRoutes = require('./routes/commentRoutes');
+const communityRoutes = require('./routes/communityRoutes');
+const userRoutes = require("./routes/userRoutes");
 const stablishConnection = require("./db/connection");
 
+// importing Utility Classes
+const Validation = require('./utils/Validation');
+const { PEP,RBACMiddleware,ABACMiddleware,ChineseWallPolicy,PDP } = require("./utils/PolicyEnforcementPoint");
+
+// importing Middlewares
+const isNaive = require('./middlewares/isNaive');
+const Community = require("./models/Community");
+
 // Express Configuration
-const port = 5000;
+const port = process.env.PORT ||  5000;
 const viewspath = path.join(__dirname, "views");
 app.use(express.static(__dirname + "/public"));
 app.set("views", __dirname + "/views");
@@ -35,10 +50,16 @@ app.use(express.json());
 // Establishing the mongoose connection
 stablishConnection();
 
+// Routes 
+
 app.use("/api/assets", assetRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/posts",postRoutes);
 app.use("/api/comments",commentRoutes);
+app.use("/api/communities",communityRoutes);
+app.use("/api/users",userRoutes);
+// Creating Instances
+const rbacMiddleware = new RBACMiddleware();
 
 // Pages Rendering
 
@@ -63,8 +84,8 @@ app.get('/register',(req,res)=>{
 })
 
 // discuss
-app.get('/discuss',async (req,res) => {
-  await Post.find({})
+app.get('/discuss/home',async (req,res) => {
+  await Post.aggregate().sample(4)
             .then((data) => res.render('discuss/index.ejs',{jwt:req.cookies.jwt,data:data}))
             .catch((err) => console.error(err))
 });
@@ -73,17 +94,25 @@ app.get('/discuss/posts/create',(req,res)=>{
 })
 // This route should be kept at the very bottom to prevent /anything  // res.render("discuss/viewpost.ejs",{post,data})
 app.get('/discuss/posts/:id',async (req,res)=>{
-  await Post.findById(req.params.id)
-            .populate("user")
-            .populate({
-              path: 'comments',
-              // Get users of the comments 
-              populate: { path: 'user' }
-            })
-            .then(post => res.render("discuss/viewPost.ejs",{post}))
-            .catch(err => console.error(err));
+    await Post.findById(req.params.id)
+              .populate("user")
+              .populate({
+                path: 'comments',
+                // Get users of the comments 
+                populate: { path: 'user' }
+              })
+              .then(post => res.render("discuss/viewPost.ejs",{post}))
+              .catch(err => res.render('error404.ejs'));
 });
-
+// Communities with id
+app.get('/discuss/communities/:id', async (req,res)=>{
+  await Community.findById(req.params.id)
+                  .populate('owner')
+                  .populate('members')
+                  .populate('posts')
+                  .then(community => res.render("discuss/viewCommunity.ejs",community))
+                  .catch(err => res.render("error404.ejs"))
+})
 // Rendering 404 on unregistered routes
 app.all('*',(req,res)=>{
     res.render('error404.ejs');

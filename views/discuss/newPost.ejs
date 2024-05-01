@@ -23,24 +23,24 @@
       <div
         class="mx-auto block max-w-md rounded-lg bg-white p-6 shadow-4 dark:bg-surface-dark"
       >
-        <form method="post" action="/api/posts/add" id="create-post-form">
-          <!--Party input-->
+        <form method="post" action="/api/posts/create" id="create-post-form">
+          <!--Community input-->
           <div class="relative mb-6" data-twe-input-wrapper-init>
             <input
               type="text"
               class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
-              id="party"
-              name="party"
-              placeholder="Party Name"
+              id="community"
+              name="community"
+              placeholder="Community Name"
             />
             <label
-              for="party"
+              for="community"
               class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary"
-              >Party
+              >Community
             </label>
           </div>
 
-          <!--Party input-->
+          <!--Community input-->
           <div class="relative mb-6" data-twe-input-wrapper-init>
             <input
               type="text"
@@ -91,13 +91,13 @@
         const postForm = document.querySelector("#create-post-form");
         const formData = new FormData(postForm);
         const formBody = {
-          party: formData.get("party"),
+          community: formData.get("community"),
           title: formData.get("title"),
           content: formData.get("content"),
         };
 
         const jwtToken = getCookie("jwt");
-        const response = await fetch("/api/posts/add", {
+        const response = await fetch("/api/posts/create", {
           method: "post",
           headers: {
             "Content-Type": "application/json",
@@ -106,7 +106,7 @@
           body: JSON.stringify(formBody),
         });
         if (response.ok) {
-          window.location.href = "/discuss";
+          window.location.href = "/discuss/home";
         } else {
           console.error(response.message);
         }
