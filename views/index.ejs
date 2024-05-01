@@ -16,13 +16,36 @@
     <meta property="og:image" content="./imagesLarge/website.png"/> -->
     
     <link rel="accesible icon" href="./assets/icons/the-trees-svgrepo-com.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./css/style.css">        
+    <link rel="stylesheet" href="./css/style.css">     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.css">   
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.min.js"></script>
+   -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js"></script> -->
+
     <script src="https://unpkg.com/scrollreveal"></script>
     <script type="application/javascript" src="js/tickrtape.js"></script>
+
+    <style>
+        #fixedDeposit-Chart {
+          width: 100%; /* Set width to 100% to fit the page */
+          height: auto; /* Allow height to adjust based on width */
+          max-width: 800px; /* Limit maximum width */
+          margin: 20px auto;
+        }
+        canvas {
+          max-width: 400px;
+          max-height: 400px;
+        }
+      </style>
+
 </head>
 <body>
 
-    <!--hero-bg-video-->
+    <!--hero--bgvideo-->
     <video
     autoplay
     loop 
