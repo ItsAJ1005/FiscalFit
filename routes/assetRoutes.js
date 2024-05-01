@@ -7,7 +7,6 @@ const rbacMiddleware = new RBACMiddleware();
 const isNaive = require("../middlewares/isNaive");
 
 router.post("/create",isNaive,rbacMiddleware.execute("create_asset"),PDP.execute,assetController.addAsset);
-router.get("/real-estate-difference",isNaive,rbacMiddleware.execute("read_asset"),PDP.execute,assetController.calculateRealEstateDifferenceForUser);
 router.get("/fd-difference",isNaive,rbacMiddleware.execute("read_asset"),PDP.execute,assetController.calculateFDDifferenceForUser);//
 router.get("/gold/profit",isNaive,rbacMiddleware.execute("read_asset"),PDP.execute,calculateGoldProfitForUser);//
 router.get("/investment-risk",isNaive,rbacMiddleware.execute("read_asset"),PDP.execute,assetController.calculateSharpeRatio);//
@@ -17,6 +16,11 @@ router.get("/fdDetails", assetController.getFixedDepositInfo);
 
 
 router.get('/stock-values', assetController.getAllStockValues);
+// router.get('/userAssets', assetController.getUserAssets);
+
+
+router.get("/real-estate-difference",isNaive,rbacMiddleware.execute("read_asset"),PDP.execute,assetController.calculateRealEstateDifferenceForUser);
+
 
 
 router.put("/gold", assetController.updateAssetAttribute);

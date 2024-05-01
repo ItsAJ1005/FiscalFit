@@ -579,7 +579,6 @@ exports.getAllStockValues = async (req, res) => {
 
 
 
-
 exports.getFixedDepositInfo = async (req, res) => {
   try {
     const token = req.cookies.jwt || req.headers.jwt;
@@ -610,6 +609,33 @@ exports.getFixedDepositInfo = async (req, res) => {
 
 
     res.status(200).json({ dateOfPurchase, principalAmount, interestRate, tenure });
+  } catch (error) {
+    console.error(`Error: ${error}`);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getUserAssets = async (req, res) => {
+  try {
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const assetsObject = user.assets[0];
+
+    if (!assetsObject) {
+      return res.status(404).json({ message: "Assets object not found for the user" });
+    }
+
+    const { equity, gold, fixedDeposit, realEstate } = assetsObject;
+
+    res.status(200).json({ equity, gold, fixedDeposit, realEstate });
   } catch (error) {
     console.error(`Error: ${error}`);
     res.status(500).json({ message: "Server error" });
