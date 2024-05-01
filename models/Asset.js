@@ -56,7 +56,7 @@ const assetSchema = new mongoose.Schema({
   gold: goldSchema,
   fixedDeposit: fixedDepositSchema,
   realEstate: realEstateSchema,
-  income: { type: Number, required: true } // Adding the income field
+  income: { type: Number, required: true } 
 });
 
 const userSchema = new mongoose.Schema({

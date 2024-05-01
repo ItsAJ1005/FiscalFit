@@ -9,8 +9,7 @@ const path = require("path");
 
 exports.addAsset = async (req, res) => {
   try {
-    const { assetClass, equity, gold, fixedDeposit, realEstate, income } =
-      req.body;
+    const { assetClass, equity, gold, fixedDeposit, realEstate, income } = req.body;
     const token = req.cookies.jwt || req.headers.jwt;
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
@@ -21,30 +20,69 @@ exports.addAsset = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    console.log("User ID:", userId);
-    const newAsset = new Asset({
-      user: userId ,
-      assetClass,
-      equity,
-      gold,
-      fixedDeposit,
-      realEstate,
-      income, // Adding income to the new asset
-    });
+    if (!user.assets) {
+      user.assets = {};
+    }
 
-    user.assets.push(newAsset);
+    if (!user.assets.equity) {
+      user.assets.equity = [];
+    }
+
+    if (equity) {
+      const newEquity = equity.map(item => ({
+        user: userId,
+        stockName: item.stockName,
+        dateOfPurchase: item.dateOfPurchase,
+        sharePriceAtPurchase: item.sharePriceAtPurchase,
+        totalInvestment: item.totalInvestment
+      }));
+
+      user.assets.equity.push(...newEquity);
+    }
+
+    if (gold) {
+      const newGold = {
+        user: userId,
+        dateOfPurchase: gold.dateOfPurchase,
+        pricePer10g: gold.pricePer10g,
+        gramsBought: gold.gramsBought
+      };
+
+      user.assets.gold = newGold;
+    }
+
+    if (fixedDeposit) {
+      const newFixedDeposit = {
+        user: userId,
+        dateOfPurchase: fixedDeposit.dateOfPurchase,
+        principalAmount: fixedDeposit.principalAmount,
+        interestRate: fixedDeposit.interestRate,
+        tenure: fixedDeposit.tenure
+      };
+
+      user.assets.fixedDeposit = newFixedDeposit;
+    }
+    if (realEstate) {
+      const newRealEstate = {
+        user: userId,
+        purchasePrice: realEstate.purchasePrice,
+        todayPrice: realEstate.todayPrice
+      };
+
+      user.assets.realEstate = newRealEstate;
+    }
+
+    user.assets.income = income;
 
     await user.save();
-    await newAsset.save();
 
-    res.status(201).json({
-      message: `Asset added successfully to user ${userId}`,
-    });
+    res.status(201).json({ message: "Asset added successfully" });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    console.error(`Error saving asset: ${error}`);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 exports.calculateRealEstateDifferenceForUser = async (req, res) => {
   try {
@@ -272,7 +310,15 @@ exports.calculateTaxForUser = async (req, res) => {
     const token = req.cookies.jwt || req.headers.jwt;
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
-        // Check if the assets array is empty
+
+    // Retrieve the user from the database
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the assets array is empty
     if (user.assets.length === 0) {
       return res.status(400).json({ message: "No assets found for the user" });
     }
@@ -318,6 +364,7 @@ exports.calculateTaxForUser = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 
 exports.calculateStockProfit = async (req, res) => {
