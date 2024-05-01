@@ -9,7 +9,8 @@ const path = require("path");
 
 exports.addAsset = async (req, res) => {
   try {
-    const { assetClass, equity, gold, fixedDeposit, realEstate, income } = req.body;
+    const { assetClass, equity, gold, fixedDeposit, realEstate, income } =
+      req.body;
     const token = req.cookies.jwt || req.headers.jwt;
     const decodedToken = jwt.verify(token, "Port-folio-hulala");
     const userId = decodedToken.id;
@@ -20,65 +21,27 @@ exports.addAsset = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (!user.assets) {
-      user.assets = {};
-    }
+    console.log("User ID:", userId);
+    const newAsset = new Asset({
+      user: userId ,
+      assetClass,
+      equity,
+      gold,
+      fixedDeposit,
+      realEstate,
+      income, // Adding income to the new asset
+    });
 
-    if (!user.assets.equity) {
-      user.assets.equity = [];
-    }
-
-    if (equity) {
-      const newEquity = equity.map(item => ({
-        user: userId,
-        stockName: item.stockName,
-        dateOfPurchase: item.dateOfPurchase,
-        sharePriceAtPurchase: item.sharePriceAtPurchase,
-        totalInvestment: item.totalInvestment
-      }));
-
-      user.assets.equity.push(...newEquity);
-    }
-
-    if (gold) {
-      const newGold = {
-        user: userId,
-        dateOfPurchase: gold.dateOfPurchase,
-        pricePer10g: gold.pricePer10g,
-        gramsBought: gold.gramsBought
-      };
-
-      user.assets.gold = newGold;
-    }
-
-    if (fixedDeposit) {
-      const newFixedDeposit = {
-        user: userId,
-        dateOfPurchase: fixedDeposit.dateOfPurchase,
-        principalAmount: fixedDeposit.principalAmount,
-        interestRate: fixedDeposit.interestRate,
-        tenure: fixedDeposit.tenure
-      };
-
-      user.assets.fixedDeposit = newFixedDeposit;
-    }
-    if (realEstate) {
-      const newRealEstate = {
-        user: userId,
-        purchasePrice: realEstate.purchasePrice,
-        todayPrice: realEstate.todayPrice
-      };
-
-      user.assets.realEstate = newRealEstate;
-    }
-
-    user.assets.income = income;
+    user.assets.push(newAsset);
 
     await user.save();
+    await newAsset.save();
 
-    res.status(201).json({ message: "Asset added successfully" });
+    res.status(201).json({
+      message: `Asset added successfully to user ${userId}`,
+    });
   } catch (error) {
-    console.error(`Error saving asset: ${error}`);
+    console.error(`Error: ${error}`);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -441,3 +404,139 @@ exports.calculateStockProfit = async (req, res) => {
   }
 };
 
+exports.updateAssetAttribute = async (req, res) => {
+  try {
+    const { attribute, value } = req.body;
+
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const asset = user.assets[0];
+
+    if (!asset) {
+      return res.status(404).json({ message: "Asset not found for the user" });
+    }
+
+    asset.gold[attribute] = value;
+
+    await user.save();
+
+    res.status(200).json({ message: "Asset attribute updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+exports.updateFDMetaAttribute = async (req, res) => {
+  try {
+    const { attribute, value } = req.body;
+
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const asset = user.assets[0];
+
+    if (!asset) {
+      return res.status(404).json({ message: "Asset not found for the user" });
+    }
+
+    asset.fixedDeposit[attribute] = value;
+
+    await user.save();
+
+    res.status(200).json({ message: "FD attribute updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+exports.updateRealEstateAttribute = async (req, res) => {
+  try {
+    const { attribute, value } = req.body;
+
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const asset = user.assets[0];
+
+    if (!asset) {
+      return res.status(404).json({ message: "Asset not found for the user" });
+    }
+
+    asset.realEstate[attribute] = value;
+
+    await user.save();
+
+    res.status(200).json({ message: "Real Estate attribute updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+exports.updateEquityAttribute = async (req, res) => {
+  try {
+    const { attribute, value } = req.body;
+
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const asset = user.assets[0];
+
+    if (!asset) {
+      return res.status(404).json({ message: "Asset not found for the user" });
+    }
+
+    const equityIndex = asset.equity.findIndex(equity => equity[attribute] !== undefined);
+
+    if (equityIndex === -1) {
+      return res.status(404).json({ message: "Equity asset not found with the specified attribute" });
+    }
+
+    asset.equity[equityIndex][attribute] = value;
+
+    await user.save();
+
+    res.status(200).json({ message: "Equity attribute updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
