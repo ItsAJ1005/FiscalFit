@@ -16,7 +16,8 @@ router.get("/fdDetails", assetController.getFixedDepositInfo);
 
 
 router.get('/stock-values', assetController.getAllStockValues);
-// router.get('/userAssets', assetController.getUserAssets);
+router.get('/userRealEstateInvestment', assetController.getRealEstatePurchasePrice);
+
 
 
 router.get("/real-estate-difference",isNaive,rbacMiddleware.execute("read_asset"),PDP.execute,assetController.calculateRealEstateDifferenceForUser);

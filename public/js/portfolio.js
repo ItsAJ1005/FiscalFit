@@ -32,7 +32,7 @@ async function calculateSums() {
     const data = {
       labels: ["Equity", "Gold", "Fixed Deposit", "Real Estate"],
       datasets: [{
-        data: [stockSum/100, goldSum, fdSum, realEstateSum], // Updated with calculated sums
+        data: [stockSum/100, goldSum*5, fdSum*10, realEstateSum], // Updated with calculated sums
         backgroundColor: [
           'rgba(255, 99, 132, 0.8)', // Red
           'rgba(255, 206, 86, 0.8)', // Yellow

@@ -641,3 +641,48 @@ exports.getUserAssets = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+exports.getRealEstatePurchasePrice = async (req, res) => {
+  try {
+    // Extract the JWT token from the request
+    const token = req.cookies.jwt || req.headers.jwt;
+
+    // Verify the JWT token and extract the user ID
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+    const userId = decodedToken.id;
+
+    // Find the user in the database
+    const user = await User.findById(userId);
+
+    // Check if the user exists
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Retrieve the assets of the user
+    const assetsObject = user.assets[0];
+
+    // Check if the assets object exists
+    if (!assetsObject) {
+      return res.status(404).json({ message: "Assets object not found for the user" });
+    }
+
+    // Retrieve the real estate asset from the assets object
+    const realEstateAsset = assetsObject.realEstate;
+
+    // Check if the real estate asset exists
+    if (!realEstateAsset) {
+      return res.status(404).json({ message: "Real estate asset not found for the user" });
+    }
+
+    // Retrieve the purchase price and today's price from the real estate asset
+    const { purchasePrice, todayPrice } = realEstateAsset;
+
+    // Return the purchase price and today's price
+    res.status(200).json({ purchasePrice, todayPrice });
+  } catch (error) {
+    console.error(`Error: ${error}`);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
