@@ -242,13 +242,13 @@
                                 <th class="py-3 px-6 text-left">Clients (Naive Users)</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-700">
+                        <tbody class="divide-y divide-gray-700"> 
                             <% expertUsers.forEach((expertUser, index) => { %>
                                 <tr>
                                     <td class="py-4 px-6"><%= index + 1 %></td>
                                     <td class="py-4 px-6"><%= expertUser.name %></td>
                                     <td class="py-4 px-6">
-                                        <% expertUser.communities_owned.forEach((community) => { %>
+                                        <% expertUser.communities.forEach((community) => { %>
                                             <p><%= community.name %></p>
                                         <% }) %>
                                     </td>

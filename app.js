@@ -66,7 +66,7 @@ const validation = new Validation();
 // main
 app.get("/", async (req, res) => {
   if(!req.cookies.jwt){
-    return res.render('index.ejs',{jwt: req.cookies.jwt,user: null});
+    return res.render('index.ejs',{jwt: null,user: null});
   }
   const user = await validation.getUser(req.cookies.jwt);
   res.render('index.ejs',{user,jwt: req.cookies.jwt});
