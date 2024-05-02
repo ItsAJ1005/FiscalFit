@@ -107,12 +107,17 @@ app.get('/register',(req,res)=>{
 })
 // admin panel
 app.get('/admin',async (req,res) => {
-  const naiveUser = await naiveUser.find({});
-  const expertUser = await adminUser.find({});
-  const communities = await Community.find({});
-  const posts = await Post.find({});
-  const comments = await Comment.find({});
-  res.render('admin.ejs');
+  if(!req.cookies.jwt){
+    return res.render('error404.ejs');
+  }else{
+    const role = validation.getRole();
+    if(role != 'supreme'){
+      res.render('error404.ejs');
+    }else{
+      
+      res.render('admin.ejs',{});
+    }
+  }
 })
 // discuss
 app.get('/discuss/home',async (req,res) => {
