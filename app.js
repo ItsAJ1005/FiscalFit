@@ -95,6 +95,7 @@ app.get('/discuss/communities/create',(req,res)=>{
 })
 // This route should be kept at the very bottom to prevent /anything  // res.render("discuss/viewpost.ejs",{post,data})
 app.get('/discuss/posts/:id',async (req,res)=>{
+    const user = await validation.getUser(req.cookies.jwt);
     await Post.findById(req.params.id)
               .populate("user")
               .populate({
@@ -102,18 +103,22 @@ app.get('/discuss/posts/:id',async (req,res)=>{
                 // Get users of the comments 
                 populate: { path: 'user' }
               })
-              .then(post => res.render("discuss/viewPost.ejs",{post}))
+              .then(post => res.render("discuss/viewPost.ejs",{post,user}))
               .catch(err => res.render('error404.ejs'));
 });
 // Communities with id
 app.get('/discuss/communities/:id', async (req,res)=>{
   const community = await Community.findById(req.params.id);
+  if(!community){
+    return res.render('error404.ejs');
+  }
+  const user = await validation.getUser(req.cookies.jwt);
   await Community.findById(req.params.id)
                   .populate('owner')
                   .populate('members')
                   .populate('posts')
                   .then((community) =>{
-                    res.render("discuss/viewCommunity.ejs",{community}) // 6631fa6022c03d8fa99ed0da
+                    res.render("discuss/viewCommunity.ejs",{community,user})
                   })
                   .catch(err => res.render("error404.ejs"))
 })
@@ -124,4 +129,5 @@ app.all('*',(req,res)=>{
 
 // listing app on defined PORT
 app.listen(port, () => {
+    console.log(`Server is up and running on port ${port}`);
 });

@@ -128,6 +128,19 @@ class abacPolicyDecisionPoint {
             // isBanned: this.resourcesSet.unBanned
           }
         }
+      },{
+        user:{
+          attributes: {
+            role: this.rolesSet.expert,
+          }
+        },
+        action: this.actionsSet.createPost,
+        resourse : {
+          type:this.resourcesSet.community,
+          attributes : {
+            // isBanned: this.resourcesSet.unBanned
+          }
+        }
       }
     ];
   }

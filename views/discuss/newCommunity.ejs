@@ -39,21 +39,31 @@
             name: formData.get("name")
         };
         const jwtToken = getCookie("jwt");
-        const response = await fetch("/api/communities/create", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-            jwt: jwtToken,
-          },
-          body: JSON.stringify(formBody),
-        });
-        if (response.ok) {
-          window.location.href = "/discuss/home";
-        } else {
-          console.error(response.message);
-          alert(response.message);
+        try {
+            const response = await fetch("/api/communities/create", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                    jwt: jwtToken,
+                },
+                body: JSON.stringify(formBody),
+            });
+            if (response.ok) {
+                window.location.href = "/discuss/home";
+            } else {
+                // Check if response is JSON
+                const responseData = await response.json();
+                if (responseData && responseData.message) {
+                    throw new Error(responseData.message);
+                } else {
+                    throw new Error("Unknown error occurred");
+                }
+            }
+        } catch (error) {
+            console.error("Create community request error:", error);
+            alert("Create community request error: " + error.message);
         }
-      });
+    });
 
       // Function to get cookie value by name
       function getCookie(name) {

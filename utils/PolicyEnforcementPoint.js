@@ -117,7 +117,7 @@ const Asset = require('../models/Asset');
           resourse : {
             ...(req.resourse && {type : req.resourse}),
             attributes : {
-              ...(req.asset?.isBanned===true && {isBanned : isBanned})
+              ...(req.asset?.isBanned===true && {isBanned : req.asset?.isBanned})
             }
           }
         }

@@ -28,6 +28,10 @@ exports.createCommunity = async (req,res)=>{
 exports.banCommunity = async (req,res)=>{
     try{
         const { resourse } = req.body;
+        const community = await Community.findById(resourse);
+        if(community.isBanned == true){
+            return res.status(400).json({message: "Community is already banned"});
+        }
         await Community.findByIdAndUpdate(resourse,{
             isBanned: true
         });
@@ -39,7 +43,7 @@ exports.banCommunity = async (req,res)=>{
 
 exports.deleteCommunity = async (req,res)=>{
     try{
-        const {resourse} = req.body;
+        const { resourse } = req.body;
         await Community.findByIdAndDelete(resourse);
         res.status(204).json({message : `Successfully Community with id ${resourse} deleted`});
     }catch(err){
@@ -66,6 +70,9 @@ exports.joinCommunity = async (req,res)=>{
         const community = await Community.findById(resourse);
         if(!community){
             return res.status(400).json({message : "Such Community does not exists"});
+        }
+        if(community.isBanned == true){
+            return res.status(400).json({message : "Community is banned"});
         }
         if(community.members.includes(userId)){
             return res.status(400).json({message : "You are already a member of this community"});

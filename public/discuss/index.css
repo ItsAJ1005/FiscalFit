@@ -61,7 +61,7 @@ body{
     border-top: 5px solid #E9EDC9;
     border-bottom: 5px solid #E9EDC9;
 }
-.post-header{
+/* .post-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -98,7 +98,7 @@ body{
     align-items: center;
     border-radius: 10px;
     background-color: #E9EDC9;
-}
+} */
 
 .popular{
     position: absolute;

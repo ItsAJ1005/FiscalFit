@@ -26,6 +26,7 @@
       {
         "name": "naive",
         "permissions": [
+          "update_user",
           "create_post",
           "read_post",
           "create_comment",
@@ -40,12 +41,14 @@
       {
         "name": "expert",
         "permissions": [
+          "update_user",
           "create_call",
           "start_call",
           "close_call",
           "create_community",
           "delete_community",
           "join_community",
+          "create_post",
           "delete_post",
           "delete_comment",
           "read_asset"

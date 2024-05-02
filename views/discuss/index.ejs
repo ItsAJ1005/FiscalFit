@@ -30,7 +30,7 @@
                     </div>
                 </div>
     </header>
-            <div id="loginModal" class="credentials">
+            <div id="loginModal" class="credentials" style="z-index: 100;">
                 <div class="background">
                     <div class="shape shape1"></div>
                     <div class="shape shape2"></div>
@@ -47,14 +47,14 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" placeholder="Password" id="password" name="password" class="form-input">
                     
-                    <label for="role">Role : </label>
+                    <!-- <label for="role">Role : </label>
 
                     <select name="role" id="role">
                         <option value="Naive">Naive</option>
                         <option value="Expert">Expert</option>
-                     </select>
+                     </select> -->
                     
-                    <button class="form-button" type="submit">Log In</button>
+                    <button id="login-form-btn" class="form-button" type="submit">Log In</button>
                     <div class="social">
                         <div class="social-item google"><i class="fab fa-google"></i> Google</div>
                         <div class="social-item facebook"><i class="fab fa-facebook"></i> Facebook</div>
@@ -99,8 +99,8 @@
             </div>
             <div class="popular-list">
                 <ul>
-                    <li><a href="/discuss/communities/6631fa6022c03d8fa99ed0da">@/Ourfinance</a></li>
-                    <li><a href="/discuss/communities/6631fa6822c03d8fa99ed0e1">@/Tickertape</a></li>
+                    <li><a href="/discuss/communities/6632edef2560ee318a3ed920">@/Ourfinance</a></li>
+                    <li><a href="/discuss/communities/6632f881554341f5749954c0">@/Tickertape</a></li>
                     <li><a href="/discuss/communities/6631fa7c22c03d8fa99ed0e8">@/Let'sdiscuss</a></li>
                     <li><a href="/discuss/communities/6631f7492a8c0244beeeb14c">@/Ficalfit</a></li>
                 </ul>
@@ -111,7 +111,7 @@
                 <%if(role == 'expert'){%>
                     <button
                     type="button"
-                    class="inline-block rounded-full bg-warning px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-warning-3 transition duration-150 ease-in-out hover:bg-warning-accent-300 hover:shadow-warning-2 focus:bg-warning-accent-300 focus:shadow-warning-2 focus:outline-none focus:ring-0 active:bg-warning-600 active:shadow-warning-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                    class="mt-5 inline-block rounded-full bg-warning px-6 pb-2 pt-2.5 text-m font-medium uppercase leading-normal text-white shadow-warning-3 transition duration-150 ease-in-out hover:bg-warning-accent-300 hover:shadow-warning-2 focus:bg-warning-accent-300 focus:shadow-warning-2 focus:outline-none focus:ring-0 active:bg-warning-600 active:shadow-warning-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
                     Create Community
                   </button>                  
                 <%}%>
