@@ -12,6 +12,14 @@
     href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css"
   /> -->
   <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+  <style>
+    body {
+      background-image: url('../assets/image/black-texture-base.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+    }
+    </style>
 </head>
 <body>
     <header>
@@ -25,7 +33,7 @@
                     <button id="log-out">Log Out</button>
                     <%}else{%>
                         <button id="log-in">Log In</button>
-                        <button>SignUp</button>
+                        <button id="sign-up">SignUp</button>
                         <%}%>
                     </div>
                 </div>
@@ -55,14 +63,14 @@
                      </select> -->
                     
                     <button id="login-form-btn" class="form-button" type="submit">Log In</button>
-                    <div class="social">
+                    <!-- <div class="social">
                         <div class="social-item google"><i class="fab fa-google"></i> Google</div>
                         <div class="social-item facebook"><i class="fab fa-facebook"></i> Facebook</div>
-                    </div>
+                    </div> -->
                 </form>            
         </div>
-        <!-- </div>
-            <div id="signupModal" class="credentials">
+        </div>
+            <div id="signupModal" class="credentials" style="z-index: 100;">
         <div class="background">
             <div class="shape shape1"></div>
             <div class="shape shape2"></div>
@@ -82,17 +90,17 @@
             <label for="role">Role : </label>
 
             <select name="role" id="role">
-                <option value="Naive">Naive</option>
-                <option value="Expert">Expert</option>
+                <option value="naive">Naive</option>
+                <option value="expert">Expert</option>
              </select>
         
-            <button class="form-button" type="submit">Sign-Up</button>
-            <div class="social">
+            <button id="signup-form-btn" class="form-button" type="submit">Sign-Up</button>
+            <!-- <div class="social">
                 <div class="social-item google"><i class="fab fa-google"></i> Google</div>
                 <div class="social-item facebook"><i class="fab fa-facebook"></i> Facebook</div>
-            </div>
+            </div> -->
         </form>
-        </div>  -->
+        </div> 
         <div class="popular">
             <div class="popular-heading">
                 Popular groups

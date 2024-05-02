@@ -12,7 +12,7 @@ body{
     display: flex;
     justify-content: space-around;
     height: 60px;
-    background-color: #D4A373;
+    background-color: #FDA403;
     align-items: center;
 }
 
@@ -107,7 +107,7 @@ body{
 }
 
 .popular{
-    background-color: #D4A373;
+    background-color: #FDA403;
     height: 200px;
     width: 200px;
     text-align: center;
