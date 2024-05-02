@@ -71,7 +71,8 @@ exports.updateComment = async (req,res) => {
 exports.banComment = async (req,res)=>{
     try{
         const { resourse } = req.body;
-        const commentToBan = await Post.findByIdAndUpdate(resourse,{
+        console.log(resourse);
+        await Post.findByIdAndUpdate(resourse,{
             isBanned: true
         });
         res.status(200).json({message : `Successfully Banned Comment ${resourse}`});

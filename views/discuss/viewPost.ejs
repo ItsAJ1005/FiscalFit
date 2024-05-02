@@ -54,8 +54,19 @@
       </div>
     </section>
     <!-- Section: Design Block -->
+    <%if(post.user._id.toString() === user._id.toString() || user.role == 'supreme'){%>
+      <button id="delete-post-btn" class="bg-danger h-10 w-40 rounded-lg mr-10">Delete Post</button>
+    <%}%>
+    <%if(user.role == 'supreme'){%>
+      <button id="ban-post-btn" class="bg-warning h-10 w-40 rounded-lg">Ban Post</button>
+    <%}%>
+    <%if(post.isBanned == true){%>
+      <div class="text-center m-auto w-1/2 text-3xl text-red-500 font-bold">
+        <h2>This post is banned</h2>  
+      </div>
+    <%}%>
     <!--Heading with the name-->
-    <h5 class="m-3">Write comment with the name <span class="font-bold"><%=post.user.username%></span></h5>
+    <h5 class="m-3">Write comment with the name <span class="font-bold"><%=user.username%></span></h5>
     <!-- Comment Box : Write your messge here -->
     <form id="comment-form" method="post" action="/api/comments/create">
       <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
@@ -104,31 +115,107 @@
 
 <script>
   const postButton = document.getElementById("post-btn");
-  postButton.addEventListener("click",async (e)=>{
-    e.preventDefault();
-    const commentForm = document.getElementById("comment-form");
-    const formData = new FormData(commentForm);
-    const postId = window.location.pathname.split('/').pop();
-    const formBody = {
-      content : formData.get("content"),
-      post : postId
+  const deletePostButton = document.getElementById("delete-post-btn");
+  const banPostButton = document.getElementById("ban-post-btn");
+  if (banPostButton) {
+    banPostButton.addEventListener("click", async (e) => {
+        console.log("Button Clicked");
+        e.preventDefault();
+        const postId = window.location.pathname.split('/').pop();
+        const jwtToken = getCookie("jwt");
+        const formBody = {
+            resourse: postId
+        };
+        try {
+            const response = await fetch(`/api/posts/ban`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "jwt": jwtToken
+                },
+                body: JSON.stringify(formBody)
+            });
+            const responseData = await response.json();
+            if (response.ok) {
+                window.location.href = "/discuss/home";
+                alert(responseData.message);
+            } else {
+                console.error("Error:", response.status);
+                alert("Error: Unable to ban post. Please try again later.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error: Unable to ban post. Please try again later.");
+        }
+    });
+  }
+  if (deletePostButton) {
+        deletePostButton.addEventListener("click", async (e) => {
+            console.log("Button Clicked")
+            e.preventDefault();
+            const postId = window.location.pathname.split('/').pop();
+            const jwtToken = getCookie("jwt");
+            const formBody = {
+                resourse: postId
+            };
+            try {
+                const response = await fetch(`/api/posts/delete`, {
+                    method: "delete",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "jwt": jwtToken
+                    },
+                    body: JSON.stringify(formBody)
+                });
+                const responseData = await response.json();
+                if (response.ok) {
+                    window.location.href = "/discuss/home";
+                    alert(responseData.message);
+                } else {
+                    // Check if response is JSON
+                    const responseData = await response.json();
+                    if (responseData && responseData.message) {
+                        throw new Error(responseData.message);
+                    } else {
+                        throw new Error("Unknown error occurred");
+                    }
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Error: " + error.message);
+            }
+        });
     }
-    const jwtToken = getCookie("jwt");
-    const response = await fetch("/api/comments/create",{
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        "jwt": jwtToken
-      },
-      body: JSON.stringify(formBody)
-    })
-    if(response.ok){
-      location.reload();
-    }else{
-      console.error(response);
-      alert(response.message);
-    }
-  });
+
+    if (postButton) {
+    postButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const commentForm = document.getElementById("comment-form");
+        const formData = new FormData(commentForm);
+        const postId = window.location.pathname.split('/').pop();
+        const formBody = {
+            content: formData.get("content"),
+            resourse: postId
+        };
+        const jwtToken = getCookie("jwt");
+        const response = await fetch("/api/comments/create", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+                "jwt": jwtToken
+            },
+            body: JSON.stringify(formBody)
+        });
+        const responseData = await response.json();
+        if (response.ok) {
+            location.reload();
+            alert(responseData.message); // Alert for successful result
+        } else {
+            console.error(responseData.message);
+            alert(responseData.message); // Alert for error
+        }
+    });
+}
   function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);

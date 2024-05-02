@@ -8,7 +8,7 @@ const postSchema = new mongoose.Schema({
     isBanned: { type: String, default: false },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "naiveUser",
+      ref: "User",
       required: true,
     },
     community: {

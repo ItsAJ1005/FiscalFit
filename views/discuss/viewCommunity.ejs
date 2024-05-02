@@ -39,14 +39,19 @@
                 <h5 class="mb-4">
                   We are all Connected!
                 </h5>
-                <a id="join-community-btn" data-mdb-ripple-init class="btn btn-outline-light btn-lg m-2" role="button" rel="nofollow" target="_blank">JOIN</a>
+                <a id="join-community-btn" data-mdb-ripple-init class="btn btn-outline-light btn-lg m-2" role="button" rel="nofollow">JOIN</a>
                 <a id="open-post-modal" data-mdb-ripple-init class="btn btn-outline-light btn-lg m-2" role="button">CREATE POST</a>
+                <%if(user.role == "supreme"){%>
+                  <a id="ban-community-btn" data-community-id="<%=community._id%>" data-mdb-ripple-init class="btn btn-outline-light btn-lg m-2" role="button">BAN COMMUNITY</a>
+                <%}%>
+                <% if (user._id.toString() === community.owner._id.toString()) { %>
+                  <a id="delete-community-btn" data-community-id="<%= community._id %>" data-mdb-ripple-init class="btn btn-outline-light btn-lg m-2" role="button">DELETE COMMUNITY</a>
+                <% } %>
               </div>
             </div>
           </div>
         </div>
         <!-- Background image -->
-
         <!-- CreatePostForm -->
         <div class="position-fixed top-50 start-50 translate-middle">
             <div id="form-container" class="bg-white rounded p-4 shadow" style="display: none; width: 70vw; max-width: 500px; backdrop-filter: blur(5px);">
@@ -64,12 +69,22 @@
                 </form>
             </div>
         </div>
+        <!-- IsBanned -->
+        <%if(community.isBanned){%>
+          <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h2 style="color: red;">This Community is Banned</h2>
+                </div>
+            </div>
+        </div>
+        <%}%>
       </header>
 
       <!-- Creating Post List -->
       <div class="posts-container">
         <% community.posts.forEach(function(post){ %>
-            <div class="container">
+          <div class="container">
                 <%- include('../components/post', {post: post}) %>
             </div>
         <% }); %>
@@ -77,56 +92,149 @@
       
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
       <script>
-        const joinCommunityButton = document.getElementById("join-community-btn");
-        joinCommunityButton.addEventListener("click",async (e) => {
-            e.preventDefault();
-            const jwtToken = getCookie("jwt");
-            const response = await fetch("/api/communities/join", {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json",
-                jwt: jwtToken,
-            },
-            body: JSON.stringify({resourse: '<%=community._id%>'}),
-            });
-            if (response.ok) {
-            window.location.href = "/discuss/home";
-            } else {
-                console.error(response.message);
-                alert(response.message);
-            }   
-        })
+        
         const formContainer = document.getElementById("form-container");
         const openPostModal = document.getElementById("open-post-modal");
-        openPostModal.addEventListener('click',()=>{
-            document.getElementById("create-post-form").style.display = "block";
-            formContainer.style.display = "block";
-        })
         const closePostModal = document.querySelector('.btn-close');
-        closePostModal.addEventListener('click',()=>{
-            document.getElementById("create-post-form").style.display = "none";
-            formContainer.style.display = "none";
-        })
         const createPostForm = document.getElementById("create-post-form");
-        createPostForm.addEventListener('submit',async (e)=>{
-            e.preventDefault();
-            const formData = new FormData(createPostForm);
-            const jwtToken = getCookie("jwt");
-            const response = await fetch("/api/posts/create", {
-                method: "post",
-                headers: {
-                    "Content-Type": "application/json",
-                    jwt: jwtToken,
-                },
-                body: JSON.stringify({resourse: '<%=community._id%>', title: formData.get("title"), content: formData.get("content")}),
+        const deleteCommunityButton = document.getElementById("delete-community-btn");
+        const banCommunityButton = document.getElementById("ban-community-btn");
+        const joinCommunityButton = document.getElementById("join-community-btn");
+        if(openPostModal){
+          openPostModal.addEventListener('click',()=>{
+              document.getElementById("create-post-form").style.display = "block";
+              formContainer.style.display = "block";
+          })
+        }
+        if(closePostModal){
+          closePostModal.addEventListener('click',()=>{
+              document.getElementById("create-post-form").style.display = "none";
+              formContainer.style.display = "none";
+          })
+        }
+        if (createPostForm) {
+            createPostForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(createPostForm);
+                const jwtToken = getCookie("jwt");
+                try {
+                    const response = await fetch("/api/posts/create", {
+                        method: "post",
+                        headers: {
+                            "Content-Type": "application/json",
+                            jwt: jwtToken,
+                        },
+                        body: JSON.stringify({ resourse: '<%=community._id%>', title: formData.get("title"), content: formData.get("content") }),
+                    })
+                    const responseData = await response.json();
+                    if (response.ok) {
+                        window.location.href = "/discuss/home";
+                        alert(responseData.message);
+                    } else {
+                        // Check if response is JSON
+                        const responseData = await response.json();
+                        if (responseData && responseData.message) {
+                            throw new Error(responseData.message);
+                        }else if(responseData && responseData.error){
+                            throw new Error(responseData.error);
+                        }else {
+                            throw new Error("Unknown error occurred");
+                        }
+                    }
+                } catch (error) {
+                    console.error("Create post request error:", error);
+                    alert("Create post request error: " + error.message);
+                }
             })
-            if (response.ok) {
-                window.location.href = "/discuss/home";
-            }else{
-                console.error(response.message);
-                alert(response.message);
+        }
+        if(deleteCommunityButton){
+          deleteCommunityButton.addEventListener("click", async (e) => {
+              e.preventDefault();
+              const communityId = window.location.pathname.split('/').pop();
+              const jwtToken = getCookie("jwt");
+              const formBody = {
+                resourse : communityId
+              }
+              const response = await fetch("/api/communities/delete", {
+                  method: "delete",
+                  headers: {
+                      jwt: jwtToken,
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(formBody)
+              });
+              if (response.ok) {
+                  window.location.href = "/discuss/home";
+              } else {
+                  console.error(response.message);
+                  alert(response.message);
+              }
+          });
+        }
+        if (joinCommunityButton) {
+        joinCommunityButton.addEventListener("click", async (e) => {
+            e.preventDefault();
+            const jwtToken = getCookie("jwt");
+            try {
+                const response = await fetch("/api/communities/join", {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json",
+                        jwt: jwtToken,
+                    },
+                    body: JSON.stringify({ resourse: '<%=community._id%>' }),
+                });
+                if (response.ok) {
+                    window.location.href = "/discuss/home";
+                } else {
+                    // Check if response is JSON
+                    const responseData = await response.json();
+                    if (responseData && responseData.message) {
+                        throw new Error(responseData.message);
+                    } else {
+                        throw new Error("Unknown error occurred");
+                    }
+                }
+            } catch (error) {
+                console.error("Join community request error:", error);
+                alert("Join community request error: " + error.message);
             }
-        })
+            })
+        }
+        if (banCommunityButton) {          
+          banCommunityButton.addEventListener("click", async (e) => {
+              e.preventDefault();
+              const communityId = window.location.pathname.split('/').pop();
+              const jwtToken = getCookie("jwt");
+              const formBody = {
+                  resourse: communityId
+              };
+              try {
+                  const response = await fetch("/api/communities/ban", {
+                      method: "put",
+                      headers: {
+                          jwt: jwtToken,
+                          "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify(formBody)
+                  });
+                  if (response.ok) {
+                      window.location.href = "/discuss/home";
+                  } else {
+                      // Check if response is JSON
+                      const responseData = await response.json();
+                      if (responseData && responseData.message) {
+                          throw new Error(responseData.message);
+                      } else {
+                          throw new Error("Unknown error occurred");
+                      }
+                  }
+              } catch (error) {
+                  console.error("Ban community request error:", error);
+                  alert("Ban community request error: " + error.message);
+              }
+          });
+      }
         function getCookie(name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);

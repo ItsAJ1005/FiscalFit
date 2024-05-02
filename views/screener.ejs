@@ -177,19 +177,48 @@
                         </div>
                     </button>
     
-                    <a href="/login">
-                        <button class="header-btn" id="login-btn">
+                    <%if(jwt == null){%>
+                        <a href="/login">
+                            <button class="header-btn" id="login-btn">
                             <span>
-                                <img src="/assets/icons/user.png"></img>
+                                <img src="./assets/icons/user.png"></img>
                             </span>
-    
-                            <span>Login</span>
-    
+        
+                                <span>Login</span>
+        
+                                <span>
+                                    <img src="./assets/icons/drop-down.png  "></img>
+                                </span>
+                            </button>
+                        </a>
+                    <%}else{%>
+                        <a href="/">
+                            <button class="header-btn logout-btn" id="login-btn">
                             <span>
-                                <img src="/assets/icons/drop-down.png  "></img>
+                                <img src="./assets/icons/user.png"></img>
                             </span>
-                        </button>
-                    </a>
+        
+                                <span>Logout</span>
+        
+                                <span>
+                                    <img src="./assets/icons/drop-down.png  "></img>
+                                </span>
+                            </button>
+                        </a>
+                        <a href="/profile">
+                            <button class="header-btn logout-btn" id="login-btn">
+                            <span>
+                                <img src="./assets/icons/user.png"></img>
+                            </span>
+        
+                                <span>Profile</span>
+        
+                                <span>
+                                    <img src="./assets/icons/drop-down.png  "></img>
+                                </span>
+                            </button>
+                        </a>
+                    <%}%>
     
                 </nav>
             </div>
