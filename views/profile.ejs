@@ -107,7 +107,7 @@
                           <img src="/assets/icons/business-report.png"></img>
                       </span>
 
-                      <a href="">Screener</a>
+                      <a href="./screener.ejs">Screener</a>
                   </button>
 
                   <!-- more-btn -->
@@ -266,112 +266,174 @@
                 
                 <ul class="list-group">
 
-                    <li class="list-group-item">
-                      <p>Stock Holdings</p>
+                    <li class="list-group-item">Stock holdings
                           <button class="edit" onclick="toggle_visibility('stockHoldingsPopup')">Edit</button>
 
-                          
 
-                          <div class="centered-div" id="stockHoldingsPopup">
+                          
+                            <!-- stock holdings -->
+                          <div class="centered-div scrollable-form" id="stockHoldingsPopup">
                             <h4><strong>Edit your stock holdings</strong></h4>
 
-                            <div class="input-group my-2 flex-nowrap">
-                                <span class="input-group-text" id="addon-wrapping">@</span>
-                                <input required type="text" class="form-control" placeholder="StockName" aria-label="Stockname" aria-describedby="addon-wrapping">
-                             </div>
+                            <div class="input-group my-2">
+                                <span class="input-group-text">Stock name and price</span>
+                                <input type="text" placeholder="Enter Stock Name" aria-label="StockName" class="form-control">
+                                <input type="number" placeholder="Enter Stock Price" aria-label="Stock price" class="form-control mx-2">
+                                <div class="relative my-2 max-w-sm">
 
-                             <div class="input-group my-2 mb-3">
+                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                      </svg>
+                                    </div>
+    
+                                    <input required datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select purchase date of stock {yyyy-mm-dd}">
+                                  </div>
+                              </div>
+                            <div class="input-group my-2">
+                                <span class="input-group-text">Stock name and price</span>
+                                <input type="text" placeholder="Enter Stock Name" aria-label="StockName" class="form-control">
+                                <input type="number" placeholder="Enter Stock Price" aria-label="Stock price" class="form-control mx-2">
+                                <div class="relative my-2 max-w-sm">
+
+                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                      </svg>
+                                    </div>
+    
+                                    <input required datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select purchase date of stock {yyyy-mm-dd}">
+                                  </div>
+                              </div>
+                            <div class="input-group my-2">
+                                <span class="input-group-text">Stock name and price</span>
+                                <input type="text" placeholder="Enter Stock Name" aria-label="StockName" class="form-control">
+                                <input type="number" placeholder="Enter Stock Price" aria-label="Stock price" class="form-control mx-2">
+                                <div class="relative my-2 max-w-sm">
+
+                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                      </svg>
+                                    </div>
+    
+                                    <input required datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select purchase date of stock {yyyy-mm-dd}">
+                                  </div>
+                              </div>
+                            <div class="input-group my-2">
+                                <span class="input-group-text">Stock name and price</span>
+                                <input type="text" placeholder="Enter Stock Name" aria-label="StockName" class="form-control">
+                                <input type="number" placeholder="Enter Stock Price" aria-label="Stock price" class="form-control mx-2">
+                                
+                                <div class="relative my-2 max-w-sm">
+
+                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                      </svg>
+                                    </div>
+    
+                                    <input required datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select purchase date of stock {yyyy-mm-dd}">
+                                  </div>
+                              </div>
+                            <div class="input-group my-2">
+                                <span class="input-group-text">Stock name and price</span>
+                                <input type="text" placeholder="Enter Stock Name" aria-label="StockName" class="form-control">
+                                <input type="number" placeholder="Enter Stock Price" aria-label="Stock price" class="form-control mx-2">
+                                <div class="relative my-2 max-w-sm">
+
+                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                      </svg>
+                                    </div>
+    
+                                    <input required datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select purchase date of stock {yyyy-mm-dd}">
+                                  </div>
+                              </div>
+                            <div class="input-group my-2">
+                                <span class="input-group-text">Stock name and price</span>
+                                <input type="text" placeholder="Enter Stock Name" aria-label="StockName" class="form-control">
+                                <input type="number" placeholder="Enter Stock Price" aria-label="Stock price" class="form-control mx-2">
+                                <div class="relative my-2 max-w-sm">
+
+                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                      </svg>
+                                    </div>
+    
+                                    <input required datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select purchase date of stock {yyyy-mm-dd}">
+                                  </div>
+                              </div>
+
+                              <div class="input-group my-2 mb-3">
                                 <span class="input-group-text">₹ </span>
-                                <input required type="text" class="form-control" placeholder="Enter share price at purchase" aria-label="Amount (to the nearest rupee)">
+                                <input required type="number" class="form-control" placeholder="Enter stock 1 price" aria-label="Amount (to the nearest rupee)">
+                                <span class="input-group-text">.00</span>
+                              </div>
+                              <div class="input-group my-2 mb-3">
+                                <span class="input-group-text">₹ </span>
+                                <input required type="number" class="form-control" placeholder="Enter stock 2 price" aria-label="Amount (to the nearest rupee)">
+                                <span class="input-group-text">.00</span>
+                              </div>
+                              <div class="input-group my-2 mb-3">
+                                <span class="input-group-text">₹ </span>
+                                <input required type="number" class="form-control" placeholder="Enter stock 3 price" aria-label="Amount (to the nearest rupee)">
+                                <span class="input-group-text">.00</span>
+                              </div>
+                              <div class="input-group my-2 mb-3">
+                                <span class="input-group-text">₹ </span>
+                                <input required type="number" class="form-control" placeholder="Enter stock 4 price" aria-label="Amount (to the nearest rupee)">
+                                <span class="input-group-text">.00</span>
+                              </div>
+                              <div class="input-group my-2 mb-3">
+                                <span class="input-group-text">₹ </span>
+                                <input required type="number" class="form-control" placeholder="Enter stock 5 price" aria-label="Amount (to the nearest rupee)">
+                                <span class="input-group-text">.00</span>
+                              </div>
+                              <div class="input-group my-2 mb-3">
+                                <span class="input-group-text">₹ </span>
+                                <input required type="number" class="form-control" placeholder="Enter stock 6 price" aria-label="Amount (to the nearest rupee)">
                                 <span class="input-group-text">.00</span>
                               </div>
 
-                             <div class="relative my-2 max-w-sm">
-
-                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                                  </svg>
-                                </div>
-
-                                <input required datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date {yyyy-mm-dd}">
-                              </div>
-
-                              <div class="btn-group end" role="group" aria-label="Basic outlined example">
-                                <button type="button" class="btn btn-outline-success">Save</button>
-                                <button type="button" class="btn btn-outline-primary" onclick="toggle_visibility('stockHoldingsPopup')">Discard</button>
-                              </div>
+                        
 
 
 
-                              <!-- profile edit -->
-                              <div class="centered-div" id="profileEditPopup">
-                                <h4><strong>Edit your profile password detais: </strong></h4>
+
+                              <!-- gold form -->
+
+                            
+                                <h4><strong>Edit your Gold details</strong></h4>
     
                                 <div class="input-group my-2 flex-nowrap">
-                                    <span class="input-group-text" id="addon-wrapping">Password</span>
-                                    <input required type="text" class="form-control" placeholder="Enter old password" aria-label="oldPassword" aria-describedby="addon-wrapping">
+                                    <span class="input-group-text" id="addon-wrapping">@</span>
+                                    <input  required type="number" class="form-control" placeholder="Quantity (g)" aria-label="gold-quantity" aria-describedby="addon-wrapping">
                                  </div>
     
+                                 <div class="input-group my-2 mb-3">
+                                    <span class="input-group-text">₹ </span>
+                                    <input required type="number" class="form-control" placeholder="Enter price price at purchase per 10g" aria-label="Amount (to the nearest rupee)">
+                                    <span class="input-group-text">.00</span>
+                                  </div>
     
-     
+                                 <div class="relative my-2 max-w-sm">
     
-                                  <div class="btn-group end" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-outline-success">Save</button>
-                                    <button type="button" class="btn btn-outline-primary" onclick="toggle_visibility('profileEditPopup')">Discard</button>
+                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                      </svg>
+                                    </div>
+    
+                                    <input required datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date of purchase {yyyy-mm-dd}">
                                   </div>
 
 
+                                  <!-- fixed deposit form -->
 
-
-                        </div>
-                    </li>
-
-
-                    <li class="list-group-item">Gold    
-
-                        <button class="edit" onclick="toggle_visibility('goldPopup')">Edit</button>
-
-                          <div class="centered-div" id="goldPopup">
-                            <h4><strong>Edit your Gold details</strong></h4>
-
-                            <div class="input-group my-2 flex-nowrap">
-                                <span class="input-group-text" id="addon-wrapping">@</span>
-                                <input  required type="number" class="form-control" placeholder="Quantity (g)" aria-label="gold-quantity" aria-describedby="addon-wrapping">
-                             </div>
-
-                             <div class="input-group my-2 mb-3">
-                                <span class="input-group-text">₹ </span>
-                                <input required type="number" class="form-control" placeholder="Enter price price at purchase per 10g" aria-label="Amount (to the nearest rupee)">
-                                <span class="input-group-text">.00</span>
-                              </div>
-
-                             <div class="relative my-2 max-w-sm">
-
-                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                                  </svg>
-                                </div>
-
-                                <input required datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date of purchase {yyyy-mm-dd}">
-                              </div>
-
-                              <div class="btn-group end" role="group" aria-label="Basic outlined example">
-                                <button type="button" class="btn btn-outline-success">Save</button>
-                                <button type="button" class="btn btn-outline-primary" onclick="toggle_visibility('goldPopup')">Discard</button>
-                              </div>
-
-
-                    </li>
-
-
-                    <li class="list-group-item">Fixed Deposits
-
-                        <button class="edit" onclick="toggle_visibility('depositPopup')">Edit</button>
-
-                        <div class="centered-div" id="depositPopup">
-                          <h4><strong>Edit your Fixed Deposits</strong></h4>
+                                  <h4><strong>Edit your Fixed Deposits</strong></h4>
 
                           <div class="input-group my-2 flex-nowrap">
                               <span class="input-group-text" id="addon-wrapping">@</span>
@@ -400,20 +462,9 @@
                               <input datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="bottom" type="Data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date of purchase {yyyy-mm-dd}">
                             </div>
 
-                            <div class="btn-group end" role="group" aria-label="Basic outlined example">
-                              <button type="button" class="btn btn-outline-success">Save</button>
-                              <button type="button" class="btn btn-outline-primary" onclick="toggle_visibility('depositPopup')">Discard</button>
-                            </div>
 
+                            <!-- FD form -->
 
-                    </li>
-
-
-                    <li class="list-group-item">Real Estates
-
-                        <button class="edit" onclick="toggle_visibility('realEstatePopup')">Edit</button>
-
-                          <div class="centered-div" id="realEstatePopup">
                             <h4><strong>Edit Real Estates </strong></h4>
 
                             <div class="input-group my-2 flex-nowrap">
@@ -427,11 +478,55 @@
                                 <span class="input-group-text">.00</span>
                               </div>
 
-                              <div class="btn-group end" role="group" aria-label="Basic outlined example">
-                                <button type="button" class="btn btn-outline-success">Save</button>
-                                <button type="button" class="btn btn-outline-primary" onclick="toggle_visibility('realEstatePopup')">Discard</button>
-                              </div>
+    
 
+                              <form method="post" action="../api/assets/add" class="btn-group end" role="group" aria-label="Basic outlined example">
+                                <button type="button" class="btn btn-outline-success">Save</button>
+                            </form>
+                                <button type="button" class="btn btn-outline-primary" onclick="toggle_visibility('stockHoldingsPopup')">Discard</button>
+
+
+
+
+                              <!-- profile edit -->
+                              <!-- <div class="centered-div" id="profileEditPopup">
+                                <h4><strong>Edit your profile password detais: </strong></h4>
+    
+                                <div class="input-group my-2 flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping">Password</span>
+                                    <input required type="text" class="form-control" placeholder="Enter old password" aria-label="oldPassword" aria-describedby="addon-wrapping">
+                                 </div> -->
+    
+    
+     
+<!--     
+                                  <div class="btn-group end" role="group" aria-label="Basic outlined example">
+                                    <button type="button" class="btn btn-outline-success">Save</button>
+                                    <button type="button" class="btn btn-outline-primary" onclick="toggle_visibility('profileEditPopup')">Discard</button>
+                                  </div> -->
+
+
+
+
+                        </div>
+                    </li>
+
+
+                    <li class="list-group-item">Gold    
+
+
+                    </li>
+
+
+                    <li class="list-group-item">Fixed Deposits
+
+                    
+                    </li>
+
+
+                    <li class="list-group-item">Real Estates
+
+                    
                     </li>
 
                     

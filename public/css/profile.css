@@ -558,7 +558,8 @@
       position: fixed;
       top: 50%;
       left: 50%;
-      width: 40vw;
+      width: 80vw;
+      height: 80vh;
       transform: translate(-50%, -50%);
       z-index: 9999; /* Ensure it's on top of everything */
       background-color: #ffffff;
@@ -567,6 +568,11 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       display: none;
     }
+    .scrollable-form {
+      max-height: 500px; /* Adjust the height as needed */
+      overflow-y: auto;
+  }
+  
 
     .list-group-item {
       padding: 8px;
