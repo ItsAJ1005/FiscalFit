@@ -141,4 +141,25 @@ gsap.from("#page5 h1", {
   },
 });
 
-
+const logoutButton = document.getElementsByClassName('logout-btn')[0];
+if(logoutButton){
+  logoutButton.addEventListener('click',(e)=>{
+      e.preventDefault();
+      fetch('../api/auth/logout', {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      })
+      .then(response => {
+          if (response.ok) {
+              window.location.href = '/'; 
+          } else {
+              console.error('Logout request failed:', response.statusText);
+          }
+      })
+      .catch(error => {
+          console.error('Logout request error:', error);
+      }); 
+  });
+}

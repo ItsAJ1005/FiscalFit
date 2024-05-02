@@ -64,17 +64,40 @@ const validation = new Validation();
 // Pages Rendering
 
 // main
-app.get("/", (req, res) => {
-  res.render('index.ejs');
+app.get("/", async (req, res) => {
+  if(!req.cookies.jwt){
+    return res.render('index.ejs',{jwt: req.cookies.jwt,user: null});
+  }
+  const user = await validation.getUser(req.cookies.jwt);
+  res.render('index.ejs',{user,jwt: req.cookies.jwt});
 });
-app.get('/portfolio',(req,res)=>{
-  res.render('portfolio.ejs');
+app.get("/profile",async (req,res) =>{
+  if(!req.cookies.jwt){
+    return res.render('profile.ejs',{jwt: req.cookies.jwt,user: null});
+  }
+  const user = await validation.getUser(req.cookies.jwt);
+  res.render('profile.ejs',{user,jwt: req.cookies.jwt});
 })
-app.get('/screener',(req,res)=>{
-  res.render('screener.ejs');
+app.get('/portfolio',async (req,res)=>{
+  if(!req.cookies.jwt){
+    return res.render('portfolio.ejs',{jwt: req.cookies.jwt,user: null});
+  }
+  const user = await validation.getUser(req.cookies.jwt);
+  res.render('portfolio.ejs',{user,jwt: req.cookies.jwt});
 })
-app.get('/gold',(req,res)=>{
-  res.render('gold.ejs');
+app.get('/screener',async (req,res)=>{
+  if(!req.cookies.jwt){
+    return res.render('screener.ejs',{jwt: req.cookies.jwt,user: null});
+  }
+  const user = await validation.getUser(req.cookies.jwt);
+  res.render('screener.ejs',{user,jwt: req.cookies.jwt});
+})
+app.get('/gold',async (req,res)=>{
+  if(!req.cookies.jwt){
+    return res.render('gold.ejs',{jwt: req.cookies.jwt,user: null});
+  }
+  const user = await validation.getUser(req.cookies.jwt);
+  res.render('gold.ejs',{user,jwt: req.cookies.jwt});
 })
 app.get('/login',(req,res)=>{
   res.render('login.ejs');
@@ -115,21 +138,23 @@ app.get('/discuss/posts/:id',async (req,res)=>{
               .catch(err => res.render('error404.ejs'));
 });
 // Communities with id
-app.get('/discuss/communities/:id', async (req,res)=>{
-  const community = await Community.findById(req.params.id);
-  if(!community){
-    return res.render('error404.ejs');
+app.get('/discuss/communities/:id', async (req, res) => {
+  try {
+    const community = await Community.findById(req.params.id)
+      .populate('owner')
+      .populate('members')
+      .populate('posts');
+
+    if (!community) {
+      return res.render('error404.ejs');
+    }
+    const user = await validation.getUser(req.cookies.jwt);
+    res.render("discuss/viewCommunity.ejs", { community, user });
+  } catch (err) {
+    console.error(err);
+    return res.render("error404.ejs");
   }
-  const user = await validation.getUser(req.cookies.jwt);
-  await Community.findById(req.params.id)
-                  .populate('owner')
-                  .populate('members')
-                  .populate('posts')
-                  .then((community) =>{
-                    res.render("discuss/viewCommunity.ejs",{community,user})
-                  })
-                  .catch(err => res.render("error404.ejs"))
-})
+});
 // Rendering 404 on unregistered routes
 app.all('*',(req,res)=>{
     res.render('error404.ejs');
