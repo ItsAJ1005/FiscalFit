@@ -7,16 +7,19 @@ signupModal.style.display = "none";
 const logginFormbtn = document.getElementById('login-form-btn');
 const signupButton = document.getElementById('sign-up');
 const signupFormbtn = document.getElementById('signup-form-btn');
+const signupForm = document.getElementById('signup-form');
+const loginForm = document.getElementById('login-form');
 
 if(signupButton) {
-    signupFormbtn.addEventListener('click', (e) => {
+    signupFormbtn.addEventListener('click', async (e) => {
         console.log("first");
         e.preventDefault();
+        const formData = new FormData(signupForm);
         const formBody = {
-            "username": document.getElementById('username').value,
-            "email": document.getElementById('email').value,
-            "password": document.getElementById('password').value,
-            "role": document.getElementById('role').value
+            "username": formData.get("username"),
+            "email": formData.get("email"),
+            "password": formData.get("password"),
+            "role": formData.get("role")
         };
         fetch('../api/auth/signup', {
                 method: 'POST',
@@ -49,10 +52,10 @@ if(signupButton) {
 if (logginFormbtn) {
     logginFormbtn.addEventListener('click', (e) => {
         e.preventDefault();
+        const formData = new FormData(loginForm);
         const formBody = {
-            "username": document.getElementById('username').value,
-            "email": document.getElementById('email').value,
-            "password": document.getElementById('password').value
+            "email": formData.get("email"),
+            "password": formData.get("password")
         };
         fetch('../api/auth/signin', {
                 method: 'POST',
