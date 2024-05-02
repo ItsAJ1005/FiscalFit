@@ -18,4 +18,4 @@ const requirAuth = (req , res , next)=>{
     }
 }
 
-module.export = { requirAuth }
+modules.export = { requirAuth }

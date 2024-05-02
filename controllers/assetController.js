@@ -540,3 +540,149 @@ exports.updateEquityAttribute = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+exports.getAllStockValues = async (req, res) => {
+  try {
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+    const userId = decodedToken.id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const assetsObject = user.assets[0];
+    if (!assetsObject) {
+      return res
+        .status(404)
+        .json({ message: "Assets object not found for the user" });
+    }
+
+    const equityAssets = assetsObject.equity;
+    if (!equityAssets || equityAssets.length === 0) {
+      return res.status(404).json({ message: "Equity assets not found for the user" });
+    }
+
+    // Extract stock name and totalInvestment from each equity asset
+    const stockValues = equityAssets.map(asset => ({
+      stockName: asset.stockName,
+      totalInvestment: asset.totalInvestment
+    }));
+
+    res.status(200).json({ stockValues });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
+exports.getFixedDepositInfo = async (req, res) => {
+  try {
+    const token = req.cookies.jwt || req.headers.jwt;
+
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const assetsObject = user.assets[0];
+
+    if (!assetsObject) {
+      return res.status(404).json({ message: "Assets object not found for the user" });
+    }
+
+    const fixedDeposit = assetsObject.fixedDeposit;
+
+    if (!fixedDeposit) {
+      return res.status(404).json({ message: "Fixed deposit asset not found for the user" });
+    }
+
+    const { dateOfPurchase, principalAmount, interestRate, tenure } = fixedDeposit;
+
+
+    res.status(200).json({ dateOfPurchase, principalAmount, interestRate, tenure });
+  } catch (error) {
+    console.error(`Error: ${error}`);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getUserAssets = async (req, res) => {
+  try {
+    const token = req.cookies.jwt || req.headers.jwt;
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const assetsObject = user.assets[0];
+
+    if (!assetsObject) {
+      return res.status(404).json({ message: "Assets object not found for the user" });
+    }
+
+    const { equity, gold, fixedDeposit, realEstate } = assetsObject;
+
+    res.status(200).json({ equity, gold, fixedDeposit, realEstate });
+  } catch (error) {
+    console.error(`Error: ${error}`);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getRealEstatePurchasePrice = async (req, res) => {
+  try {
+    // Extract the JWT token from the request
+    const token = req.cookies.jwt || req.headers.jwt;
+
+    // Verify the JWT token and extract the user ID
+    const decodedToken = jwt.verify(token, "Port-folio-hulala");
+    const userId = decodedToken.id;
+
+    // Find the user in the database
+    const user = await User.findById(userId);
+
+    // Check if the user exists
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Retrieve the assets of the user
+    const assetsObject = user.assets[0];
+
+    // Check if the assets object exists
+    if (!assetsObject) {
+      return res.status(404).json({ message: "Assets object not found for the user" });
+    }
+
+    // Retrieve the real estate asset from the assets object
+    const realEstateAsset = assetsObject.realEstate;
+
+    // Check if the real estate asset exists
+    if (!realEstateAsset) {
+      return res.status(404).json({ message: "Real estate asset not found for the user" });
+    }
+
+    // Retrieve the purchase price and today's price from the real estate asset
+    const { purchasePrice, todayPrice } = realEstateAsset;
+
+    // Return the purchase price and today's price
+    res.status(200).json({ purchasePrice, todayPrice });
+  } catch (error) {
+    console.error(`Error: ${error}`);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
