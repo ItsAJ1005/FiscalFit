@@ -5,7 +5,7 @@ module.exports = {
   entry: './public/entry.js', // Entry point of your application
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public'), // Output directory for bundled files
+    path: path.resolve(__dirname, 'dist'), // Change output directory to 'dist'
   },
   module: {
     rules: [
