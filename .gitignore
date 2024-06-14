@@ -6,3 +6,5 @@
 
 #ignoring .env
 .env
+# Local Netlify folder
+.netlify
