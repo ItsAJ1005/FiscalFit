@@ -1,2 +1,5 @@
 
-## This full-stack project integrates HTML, CSS, JavaScript, Node.js, Express, Docker, CORS, MongoDB, multi-user authentication, and RESTful APIs. It's a stock portfolio web application enabling users to predict profits and losses using visual charts and data storage. Users can analyze their yearly income from stocks, gold, and bank assets on their dashboard. The visually appealing interface enhances user engagement and promotes product advocacy.
+### This full-stack project integrates HTML, CSS, JavaScript, Node.js, Express, Docker, CORS, MongoDB, multi-user authentication, and RESTful APIs. It's a stock portfolio web application enabling users to predict profits and losses using visual charts and data storage. Users can analyze their yearly income from stocks, gold, and bank assets on their dashboard. The visually appealing interface enhances user engagement and promotes product advocacy.
+
+
+## Check Out The Demo Video Here -> https://drive.google.com/file/d/1oA53qGoqaBf27PH5Kdi6ArShaGXEZAfo/view?usp=sharing 
